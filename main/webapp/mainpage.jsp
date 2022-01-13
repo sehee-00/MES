@@ -10,7 +10,7 @@
 <%@ page import="java.sql.SQLException"%>
 
 
-
+<!-- index페이지에서 넘어온 id,pw 받기 -->
 <%
 String id = request.getParameter("id");
 String pw = request.getParameter("pw");
