@@ -17,9 +17,17 @@
 	
 	<link href="index.css" rel="stylesheet">
 	
+	 <%
+     HttpSession sessions = request.getSession(false);
+     if(sessions != null){
+          sessions.invalidate();
+     }
+     %>
+	
 </head>
 <body class="text-center">
 	<form class="form-signin" action="mainpage.jsp" method="post">
+	<div class="inputformdiv">
 		<div class="form-floating">
 		    <input type="text" class="form-control" name="id" placeholder="ID">
             <label for="floatingInput">ID</label>
@@ -29,6 +37,7 @@
             <label for="floatingPassword">Password</label>
         </div>
 		<button class="w-100 btn btn-lg btn-primary" type="submit">로그인</button>
+	</div>
 	</form>
 </body>
 </html>

@@ -3,13 +3,19 @@ package board;
 import java.util.Date;
 
 public class BoardVO {
+	private int board_id;
 	private int board_num;
 	private String writer;
-	private Date w_day;
+	private String regdate;
 	private String title;
-	private String content;
+	private String contents;
 	
-	
+	public int getBoard_id() {
+		return board_id;
+	}
+	public void setBoard_id(int board_id) {
+		this.board_id = board_id;
+	}
 	public int getBoard_num() {
 		return board_num;
 	}
@@ -22,11 +28,16 @@ public class BoardVO {
 	public void setWriter(String writer) {
 		this.writer = writer;
 	}
-	public Date getW_day() {
-		return w_day;
+	public String getRegdate() {
+		if(regdate == null) {
+			return null;
+		}
+		
+		String rd = regdate.substring(0, 10);
+		return rd;
 	}
-	public void setW_day(Date w_day) {
-		this.w_day = w_day;
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
 	}
 	public String getTitle() {
 		return title;
@@ -34,11 +45,11 @@ public class BoardVO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getContent() {
-		return content;
+	public String getContents() {
+		return contents;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 	
 	

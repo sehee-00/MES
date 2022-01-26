@@ -31,6 +31,10 @@ a:focus, a:hover{
     margin-bottom: 2rem;
 }
 
+#ptitle{
+	cursor: pointer;
+}
+
 ul{
     padding-left: 20px;
     font-size: large;
@@ -40,4 +44,8 @@ ul{
 
 li{
     padding: 5px;
+}
+
+.sidemenuselect{
+	cursor: pointer;
 }

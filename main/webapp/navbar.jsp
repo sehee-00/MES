@@ -12,8 +12,8 @@
         <!--bootstrap-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="sidemenu.css?after">
-        <link rel="stylesheet" href="navbar.css?after">
+        <link rel="stylesheet" href="sidemenu.css?ver3">
+        <link rel="stylesheet" href="navbar.css?ver3">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
         
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -26,12 +26,13 @@
               <div class="navbar-header row">
                 <div class="col-md-8">
                     <a class="navbar-brand" id="menuicon">
-                    <span class="glyphicon glyphicon-menu-hamburger"></span>
+                    <span class="glyphicon glyphicon-menu-hamburger"><span style="margin-left:10px" class="sidemenuselect upmenu" id="maincontent">home</span></span>
                     </a>
                 </div>
-                <div id="userinfo" class="col-md-4">
+                <div id="userinfo" class="col-md-4" style="margin-left:'10px'">
                     <a class="navbar-text" id="user">
-                        (User)님 반갑습니다
+                    <% String userid = (String)session.getAttribute("id"); %>
+                        <%=userid %>님 반갑습니다
                     </a>
                     <a href="#" class="navbar-text" id="useralarm"><span id="useralarmicon" class="glyphicon glyphicon-comment"></span>
                         <span id="useralarmicon2" class="badge">n</span></a>
@@ -55,7 +56,7 @@
                     $(".glyphicon-menu-hamburger").animate({left:"0px"}, 500);
                     $("#pframe").animate({"margin-left":"+=250px", "width":"1610px"}, 500);                   
                 }
-            })
+            });
             
              $(document).ready(function(){
                 $("#sidemenu").hover(function(){
@@ -69,7 +70,15 @@
                     }
                 }
             );
-            })
+            });
+            
+             $("#user").click(function(){
+                 let logoutbool = false;
+                 logoutbool = window.confirm("로그아웃 하시겠습니까?");
+                 if(logoutbool){
+                    location.href = "./index.jsp"
+                 }
+               });
           </script>
     
         <aside id="sidemenu" class="sidebar">
@@ -90,13 +99,13 @@
                     <div id="collapseOne" class="accordion-body collapse"> <!--열려있기 바라면 class에 in-->
                         <li>
                         <div class="accordion-inner">
-                        견적서 관리
+                        <a class="sidemenuselect" id="quotation">견적서 관리</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        수주 관리
+                        <a class="sidemenuselect" id="order">수주 관리</a>
                         </div>
                         </li>
                     </div>
@@ -116,13 +125,13 @@
                     <div id="collapseTwo" class="accordion-body collapse">
                         <li>
                         <div class="accordion-inner">
-                        생산 진행 관리
+                        <a class="sidemenuselect" id="productionprog">생산 진행 관리</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        진척 현황
+                        <a class="sidemenuselect" id="progress">진척 현황</a>
                         </div>
                         </li>
                     </div>
@@ -142,31 +151,31 @@
                     <div id="collapseThree" class="accordion-body collapse">
                         <li>
                         <div class="accordion-inner">
-                        전체작업일보
+                        <a class="sidemenuselect" id="allwork">전체작업일보</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        나의작업일보
+                        <a class="sidemenuselect" id="mywork">나의작업일보</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        외주작업일보
+                        <a class="sidemenuselect" id="outsourcwork">외주작업일보</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        불량 관리
+                        <a class="sidemenuselect" id="faulty">불량 관리</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        게시판
+                        <a class="sidemenuselect" id="board">게시판</a>
                         </div>
                         </li>
                     </div>
@@ -188,19 +197,19 @@
 
                         <li>
                         <div class="accordion-inner">
-                        부품 관리
+                        <a class="sidemenuselect" id="part">부품 관리</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        자재 관리
+                        <a class="sidemenuselect" id="material">자재 관리</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        자재 현황 조회
+                        <a class="sidemenuselect" id="materialcur">자재 현황 조회</a>
                         </div>
                         </li>
                     </div>
@@ -222,19 +231,19 @@
 
                         <li>
                         <div class="accordion-inner">
-                        발주 관리
+                        <a class="sidemenuselect" id="orderb">발주 관리</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        외주 관리
+                        <a class="sidemenuselect" id="outsourcing">외주 관리</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        입출고 관리
+                        <a class="sidemenuselect" id="io">입출고 관리</a>
                         </div>
                         </li>
                     </div>
@@ -256,49 +265,49 @@
 
                         <li>
                         <div class="accordion-inner">
-                        작업자별 실적 현황
+                        <a class="sidemenuselect" id="performancecur">작업자별 실적 현황</a>
                         </div>
                         </li>
                         
                         <li>
                         <div class="accordion-inner">
-                        수주별 작업공수표
+                        <a class="sidemenuselect" id="workcheck">수주별 작업공수표</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        계획대비<br>실적원가분석
+                        <a class="sidemenuselect" id="costperform">계획대비<br>실적원가분석</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        불량현황
+                        <a class="sidemenuselect" id="faultycur">불량현황</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        PQCD 현황
+                        <a class="sidemenuselect" id="pqcdcur">PQCD 현황</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        설비 가동 현황
+                        <a class="sidemenuselect" id="facilitiesopercur">설비 가동 현황</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        외주 비용 현황
+                        <a class="sidemenuselect" id="outsourccostcur">외주 비용 현황</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        소모품 현황
+                        <a class="sidemenuselect" id="suppliescur">소모품 현황</a>
                         </div>
                         </li>
                         
@@ -321,25 +330,25 @@
 
                         <li>
                         <div class="accordion-inner">
-                        공통코드 관리
+                        <a class="sidemenuselect" id="commancode">공통코드 관리</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        업체 관리
+                        <a class="sidemenuselect" id="company">업체 관리</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        표준공정 관리
+                        <a class="sidemenuselect" id="stanprocess">표준공정 관리</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        설비 관리
+                        <a class="sidemenuselect" id="facilities">설비 관리</a>
                         </div>
                         </li>
                     </div>
@@ -360,13 +369,13 @@
                     <div id="collapseEight" class="accordion-body collapse">
                         <li>
                         <div class="accordion-inner">
-                        사용자 관리
+                        <a class="sidemenuselect" id="userinformation">사용자 관리</a>
                         </div>
                         </li>
 
                         <li>
                         <div class="accordion-inner">
-                        사용자 메뉴 관리
+                        <a class="sidemenuselect" id="usermenu">사용자 메뉴 관리</a>
                         </div>
                         </li>
                     </div>
@@ -378,5 +387,37 @@
 
             </ul>
         </aside>
-    </body>
-</html>
+          
+    <script>
+    $(".sidemenuselect").on("click",function(){
+    	event.stopPropagation()
+    	let selectedid = $(this).attr('id');
+    	
+    	switch (selectedid){
+    	
+    		case "maincontent":
+			let mainbool = false;
+			mainbool = window.confirm("작업한 내용이 모두 사라집니다. 홈으로 돌아가시겠습니까?");
+			if(mainbool){
+				$("#pframe").attr('src', '#');
+			}
+			break;
+    	
+    		case "board":
+    			$("#pframe").attr('src', 'board/board.jsp');
+    			break;
+    			
+    		case "userinformation":
+    			$("#pframe").attr('src','admin/user_management.jsp');
+    			break;
+    	}
+    });
+    
+    $("#ptitle").click(function(){
+    	let mainbool = false;
+		mainbool = window.confirm("작업한 내용이 모두 사라집니다. 홈으로 돌아가시겠습니까?");
+		if(mainbool){
+			$("#pframe").attr('src', '#');
+		}
+    })
+    </script>

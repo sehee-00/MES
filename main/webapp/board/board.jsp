@@ -12,22 +12,7 @@
     <head>
     	<jsp:useBean id="dao" class="board.BoardDAO"/>
     	<%
-    	
-    		BoardVO selectboard = null;
     		request.setCharacterEncoding("UTF-8");
-    		String id = request.getParameter("bn");
-    		
-    		String duration = request.getParameter("dates");
-    		String startdate = null, enddate = null;
-    		if(duration != null){
-    			int index = duration.indexOf(" ");
-    			startdate = duration.substring(0,index);
-    			enddate = duration.substring(index+3);
-    		}
-    		
-    		if(id != null){
-    			selectboard = dao.getBoard(id);
-    		}
     	%>
     
     	<meta charset="UTF-8">
@@ -46,39 +31,16 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+        
     </head>
     <body id="boardp">
-    	<% List<BoardVO> list;
-    	if(startdate != null && enddate != null){
-    		list = dao.getList2(startdate, enddate);
-    	}
-    	else{
-    		list = dao.getList();
-    	}%>
     
         <div class="title">작업 관리/게시판</div>
         <div class="panel panel-default border searchbox">
             <div class="panel-body">
-                제목:&nbsp;&nbsp;&nbsp;<input type="text" class="form-control searchtitle">
+                제목:&nbsp;&nbsp;&nbsp;<input type="text" class="form-control searchtitle" name="searchdata">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                작성일:&nbsp;&nbsp;&nbsp;<input type="text" name="dates" class="form-control searchtitle">
-            
-            	<script>
-	                $('input[name="dates"]').daterangepicker({
-	                    timePicker: false,
-	                    locale:{
-	                        format: 'YY/MM/DD'
-	                    }
-	                });
-	                
-	                $('input[name="dates"]').change(function(){
-	                    location.href="./board.jsp?dates=" + $('input[name="dates"]').val();
-	                });
-	                
-	                <% if(duration != null){ %>
-	                	$('input[name="dates"]').val("<%=duration%>");
-	                <%}%>
-	            </script>
+                작성일:&nbsp;&nbsp;&nbsp;<input type="text" name="dates" class="form-control searchtitle" id="searchdate">
             </div>
         </div>
         
@@ -91,32 +53,9 @@
             </div>
 
             <div class="panel-body">
-                <table class="table table-bordered table-hover">
-                    <thead class="tablehead">
-                        <th style="width: 10%;">No.</th>
-                        <th style="width: 30%;">제목</th>
-                        <th style="width: 30%;">작성자</th>
-                        <th style="width: 30%;">작성일</th>
-                    </thead>
-                    <%for(BoardVO b: list) {%>
-                    <tr class="tablecontent" id='<%= b.getBoard_num() %>' onclick="javascript:location.href='./board.jsp?bn=<%= b.getBoard_num() %>'">
-                        <td><%=b.getBoard_num() %></td>
-                        <td><%=b.getTitle() %></td>
-                        <td><%=b.getWriter() %></td>
-                        <td><%=b.getW_day() %></td>
-                    </tr>
-                    <%}; %>
-                </table> 
-
-                <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="">2</a></li>
-                    <li><a href="">3</a></li>
-                    <li><a href="">4</a></li>
-                    <li><a href="">5</a></li>
-                    <li><a href="">&raquo;</a></li>
-                </ul>
+            <div id="boardt"></div>
+            
+           
             </div>
         </div>
         
@@ -127,16 +66,17 @@
 
             <div class="panel-body">
                 <form action="boardinsert.jsp" method="post">
+                	<input type="text" id="boardidinput" name="boardid" style="display:none"/>
                     <table style="border: 0; width: 98%;">
                         <tr>
                             <td>
                             	<div class="form-group boardnum">
                                     <label for="boardnuminput">게시판 번호 <span style="color: red;">*</span></label>
-                                    <input type="text" id="boardnuminput" class="form-control" name="num" value=<%=dao.getLastnum() + 1 %> readonly>
+                                    <input type="text" id="boardnuminput" class="form-control" name="num">
                                 </div>
                                 <div class="form-group writeday">
                                     <label for="writedayinput">작성일자 <span style="color: red;">*</span></label>
-                                    <input type="text" id="writedayinput" class="form-control" name="day" value=<%=new SimpleDateFormat("yyyy-MM-dd").format(new Date()) %> readonly>
+                                    <input type="text" id="writedayinput" class="form-control" name="day" maxlength="10">
                                 </div>
                             </td>
                         </tr>
@@ -164,14 +104,8 @@
                                 <div class="buttongruops">
                                     <input class="btn btn-primary" type="reset" value="초기화" id="boardreset"/>
                                     <input class="btn btn-primary" type="submit" value="저장"/>
-                                    <input class="btn btn-danger" type="button" value="삭제" onclick="javascript:location.href='./boarddelete.jsp?bn=<%= id %>'"/>
+                                    <input class="btn btn-danger" id="deleteboard" type="button" value="삭제"/>
                                 </div>
-                                
-                                <script>
-                                	$("#boardreset").click(function(){
-                                		$(".tablecontent").css({"background":"white"});
-                                	})
-                                </script>
                             </td>
                         </tr>
                     </table>
@@ -179,29 +113,95 @@
             </div>
 		</div>
 		</div>
-		
-		<script>
-		<%if(selectboard != null) { %>
-		
-			var row = document.getElementById("<%=selectboard.getBoard_num() %>");
-
-            row.style.background = "lightgray";
-            
-
-            $(document).ready(function() {
-                $('#boardnuminput').val("<%=selectboard.getBoard_num() %>");
-            });
-            $(document).ready(function() {
-                $('#writedayinput').val("<%=selectboard.getW_day() %>");
-            });
-            $(document).ready(function() {
-                $('#boardtitleinput').val("<%=selectboard.getTitle() %>");
-            });
-            $(document).ready(function() {
-                $('#boardcontentsinput').val("<%=selectboard.getContent() %>");
-            });
-            
-		<% } %>
-		</script>
     </body>
 </html>
+
+<script>
+var pnum = "1";
+var dates = "";
+var sda = "";
+
+<!-- 게시판 테이블 셋팅 -->
+$(document).ready(function(){
+	$.ajax({
+        type:"GET",
+        url:"./boardsearch.jsp",
+        data:{page:pnum},
+        dataType:"html",
+        success:function(data){
+            $("#boardt").html(data);
+        }
+    });
+});
+
+<!-- 검색 -->
+$('input[name="dates"]').daterangepicker({
+    timePicker: false,
+    locale:{
+        format: 'YY/MM/DD'
+    },
+    "startDate": "<%=dao.getfdate()%>",
+    "endDate": new Date()
+});
+
+$('input[name="dates"]').on("change",function(){
+	dates = $('input[name="dates"]').val();
+	sda = $('input[name="searchdata"]').val();
+	
+	$.ajax({
+		type:"GET",
+		url:"./boardsearch.jsp",
+		data:{page:"1", date:dates, sdata:sda},
+		dataType:"html",
+		success:function(data){
+            $("#boardt").html(data);
+        }
+	});
+});
+
+
+$('input[name="searchdata"]').on("keydown",function(e){
+	
+	if(e.keyCode == 13){
+		sda = $('input[name="searchdata"]').val();
+		dates = $('input[name="dates"]').val();
+	
+		$.ajax({
+			type:"GET",
+			url:"./boardsearch.jsp",
+			data:{page:"1", date:dates, sdata:sda},
+			dataType:"html",
+			success:function(data){
+	            $("#boardt").html(data);
+	        }
+		});
+	};
+});
+
+<!-- 그외 셋팅 -->
+$("#boardreset").click(function(){
+	$(".tablecontent").css({"background":"white"});
+});
+
+$(document).on("keyup", "input[name='num']", function(e) {
+	$(this).val( $(this).val().replace(/[^0-9-]/gi,"") );
+});
+
+$(document).on("keyup", "input[name='day']", function(e) {
+	$(this).val( $(this).val().replace(/[^0-9-]/gi,"") );
+	
+	$(this).val(date_mask($(this).val()));
+});
+
+function date_mask(objValue) {
+	 var v = objValue.replace("--", "-");
+
+	    if (v.match(/^\d{4}$/) !== null) {
+	        v = v + '-';
+	    } else if (v.match(/^\d{4}\-\d{2}$/) !== null) {
+	        v = v + '-';
+	    }
+	 
+	    return v;
+	}
+</script>
