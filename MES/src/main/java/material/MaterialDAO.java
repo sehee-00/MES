@@ -225,7 +225,7 @@ public class MaterialDAO {
 		int result = 0;
 		
 		try {
-			String sql = "insert into materials values(?,?,?,?,?,?,?)";
+			String sql = "insert into materials values(?,?,?,?,?,?,?, \'자재관리\', \'소재구분\')";
 			con = db.getCon();
 			pstmt = con.prepareStatement(sql);
 			
