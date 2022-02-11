@@ -155,6 +155,7 @@ rs=stmt.executeQuery(query);
 							</tr>
 						</thead>
 						<tbody style="border-top: none;">
+						
 						<%
 						int count=0;
 						int pagegroup=0;
@@ -176,6 +177,7 @@ rs=stmt.executeQuery(query);
 							<td style="display:none"><%=rs.getString("unit")%></td>
 							<td><button type="button" class="btn btn-secondary">인쇄</button></td>
 						</tr>
+						
 						<%
 						}
 						%>
@@ -190,6 +192,8 @@ rs=stmt.executeQuery(query);
 							document.getElementById("safety_stock").value=element.children[5].innerHTML;
 							document.getElementById("standard").value=element.children[6].innerHTML;
 							document.getElementById("unit").value=element.children[7].innerHTML;
+							
+							document.getElementById("submitcheck").value="1";
 							
 							// 테이블 배경색 설정
 							resetbutton();
@@ -336,7 +340,7 @@ rs=stmt.executeQuery(query);
 							<div class="col-12">
 								<button type="button">임시버튼</button>
 							</div>
-							
+							<input type="text" style="display:none" value="0" name="submitcheck" id="submitcheck">
 							<div class="col-12">
 								<button class="btn btn-danger float-right" type="button" onclick="deletebutton()">삭제</button>
 								<button class="btn btn-info float-right"

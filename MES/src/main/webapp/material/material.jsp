@@ -291,7 +291,7 @@
                     
                     rows.forEach(element => {
                     	let mi = 0;
-                    	let mn = element["자재명"];
+                    	let mn = element["자재명"]; 
                 		let mpr = element["단가"];
                 		let mts = element["소요 자재 유형"];
                 		let mps = element["자재 공정"];

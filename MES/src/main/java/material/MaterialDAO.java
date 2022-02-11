@@ -174,7 +174,7 @@ public class MaterialDAO {
 		List<String> list = new ArrayList<String>();
 		
 		try {
-			String sql = "SELECT sub_code FROM common_code WHERE group_name=\'자재관리\' and main_code=\'소재구분\'";
+			String sql = "SELECT sub_code FROM mes.code_sub WHERE main_code=\'소재구분\'";
 			
 			con = db.getCon();
 			stmt = con.createStatement();
@@ -199,7 +199,7 @@ public class MaterialDAO {
 		List<String> list = new ArrayList<String>();
 		
 		try {
-			String sql = "SELECT process_name FROM process";
+			String sql = "select distinct process_name from mes.process";
 			
 			con = db.getCon();
 			stmt = con.createStatement();
@@ -225,7 +225,7 @@ public class MaterialDAO {
 		int result = 0;
 		
 		try {
-			String sql = "insert into materials values(?,?,?,?,?,?,?, \'자재관리\', \'소재구분\')";
+			String sql = "insert into materials values(?,?,?,?,?,?,?)";
 			con = db.getCon();
 			pstmt = con.prepareStatement(sql);
 			

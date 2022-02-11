@@ -6,7 +6,6 @@
 <%@ page import="java.sql.ResultSet"%>
 <%@ page import="java.sql.SQLException"%>
 
-
 <!-- 데이터베이스 연결 -->
 <%
 Class.forName("com.mysql.jdbc.Driver");
@@ -22,7 +21,6 @@ conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 %>
 
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,24 +29,25 @@ conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 </head>
 <body>
 <%
-String submitcheck = request.getParameter("submitcheck");
-
-String part_name = request.getParameter("part_name");
-String part_type = request.getParameter("part_type");
-String core = request.getParameter("core");
-String unit_price = request.getParameter("unit_price");
-String stock = request.getParameter("stock");
-String safety_stock = request.getParameter("safety_stock");
-String standard = request.getParameter("standard");
-String unit = request.getParameter("unit");
-
-
-if(part_name.equals("")){
-	response.sendRedirect("part_management.jsp");
+String txtmain = request.getParameter("txtmain");
+String txtsub = request.getParameter("txtsub");
+String subusing = request.getParameter("subusing");
+String revisemain = request.getParameter("revisemain");
+if(subusing.equals("Y")){
+	subusing = "1";
 }
 else{
+	subusing="0";
+}
+String submitcheck = request.getParameter("submitcheck");
+
+if(txtmain.equals("") || txtsub.equals("")){
+	response.sendRedirect("user_management.jsp");
+}
+
+else{
 	if(submitcheck.equals("1")){
-		query = "delete from part where part_name='" + part_name + "';";
+		query = "delete from code_sub where sub_code='" + revisemain + "'";
 
 		// Create Statement 
 		stmt = conn.createStatement();
@@ -56,15 +55,13 @@ else{
 		stmt.executeUpdate(query);
 		stmt.close();
 	}
-	query = "insert into part values('"+part_name+"','"+part_type+"','"+core+"',"+unit_price+","+stock+","+safety_stock+",'"+standard+"','"+unit+"','')";
-	
+	query = "insert into code_sub values('"+txtmain+"','"+txtsub+"',"+subusing+")";
+
 	stmt = conn.createStatement();
 	stmt.executeUpdate(query);
 
-	response.sendRedirect("part_management.jsp");
+	response.sendRedirect("common_code.jsp");
 }
-
-
 
 %>
 </body>

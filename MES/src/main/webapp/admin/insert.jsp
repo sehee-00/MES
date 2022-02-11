@@ -31,6 +31,8 @@ conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 </head>
 <body>
 <%
+String submitcheck = request.getParameter("submitcheck");
+
 String user_id = request.getParameter("user_id");
 String user_pw = request.getParameter("user_pw");
 String user_name = request.getParameter("user_name");
@@ -47,6 +49,15 @@ if(user_id.equals("")){
 	response.sendRedirect("user_management.jsp");
 }
 else{
+	if(submitcheck.equals("1")){
+		query = "delete from user where user_id='" + user_id + "';";
+
+		// Create Statement 
+		stmt = conn.createStatement();
+		// Run Qeury 
+		stmt.executeUpdate(query);
+		stmt.close();
+	}
 	query = "insert into user values('"+user_id+"','"+user_pw+"','"+user_name+"','"+first_position+"','"+second_position+"','"+third_position+"','"+phone+"','"+email+"','"+note+"','"+state+"','"+use_yn+"')";
 
 	stmt = conn.createStatement();
@@ -54,8 +65,6 @@ else{
 
 	response.sendRedirect("user_management.jsp");
 }
-
-
 
 %>
 </body>

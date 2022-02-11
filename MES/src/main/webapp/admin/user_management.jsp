@@ -206,6 +206,8 @@ rs=stmt.executeQuery(query);
 							document.getElementById("state").value=element.children[10].innerHTML;
 							document.getElementById("use_yn").value=element.children[11].innerHTML;
 							
+							document.getElementById("submitcheck").value="1";
+							
 							// 테이블 배경색 설정
 							resetbutton();
 							element.style.backgroundColor="#17A2B8";
@@ -365,7 +367,7 @@ rs=stmt.executeQuery(query);
 									<option value="0">N</option>
 								</select>
 							</div>
-							
+							<input type="text" style="display:none" value="0" name="submitcheck" id="submitcheck">
 							<div class="col-12">
 								<button class="btn btn-danger float-right" type="button" onclick="deletebutton()">삭제</button>
 								<button class="btn btn-info float-right"
@@ -383,6 +385,7 @@ rs=stmt.executeQuery(query);
 										var item = trs.item(i);
 										item.style.backgroundColor="white";
 									}
+									
 								}
 								</script>
 							</div>

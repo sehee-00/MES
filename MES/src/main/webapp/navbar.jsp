@@ -330,7 +330,7 @@
 
                         <li>
                         <div class="accordion-inner">
-                        <a class="sidemenuselect" id="commancode">공통코드 관리</a>
+                        <a class="sidemenuselect" id="commoncode">공통코드 관리</a>
                         </div>
                         </li>
 
@@ -418,6 +418,22 @@
     		case "material":
     			$("#pframe").attr('src', 'material/material.jsp');
     			break;
+    			
+    		case "commoncode":
+    			$("#pframe").attr('src', 'common_code/common_code.jsp');
+    			break;
+    			
+    		case "order":
+    			$("#pframe").attr('src', 'Order/Order.jsp');
+    			break;
+    			
+    		case "quotation":
+    			$("#pframe").attr('src', 'estimate/estimate.jsp');
+    			break;
+    			
+    		case "facilities":
+    			$("#pframe").attr('src', 'facilites/facilites.jsp');
+    			break;
     	}
     });
     
@@ -425,7 +441,7 @@
     	let mainbool = false;
 		mainbool = window.confirm("작업한 내용이 모두 사라집니다. 홈으로 돌아가시겠습니까?");
 		if(mainbool){
-			$("#pframe").attr('src', '#');
+			$("#pframe").attr('src', '');
 		}
     })
     </script>
