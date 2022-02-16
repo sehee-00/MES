@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 body{
     background: rgb(238, 237, 237);
 }
@@ -9,7 +11,7 @@ body{
 }
 
 .panel-title{
-    padding-top:10px;
+    padding-top: 10px;
     padding-bottom: 10px;
 }
 
@@ -23,22 +25,6 @@ body{
     border-bottom: 0px;
     border-right: 0px;
     border-left: 0px;
-}
-
-.warningredbox, .warningboxexp, .completegreenbox, .completegreenexp{
-    border-radius: 5px;
-    box-shadow: 3px 3px 3px rgb(0 0 0 / 5%);
-}
-
-.warningredbox{
-    background:rgb(227, 183, 190);
-    width:30px;
-    height:40px;
-}
-.completegreenbox{
-	background:rgb(214, 233, 198);
-    width:30px;
-    height:40px;
 }
 
 .searchbox{
@@ -56,14 +42,14 @@ body{
     font-weight: bold;
 }
 
-.orderlistbox{
+.listbox{
     float: left;
     width: 48.5vw;
     margin: 0px;
     padding: 0px;
 }
 
-.table_head{
+.tablehead{
     background: rgb(23, 162, 184);
     color: white;
 }
@@ -73,7 +59,7 @@ body{
     cursor: pointer;
 }
 
-.orderinputbox{
+.inputbox{
     float: right;
     width: 48.5vw;
     margin: 0px;
@@ -86,33 +72,6 @@ body{
 
 .pagination>li>a, .pagination>li>span{
     color: gray;
-}
-
-.quotation{
-    float: left;
-    width: 48%;
-}
-
-.itemno{
-    float: right;
-    width: 48%;
-}
-.company{
-    float: left;
-    width: 48%;
-}
-.orderday{
-    float: right;
-    width: 48%;
-}
-#cover1{
-	text-align:center;	
-}
-.classification, .parts, .car, .productname, .amount, .negotiate, .expectedday, .processcompletionday, .dueday{
-    display:inline-block;
-    zoom:1;
-    width: 31%;
-    margin-right:14px;
 }
 
 .btn-primary{
@@ -129,19 +88,42 @@ body{
     float: right;
 }
 
-.searchtitle{
+.searchtext{
     width: 10%;
     display: table-cell;
 }
+
 .row{
     margin-left: 1em;
     margin-right: 1em;
 }
-.pagination{
-    float: right;
+
+/*-----------------------------태초마을------------------------*/
+
+#umUsersList{
+    width:31%;
 }
 
-.pagination>li>a, .pagination>li>span{
-    color: gray;
+#umUsermenuList{
+    width:68%;
 }
 
+#umUsermenuListHeader{
+    width:100%;
+}
+
+#umbtn{
+    text-align: right;
+}
+
+.modal-dialog{
+    width: 800px;
+}
+
+.displaynone{
+	display:none;
+}
+
+.selecteduserrow{
+    background: lightgray;
+}

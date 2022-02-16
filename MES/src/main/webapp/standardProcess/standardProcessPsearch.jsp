@@ -31,6 +31,8 @@
         <td id="sppay"><%=pdto.getPay() %></td>
         <td id="sploadfac"><%=pdto.getLoad_factor() %></td>
         <td id="spusing"><%=pdto.isUsing() %></td>
+        
+        <td id="spmanager" style="display:none;"><%=pdto.getProcess_manager() %></td>
     </tr>
     <%}}else{ %>
     <tr>
@@ -40,7 +42,7 @@
     
     <script>
     $(document).on("click",".processcontent",function(){
-		$(".processcontent").css("background","white");
+		$(".processcontent, .facilitycontent").css("background","white");
 		$(this).css("background","lightgray");
 		
 		$("#insertselpcpanel").show();
@@ -59,10 +61,18 @@
 		
 		$("#selectedprocessname").val($(this).attr("name"));
 		$("#selectedprocessid").val($(this).attr("id"));
+		
+		let spmstr = $(this).children("#spmanager").text();
+		let spmanagers = spmstr.split(',');
+		$("#selpcinchargeselect").html(null);
+		for(var s of spmanagers){
+			let htmlstr = "<option>" + s + "</option>";
+			$("#selpcinchargeselect").append(htmlstr);
+		}
 	});
     
     $(document).on("click",".facilitycontent",function(){
-    	$(".processcontent").css("background","white");
+    	$(".processcontent, .facilitycontent").css("background","white");
 		$(this).css("background","lightgray");
 		
 		$("#insertselpcpanel").hide();

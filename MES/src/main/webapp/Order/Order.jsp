@@ -58,7 +58,6 @@
 			var pnum = "1";// 페이지
 			var dates = "";// 수주일
 			var input = "";// 입력 데이터
-
 			$(document).ready(function(){
 				$.ajax({
 					type:"GET",
@@ -333,10 +332,8 @@
 							function dateFormat(date) {
 						        let month = date.getMonth() + 1;
 						        let day = date.getDate();
-
 						        month = month >= 10 ? month : '0' + month;
 						        day = day >= 10 ? day : '0' + day;
-
 						        return date.getFullYear() + '-' + month + '-' + day;
 							}
 							</script>
@@ -367,7 +364,6 @@ $("#order_et_id").on("change",function(e){
 		}
 	});
 });
-
 <!-- 기타 세팅(날짜 입력 세팅) -->
 $(document).on("keyup", "input[name='orderday']", function(e) {
 	$(this).val( $(this).val().replace(/[^0-9-]/gi,"") );
@@ -379,7 +375,6 @@ $(document).on("keyup", "input[name='expectedday']", function(e) {
 	
 	$(this).val(date_mask($(this).val()));
 });
-
 function date_mask(objValue) {
 	 var v = objValue.replace("--", "-");
 	    if (v.match(/^\d{4}$/) !== null) {

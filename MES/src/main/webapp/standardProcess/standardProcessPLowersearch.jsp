@@ -23,6 +23,7 @@ if(spLowerProcessList != null){
     <td id="sploadfac"><%=pdto.getLoad_factor() %></td>
     <td id="spusing"><%=pdto.isUsing() %></td>
 
+    <td id="spmanager" style="display:none;"><%=pdto.getProcess_manager() %></td>
     <td style='display:none' id="mtype"></td>
     <td style='display:none' id="mproc"></td>
 </tr>

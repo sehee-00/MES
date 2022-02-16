@@ -2,6 +2,9 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import = "java.util.HashMap" %>
+<%@ page import = "java.util.Map" %>
+<%@ page import = "java.util.Map.Entry" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -87,7 +90,7 @@
 
             <ul>
                 <div class="accordion" id="accordion2">
-                <li>
+                <li name="영업 관리">
                     <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
@@ -97,13 +100,13 @@
 
                     <ul>
                     <div id="collapseOne" class="accordion-body collapse"> <!--열려있기 바라면 class에 in-->
-                        <li>
+                        <li name="견적서 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="quotation">견적서 관리</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="수주 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="order">수주 관리</a>
                         </div>
@@ -113,7 +116,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li name="생산 관리">
                     <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseTwo">
@@ -123,13 +126,13 @@
                     
                     <ul>
                     <div id="collapseTwo" class="accordion-body collapse">
-                        <li>
+                        <li name="생산 진행 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="productionprog">생산 진행 관리</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="진척 현황">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="progress">진척 현황</a>
                         </div>
@@ -139,7 +142,7 @@
                     </div>
                 </li>
                 
-                <li>
+                <li name="작업 관리">
                     <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseThree">
@@ -149,31 +152,31 @@
 
                     <ul>
                     <div id="collapseThree" class="accordion-body collapse">
-                        <li>
+                        <li name="전체작업일보">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="allwork">전체작업일보</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="나의작업일보">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="mywork">나의작업일보</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="외주작업일보">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="outsourcwork">외주작업일보</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="불량 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="faulty">불량 관리</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="게시판">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="board">게시판</a>
                         </div>
@@ -184,7 +187,7 @@
                     </div>
                 </li>
                     
-                <li>
+                <li name="자재 제품 관리">
                     <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFour">
@@ -195,19 +198,19 @@
                     <ul>
                     <div id="collapseFour" class="accordion-body collapse">
 
-                        <li>
+                        <li name="부품 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="part">부품 관리</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="자재 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="material">자재 관리</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="자재 현황 조회">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="materialcur">자재 현황 조회</a>
                         </div>
@@ -218,7 +221,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li name="발주입고 관리">
                     <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseFive">
@@ -229,19 +232,19 @@
                     <ul>
                     <div id="collapseFive" class="accordion-body collapse">
 
-                        <li>
+                        <li name="발주 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="orderb">발주 관리</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="외주 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="outsourcing">외주 관리</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="입출고 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="io">입출고 관리</a>
                         </div>
@@ -252,7 +255,7 @@
                     </div>
                 </li>
                     
-                <li>
+                <li name="Dashboard">
                     <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSix">
@@ -263,49 +266,49 @@
                     <ul>
                     <div id="collapseSix" class="accordion-body collapse">
 
-                        <li>
+                        <li name="작업자별 실적 현황">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="performancecur">작업자별 실적 현황</a>
                         </div>
                         </li>
                         
-                        <li>
+                        <li name="수주별 작업공수표">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="workcheck">수주별 작업공수표</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="계획대비 실적원가분석">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="costperform">계획대비<br>실적원가분석</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="불량현황">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="faultycur">불량현황</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="PQCD 현황">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="pqcdcur">PQCD 현황</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="설비 가동 현황">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="facilitiesopercur">설비 가동 현황</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="외주 비용 현황">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="outsourccostcur">외주 비용 현황</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="소모품 현황">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="suppliescur">소모품 현황</a>
                         </div>
@@ -317,7 +320,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li name="기준정보 관리">
                     <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseSeven">
@@ -328,25 +331,25 @@
                     <ul>
                     <div id="collapseSeven" class="accordion-body collapse">
 
-                        <li>
+                        <li name="공통코드 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="commoncode">공통코드 관리</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="업체 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="company">업체 관리</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="표준공정 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="stanprocess">표준공정 관리</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="설비 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="facilities">설비 관리</a>
                         </div>
@@ -357,7 +360,7 @@
                     </div>
                 </li>
 
-                <li>
+                <li name="Admin">
                     <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseEight">
@@ -367,13 +370,13 @@
 
                     <ul>
                     <div id="collapseEight" class="accordion-body collapse">
-                        <li>
+                        <li name="사용자 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="userinformation">사용자 관리</a>
                         </div>
                         </li>
 
-                        <li>
+                        <li name="사용자 메뉴 관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="usermenu">사용자 메뉴 관리</a>
                         </div>
@@ -387,8 +390,31 @@
 
             </ul>
         </aside>
-          
+    
+    <jsp:useBean id="usermenudao" class="userMenu.UserMenuDAO"/>  
     <script>
+    //메뉴 display 처리(권한 처리)
+    $(document).ready(function(){
+    	$("li").hide();
+    	<%
+    	Map<String,String[]> allmenu = usermenudao.getUserMenu(userid);
+    	if(allmenu != null){
+			for(Entry<String,String[]> menus : allmenu.entrySet()){
+		%>
+		$("li[name='<%=menus.getKey()%>']").show();
+		<%
+				for(String lowermenu : menus.getValue()){
+		%>
+		$("li[name='<%=lowermenu%>']").show();
+		<%
+				}
+			}
+    	}
+    	%>
+    });
+    
+    
+    //메뉴 클릭 이벤트
     $(".sidemenuselect").on("click",function(){
     	event.stopPropagation()
     	let selectedid = $(this).attr('id');
@@ -434,6 +460,18 @@
     		case "facilities":
     			$("#pframe").attr('src', 'facilites/facilites.jsp');
     			break;
+    		
+    		case "stanprocess":
+    			$("#pframe").attr('src','standardProcess/standardProcess.jsp');
+    			break;
+    			
+    		case "company":
+    			$("#pframe").attr('src','Company/company.jsp');
+    			break;
+    			
+    		case "usermenu":
+    			$("#pframe").attr('src','userMenu/userMenu.jsp');
+    			break;
     	}
     });
     
@@ -443,5 +481,5 @@
 		if(mainbool){
 			$("#pframe").attr('src', '');
 		}
-    })
+    });
     </script>

@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONObject;
+
 import dbconn.DBconn;
 import standardProcess.*;
 
@@ -115,6 +117,7 @@ public class StandardProcessDAO {
 				dto.setLoad_factor(rs.getInt("load_factor"));
 				dto.setUsing(rs.getBoolean("using"));
 				dto.setLowerlevel(rs.getBoolean("lowerlevel"));
+				dto.setProcess_manager(rs.getString("process_manager"));
 				
 				list.add(dto);
 			}
@@ -149,6 +152,7 @@ public class StandardProcessDAO {
 				dto.setLoad_factor(rs.getInt("load_factor"));
 				dto.setUsing(rs.getBoolean("using"));
 				dto.setLowerlevel(rs.getBoolean("lowerlevel"));
+				dto.setProcess_manager(rs.getString("process_manager"));
 				
 				list.add(dto);
 			}
@@ -192,6 +196,41 @@ public class StandardProcessDAO {
 		}
 		
 		return list.isEmpty() ? null : list;
+	}
+	
+	public JSONObject getWorkTime(String process_name) {
+		JSONObject result = new JSONObject();
+		
+		try {
+			String sql = "select * from process_time where p_name=?";
+			
+			con = db.getCon();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, process_name);
+			rs = pstmt.executeQuery();
+			
+			int index = 0;
+			
+			while(rs.next()) {
+				JSONObject wt = new JSONObject();
+				
+				wt.put("wtstart", rs.getString("work_start"));
+				wt.put("wtend", rs.getString("work_end"));
+				
+				result.put(index, wt);
+				
+				index += 1;
+			}
+			
+			pstmt.close();
+			rs.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			db.close();
+		}
+		
+		return result.isEmpty() ? null : result;
 	}
 	
 	//입력, 수정
@@ -238,6 +277,68 @@ public class StandardProcessDAO {
 			e.printStackTrace();
 		}finally {
 			db.close();
+		}
+		
+		return res;
+	}
+	
+	public int insertProcessManager(String process_name, String proc_manager) { //update process_manager at process
+		int res = 0;
+		
+		try {
+			String sql = "UPDATE mes.process SET process_manager = ? WHERE process_name = ?";
+			con = db.getCon();
+			pstmt = con.prepareStatement(sql);
+			
+			pstmt.setString(1, proc_manager);
+			pstmt.setString(2, process_name);
+			
+			res = pstmt.executeUpdate();
+			
+			pstmt.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			db.close();
+		}
+		
+		return res;
+	}
+	
+	public int insertWorkTime(String p_name, String[] wt) { //insert process_time table
+		int res = 0;
+		
+		if(wt.length % 2 != 0) {
+			return 0;
+		}
+		
+		try {
+			String sql = "delete from process_time where p_name=?";
+			con = db.getCon();
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, p_name);
+			res = pstmt.executeUpdate();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			db.close();
+		}
+		
+		for(int i = 0; i<wt.length; i +=2) {
+			try {
+				String sql = "insert into process_time values(?,?,?)";
+				con = db.getCon();
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, p_name);
+				pstmt.setString(2, wt[i]);
+				pstmt.setString(3, wt[i+1]);
+				
+				res = pstmt.executeUpdate();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				db.close();
+			}
 		}
 		
 		return res;
@@ -321,5 +422,4 @@ public class StandardProcessDAO {
 			db.close();
 		}
 	}
-	
 }

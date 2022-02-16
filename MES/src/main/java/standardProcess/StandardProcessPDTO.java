@@ -7,7 +7,7 @@ public class StandardProcessPDTO {
 	private int pay; //임률
 	private int load_factor; //부하율
 	private boolean using; //사용유무
-	private String[] process_manager; //공정담당자
+	private String process_manager; //공정담당자
 	private String work_start; //시작시간
 	private String work_end; //끝난시간
 	private boolean lowerlevel; //하위레벨 유무
@@ -57,11 +57,21 @@ public class StandardProcessPDTO {
 	public void setUsing(boolean using) {
 		this.using = using;
 	}
-	public String[] getProcess_manager() {
+	public String getProcess_manager() {
 		return process_manager;
 	}
-	public void setProcess_manager(String[] process_manager) {
-		this.process_manager = process_manager;
+	public void setProcess_manager(String process_manager) {
+		if(process_manager == null) {
+			this.process_manager = " ";
+		}
+		else {
+			if(process_manager.equals("null")) {
+				this.process_manager = " ";
+			}
+			else {
+				this.process_manager = process_manager;
+			}
+		}
 	}
 	public String getWork_start() {
 		return work_start;

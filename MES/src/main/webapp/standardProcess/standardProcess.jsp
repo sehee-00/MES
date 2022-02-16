@@ -40,7 +40,8 @@
                         <tr>
                             <td id="sptitle"><h5 class="panel-title">표준공정 관리</h5></td>
                             <td id="spbtn">
-                                <input class="btn btn-primary" id="stdWtbtn" type="button" value="표준 작업시간" data-toggle="modal" data-target="#stdWtmodal"/>
+                            	<input id="WtmodalTogglebtn" type="button" data-toggle="modal" data-target="#stdWtmodal" style="display:none;"/>
+                                <input class="btn btn-primary" id="stdWtbtn" type="button" value="표준 작업시간"/>
                                 <input class="btn btn-primary" id="insertpc" type="button" value="공정등록"/>
                                 <input class="btn btn-primary" id="insertpceq" type="button" value="공정설비등록"/>
                             </td>
@@ -60,31 +61,34 @@
                 <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <button id="Wtclose" type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">표준작업시간</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="stdWtinputbody">
-                            <div>
-                                <div class="form-group stdWtinput">
-                                    <label for="stdWtstarttime">시작시간</label>
-                                    <input type="time" id="stdWtstarttime" class="form-control" name="pcpname">
-                                </div>
-
-                                <div class="form-group stdWtinput">
-                                    <label for="stdWtendtime">종료시간</label>
-                                    <input type="time" id="stdWtendtime" class="form-control" name="pcpname">
-                                </div>
-                            </div>
-                        </div>
-                        <div style="text-align: right;" id="stdWtinputARbtn">
-                            <button type="button" class="btn btn-default" id="stdWtaddbtn">+</button>
-                            <button type="button" class="btn btn-default" id="stdWtremovebtn">-</button>
-                        </div>
+	                    <form id="stdWtform">
+	                    	<input type="text" id="wtprocname" name="process_name" style="display:none;"/>
+	                    	<input type="text" name="mode" value="worktime" style="display:none;"/>
+	                        <div id="stdWtinputbody">
+	                            <div>
+	                                <div class="form-group stdWtinput">
+	                                    <label for="stdWtstarttime">시작시간</label>
+	                                    <input type="time" id="stdWtstarttime" class="form-control" name="wtinput">
+	                                </div>
+	
+	                                <div class="form-group stdWtinput">
+	                                    <label for="stdWtendtime">종료시간</label>
+	                                    <input type="time" id="stdWtendtime" class="form-control" name="wtinput">
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div style="text-align: right;" id="stdWtinputARbtn">
+	                            <button type="button" class="btn btn-default" id="stdWtaddbtn">+</button>
+	                            <button type="button" class="btn btn-default" id="stdWtremovebtn">-</button>
+	                        </div>
+	                    </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id="insertstdWtbtn">등록</button>
-                        <!--<button type="button" class="btn btn-danger" data-dismiss="modal">닫기</button>-->
                     </div>
                 </div>
                 </div>
@@ -176,41 +180,18 @@
                                             if(useridlist != null){
                                            		for(String userid:useridlist){
                                            	%>
-                                            <tr class="tablecontent" id="<%=userid %>">
-                                                <td><input type="checkbox" checked='checked' value="<%=userid%>"></td>
+                                            <tr class="tablecontent userlistcontent" id="<%=userid %>">
+                                                <td><input type="checkbox" value="<%=userid %>" id="usercheckbox"></td>
                                                 <td id="username"><%=userid %></td>
                                             </tr>
                                             <%}}%>
                                         </table>
                                     </div>
                                 </td>
-                                <!--
-                                <td style="width: 20%;">
-                                    <button class="btn btn-default"><span class="glyphicon glyphicon-menu-right"></span></button>
-                                    <br><br>
-                                    <button class="btn btn-default"><span class="glyphicon glyphicon-menu-left"></span></button>
-                                </td>
-                                <td style="width: 40%;">
-                                    <div>
-                                        <table class="table table-bordered table-hover inchargelist" id="usersselectedlist">
-                                            <thead class="tablehead">
-                                                <th style="width: 20%;"></th>
-                                                <th>선택된 사용자</th>
-                                            </thead>
-                    
-                    						<tr class="tablecontent" id="admin">
-                                                <td><input type="checkbox" value="admin"></td>
-                                                <td id="username">admin</td>
-                                            </tr>
-                                        </table>
-                                    </div>
-                                </td>
-                            </tr>
-                            -->
                         </table>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">저장</button>
+                        <button type="button" class="btn btn-primary" id="insertProcMbtn">저장</button>
                     </div>
                 </div>
                 </div>
@@ -377,9 +358,10 @@
             $("#insertpcpanel").toggle();
             $("#insertpceqpanel").hide();
             $("#insertselpcpanel").hide();
-            $(".processcontent").css("background","white");
+            $(".processcontent, .facilitycontent").css("background","white");
             
             $("#pcusingselect").val(null);
+            $("#selectedprocessid").val(null);
         });
 
         //공정설비등록 버튼 이벤트
@@ -387,7 +369,7 @@
             $("#insertpcpanel").hide();
             $("#insertpceqpanel").toggle();
             $("#insertselpcpanel").hide();
-            $(".processcontent").css("background","white");
+            $(".processcontent, .facilitycontent").css("background","white");
         });
 
         //표준작업시간 추가와 삭제 버튼 이벤트
@@ -397,7 +379,7 @@
         });
 
         $("#stdWtremovebtn").on("click",function(){
-            if($(this).parent().siblings().length != 1){
+            if($(this).parent().siblings().length != 3){
                 $(this).parent().prev().remove();
             }
         });
@@ -406,7 +388,7 @@
         $("#userslist").find("input:checkbox").on("click",function(){
             $(this).parent().parent().toggleClass("selecteduserrow");
             if($(this).attr("checked") == "checked"){
-            	$(this).attr("checked","");
+            	$(this).removeAttr("checked");
             }else{
             	$(this).attr("checked","checked");
             }
@@ -416,11 +398,59 @@
         $("#selpcchargeinsertbtn").on("click",function(){
         	
         	if($("#selectedprocessid").val() == $("#selpcpnameinput").val()){
+        		$(".userlistcontent input[type='checkbox']").prop("checked", false);
+        		$(".userlistcontent input[type='checkbox']").removeAttr("checked");
+        		$("#userslist tr").removeClass("selecteduserrow");
+        		
+        		$("#selpcinchargeselect").children("option").each(function(){
+        			$("input[value='" + this.text +"']").prop("checked", true);
+        			$("input[value='" + this.text +"']").attr("checked","checked");
+        			$("input[value='" + this.text +"']").parent().parent().addClass("selecteduserrow");
+        		});
+
         		$("#modaltogglebtn").click();
         	}else{
         		alert('공정을 선택해주세요');
         	}
         			
+        });
+        
+        //표준작업시간 버튼 클릭 이벤트
+        $("#stdWtbtn").on("click",function(){
+        	let procname = $("#selectedprocessid").val();
+        	$("#wtprocname").val(procname);
+        	if(procname){
+        		$("#WtmodalTogglebtn").click();
+        		$.ajax({
+    				type:"GET",
+    				url:"./SearchWorkTime",
+    				data: {proc_name:procname},
+    				dataType:"JSON",
+    				success:function(data){
+    					if(data != null){
+    						$("#stdWtinputARbtn").prev().children().children().children("#stdWtstarttime").val(data[0].wtstart);
+    						$("#stdWtinputARbtn").prev().children().children().siblings().children("#stdWtendtime").val(data[0].wtend);
+    						$("#stdWtaddbtn").click();
+    						
+	    					for(var i = 1; i<Object.keys(data).length ; i++){
+	    						$("#stdWtinputARbtn").prev().children().children("#stdWtstarttime").val(data[i].wtstart);
+	    						$("#stdWtinputARbtn").prev().children().siblings().children("#stdWtendtime").val(data[i].wtend);
+	    						$("#stdWtaddbtn").click();
+	    					}
+    					}
+    				},
+    				error:function(){
+    					alert("error");
+    				}
+    			});
+        	}else{
+        		alert("공정을 선택해주세요");
+        	}
+        });
+        
+        $("#Wtclose").on("click",function(){ //표준작업시간 창을 닫을 때 폼 리셋
+        	$("#stdWtinputbody").siblings("div").not("#stdWtinputARbtn").remove();
+        	$("input[name='wtinput']").val(null);
         });
         
         //공정설비 삽삭갱
@@ -614,6 +644,68 @@
 			});
         });
         
+        $("#insertProcMbtn").on("click",function(){ //공정담당자 등록
+        	let procms = "";
+        	$("input:checkbox[id='usercheckbox']:checked").each(function(){
+        		procms = procms + ",";
+        		procms = procms + this.value;
+        	});
+        	procms = procms.substr(1);
+        	let procname = $("#selectedprocessid").val();
+			
+        	$.ajax({
+        		type:"POST",
+        		async:false,
+        		url:"./standardProcessinsert.jsp",
+        		data:{"process_name":procname, "process_manager":procms, "mode":"procmanager"},
+        		dataType:"html",
+        		success:function(data){
+					var d = JSON.parse(data);
+					if(d.result == 1){
+						alert("저장되었습니다");
+						tsetting();
+						$('form').each(function(){this.reset();});
+						$("#selpcinchargeselect").html(null);
+						$(".selectlist").val(null).select2();
+						
+						$("#inchargemodal .close").click();
+					}
+					else{
+						alert("실패하였습니다");
+					}
+				},
+				error:function(){
+					alert("error");
+				}
+        	});
+        });
+        
+     	$("#insertstdWtbtn").on("click",function(){ //worktime(표준작업시간) 등록
+     		$.ajax({
+     			type:"POST",
+     			url:"./standardProcessinsert.jsp",
+     			data:$("#stdWtform").serialize(),
+     			dataType:"html",
+        		success:function(data){
+					var d = JSON.parse(data);
+					if(d.result == 1){
+						alert("완료하였습니다");
+						tsetting();
+						$('form').each(function(){this.reset();});
+						$("#selpcinchargeselect").html(null);
+						$(".selectlist").val(null).select2();
+						$("#Wtclose").click();
+					}
+					else{
+						alert("실패하였습니다");
+					}
+				},
+				error:function(){
+					alert("error");
+				}
+     		});
+     	});
+        
         //그외 셋팅용 함수
         //network 요청 딜레이 처리 sleep 함수
         function sleep(ms) {
@@ -683,6 +775,11 @@
         		}
         	}
 
+        });
+        
+        //공정명 수정시 공정 담당자 빈칸되도록 함 = 새 공정 등록이기 때문
+        $(document).on("keyup","#selpcpnameinput",function(){
+        	$("#selpcinchargeselect").html(null);
         });
     </script>
 </html>

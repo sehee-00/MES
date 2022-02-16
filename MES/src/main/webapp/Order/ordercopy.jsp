@@ -44,7 +44,7 @@
 	if(orderDTO.getO_num()==0){
 		orderDTO.setO_num(orderDAO.getNext());
 	}
-	
+
 	orderDTO.setO_date(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 	orderDTO.setDel_date(null);
 

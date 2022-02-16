@@ -209,8 +209,8 @@ $(document).ready(function(){
 					$("#orderinsert").show();
 				}
 				
-				if($(this).children('#order_note').text().length != 0){
-					$("#order_note").val($(this).children('#ordernote').text().substr(0,10));
+				if($(this).children('#ordernote').text()!="null"){
+					$("#order_note").val($(this).children('#ordernote').text());
 				}else{
 					$("#order_note").val(null);
 				}
