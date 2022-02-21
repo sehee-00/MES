@@ -13,8 +13,8 @@ import java.util.List;
 import dbconn.DBconn;
 
 public class UserMenuDAO {
-private DBconn db;
-	
+	private DBconn db;
+
 	private Connection con;
 	private Statement stmt;
 	private PreparedStatement pstmt;

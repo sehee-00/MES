@@ -425,7 +425,7 @@
 			let mainbool = false;
 			mainbool = window.confirm("작업한 내용이 모두 사라집니다. 홈으로 돌아가시겠습니까?");
 			if(mainbool){
-				$("#pframe").attr('src', '#');
+				location.reload();
 			}
 			break;
     	
@@ -471,6 +471,18 @@
     			
     		case "usermenu":
     			$("#pframe").attr('src','userMenu/userMenu.jsp');
+    			break;
+    			
+    		case "orderb":
+    			$("#pframe").attr('src','manage_porder/manage_porder.jsp');
+    			break;
+    			
+    		case "outsourcing":
+    			$("#pframe").attr('src','Outsourcing/outsourcing.jsp');
+    			break;
+    			
+    		case "io":
+    			$("#pframe").attr('src','inandout/inandout.jsp');
     			break;
     	}
     });

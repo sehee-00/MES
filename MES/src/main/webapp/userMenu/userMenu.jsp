@@ -239,7 +239,7 @@ $("#insertUsermenu").on("click",function(){
 		async:false,
 		url:"./userMenuinsert",
 		data:{"userid":user, "sales":menus["영업 관리"], "prod":menus["생산 관리"],
-			"work":menus["작업 관리"], "mateiral_prod":menus["자재 제품 관리"], "order_warehousing":menus["발주입고 관리"], 
+			"work":menus["작업 관리"], "material_prod":menus["자재 제품 관리"], "order_warehousing":menus["발주입고 관리"], 
 			"dashboard":menus["Dashboard"], "info_manage":menus["기준정보 관리"], "admin":menus["Admin"]},
 		dataType:"JSON",
 		success:function(data){

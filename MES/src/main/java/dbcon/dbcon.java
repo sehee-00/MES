@@ -466,7 +466,7 @@ public class dbcon {
 		Vector<String> v = new Vector<String>();
 		try {
 			dbconnect();
-			String sql = "select sub_code from code_sub where main_code = 'Í∏∞ÌÉÄÍ≤¨Ï†Å'";
+			String sql = "select sub_code from code_sub where main_code = '±‚≈∏∞ﬂ¿˚'";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -513,7 +513,7 @@ public class dbcon {
 		Vector<String> v = new Vector<String>();
 		try {
 			dbconnect();
-			String sql = "select sub_code from code_sub where main_code = 'ÏÑ§ÎπÑÌòÑÌô©'";
+			String sql = "select sub_code from code_sub where main_code = 'º≥∫Ò«ˆ»≤'";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -610,5 +610,142 @@ public class dbcon {
 			e.printStackTrace();
 		}
 		return v;
+	}
+	//---------------------------place_order-------------------
+	public Vector<manage_porderdb> manage_porderdbtable(){
+		Vector<manage_porderdb> v = new Vector<manage_porderdb>();
+		try {
+			dbconnect();
+			String sql = "select m_no, part_name, order_name, number_of_request, type from manage_porder";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				manage_porderdb mp = new manage_porderdb();
+				mp.setM_no(rs.getInt("m_no"));
+				mp.setPart_name(rs.getString("part_name"));
+				if(rs.getString("order_name") == null) {
+					mp.setOrder_name("");
+				}
+				else {
+					mp.setOrder_name(rs.getString("order_name"));
+				}
+				mp.setNumber_of_request(rs.getInt("number_of_request"));
+				mp.setType(rs.getString("type"));
+				v.add(mp);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	public Vector<manage_porderdb> searchmanage_porder(String searchpartname){
+		Vector<manage_porderdb> v = new Vector<manage_porderdb>();
+		try {
+			dbconnect();
+			String sql = "select m_no, part_name, order_name, number_of_request, type from manage_porder where part_name like ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+searchpartname+"%");	
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				manage_porderdb mp = new manage_porderdb();
+				mp.setM_no(rs.getInt("m_no"));
+				mp.setPart_name(rs.getString("part_name"));
+				if(rs.getString("order_name") == null) {
+					mp.setOrder_name("");
+				}
+				else {
+					mp.setOrder_name(rs.getString("order_name"));
+				}
+				mp.setNumber_of_request(rs.getInt("number_of_request"));
+				mp.setType(rs.getString("type"));
+				v.add(mp);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public Vector<manage_porderdb> searchmanage_porder2(String searchpartname, String searchorder){
+		Vector<manage_porderdb> v = new Vector<manage_porderdb>();
+		try {
+			dbconnect();
+			String sql = "select m_no, part_name, order_name, number_of_request, type from manage_porder where part_name like ? and order_name like ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, "%"+searchpartname+"%");
+			pstmt.setString(2, "%"+searchorder+"%");	
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				manage_porderdb mp = new manage_porderdb();
+				mp.setM_no(rs.getInt("m_no"));
+				mp.setPart_name(rs.getString("part_name"));
+				if(rs.getString("order_name") == null) {
+					mp.setOrder_name("");
+				}
+				else {
+					mp.setOrder_name(rs.getString("order_name"));
+				}
+				mp.setNumber_of_request(rs.getInt("number_of_request"));
+				mp.setType(rs.getString("type"));
+				v.add(mp);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public void insertplace_order(String[] partname, String[] type, String[] nor, String com, String place, String[] price, String note){		
+		try {
+			dbconnect();
+			String sql = "insert into place_order(part_name, type, "
+					+ "number_of_request, porder_company, p_date, receiving_day, receiving_status, place_of_delivery, unit_price, note) values"
+					+ "(?, ?, ?, ?, sysdate(), null, 'N', ?, ?, ?)";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			for(int i=0; i<partname.length; i++) {
+				pstmt.setString(1, partname[i]);
+				pstmt.setString(2, type[i]);
+				pstmt.setString(3, nor[i]);
+				pstmt.setString(4, com);
+				pstmt.setString(5, place);
+				pstmt.setInt(6, Integer.parseInt(price[i]));
+				pstmt.setString(7, note);
+				pstmt.executeUpdate();
+			}
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deletemanage_porder(String[] m_no) {
+		try {
+			dbconnect();
+			String sql = "delete from manage_porder where m_no = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			for(int i=0; i<m_no.length; i++) {
+				pstmt.setString(1, m_no[i]);
+				pstmt.executeUpdate();
+			}
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

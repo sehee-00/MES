@@ -39,4 +39,14 @@
     <servlet-name>searchfacilities</servlet-name>
     <url-pattern>/searchfacilities</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>searchmanage_porder</display-name>
+    <servlet-name>searchmanage_porder</servlet-name>
+    <servlet-class>ajax.searchmanage_porder</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>searchmanage_porder</servlet-name>
+    <url-pattern>/searchmanage_porder</url-pattern>
+  </servlet-mapping>
 </web-app>
