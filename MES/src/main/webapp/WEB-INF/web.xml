@@ -49,4 +49,14 @@
     <servlet-name>searchmanage_porder</servlet-name>
     <url-pattern>/searchmanage_porder</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>searchpm</display-name>
+    <servlet-name>searchpm</servlet-name>
+    <servlet-class>ajax.searchpm</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>searchpm</servlet-name>
+    <url-pattern>/searchpm</url-pattern>
+  </servlet-mapping>
 </web-app>

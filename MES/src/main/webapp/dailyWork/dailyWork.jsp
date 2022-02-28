@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<jsp:useBean id="dao" class="dailyWork.DailyWorkDAO" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,15 +23,15 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-        <link rel="stylesheet" href="dailyWork.css">
+        <link rel="stylesheet" href="dailyWork.css?ver05">
         
     </head>
     <body id="boardp">
     
-        <div class="title">Admin / 조직도 관리 / 사용자 메뉴 관리</div>
+        <div class="title">작업 관리 / 전체작업일보</div>
         <div class="panel panel-default border searchbox">
             <div class="panel-body">
-                <span>작업자:&nbsp;&nbsp;&nbsp;<input type="text" class="form-control searchtext" name="searchid"></span>
+                <span>작업자:&nbsp;&nbsp;&nbsp;<input type="text" class="form-control searchtext" name="searchid" id="searchid"></span>
                 &nbsp;&nbsp;&nbsp;
                 <span>등록일:&nbsp;&nbsp;&nbsp;<input type="text" name="dates" class="form-control searchtext" id="searchdate"></span>
                 <script>
@@ -38,11 +39,9 @@
                         timePicker: false,
                         locale:{
                             format: 'YY/MM/DD'
-                        }
-                    });
-    
-                    $('input[name="dates"]').change(function(){
-                        console.log($('input[name="dates"]').val());
+                        },
+                        "startDate": "<%=dao.getfdate()%>",
+                        "endDate": new Date()
                     });
                 </script>
             </div>
@@ -85,23 +84,57 @@
                         </thead>
                         <tbody class="tablecontent">
                         	<tr>
-	                            <div class="form-group">
-	                                <td><input type="text" class="form-control" id="ordername" readonly></td>
-	                                <td><input type="text" class="form-control" id="partname" readonly></td>
-	                                <td><input type="text" class="form-control" id="processname" readonly></td>
-	                                <td><input type="text" class="form-control" id="facilityname" readonly></td>
-	                                <td><input type="datetime-local" class="form-control" id="startdtime"></td>
-	                                <td><input type="datetime-local" class="form-control" id="enddtime"></td>
-	                                <td style="text-align: center;"><input type="checkbox" id="faultycheck"></td>
-	                                <td><div id="statusdiv"></div></td>
-	                            </div>
+	                        	<form id="mwform">
+		                            <div class="form-group">
+			                                <td><input type="text" class="form-control" id="ordername" readonly></td>
+			                                <td><input type="text" class="form-control" id="partname" readonly></td>
+			                                <td><input type="text" class="form-control" id="processname" readonly></td>
+			                                <td><input type="text" class="form-control" id="facilityname" readonly></td>
+			                                <td><input type="datetime-local" class="form-control" id="startdtime"></td>
+			                                <td><input type="datetime-local" class="form-control" id="enddtime"></td>
+			                                <td style="text-align: center;"><input type="checkbox" id="faultycheck"></td>
+			                                <td><div id="statusdiv" style="text-align:center;"></div></td>
+		                            </div>
+		                        </form>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <table class="table" id="worklogtable">
+                        <thead class="tablehead" style="background: rgb(83, 83, 83);">
+                            <th style="width: 10%; text-align: center;">업체명</th>
+                            <th style="width: 10%; text-align: center;">도번</th>
+                            <th style="width: 10%; text-align: center;">수량</th>
+                            <th style="width: 10%; text-align: center;">CORE종류</th>
+                            <th style="width: 10%; text-align: center;">작업시간(H)</th>
+                            <th style="width: 10%; text-align: center;">실가공시간(H)</th>
+                            <th style="width: 10%; text-align: center;">무인가공시간(H)</th>
+                            <th style="width: 10%; text-align: center;">비가공시간(H)</th>
+                            <th style="width: 10%; text-align: center;">TOTAL작업시간(H)</th>
+                            <th style="width: 10%; text-align: center;">TOTAL가공시간(H)</th>
+                        </thead>
+                        <tbody class="tablecontent">
+                        	<tr>
+	                        	<form id="mwform2">
+		                            <div class="form-group">
+			                                <td><input type="text" class="form-control" id="comname" readonly></td>
+			                                <td><input type="text" class="form-control" id="dobun" readonly></td>
+			                                <td><input type="text" class="form-control" id="amount" readonly></td>
+			                                <td><input type="text" class="form-control" id="coretype" readonly></td>
+			                                <td><input type="text" class="form-control" id="worktime" readonly></td>
+			                                <td><input type="text" class="form-control" id="aworktime" readonly></td>
+			                                <td><input type="text" class="form-control" id="npworktime" readonly></td>
+			                                <td><input type="text" class="form-control" id="nworktime" readonly></td>
+			                                <td><input type="text" class="form-control" id="totalwt" readonly></td>
+			                                <td><input type="text" class="form-control" id="totalmt" readonly></td>
+		                            </div>
+		                        </form>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">저장</button>
-                    <button type="button" class="btn btn-danger">삭제</button>
+                    <button type="button" class="btn btn-default float-right" data-dismiss="modal">닫기</button>
                 </div>
             </div>
             </div>
@@ -133,23 +166,24 @@
                         <tbody class="tablecontent">
                         	<tr>
 	                            <div class="form-group">
-	                                <td><input type="text" class="form-control" id="ordername" readonly></td>
-	                                <td><input type="text" class="form-control" id="partname" readonly></td>
-	                                <td><input type="text" class="form-control" id="processname" readonly></td>
-	                                <td><input type="text" class="form-control" id="companyname" readonly></td>
-	                                <td><input type="text" class="form-control" id="price"></td>
-	                                <td><input type="text" class="form-control" id="whdate"></td>
-	                                <td><input type="date" class="form-control" id="outsstarttime"></td>
-	                                <td><input type="date" class="form-control" id="outsendtime"></td>
-	                                <td style="text-align: center;"><input type="checkbox" id="faultycheck"></td>
+		                            <form id="osform">
+		                                <td><input type="text" class="form-control" id="ordername" readonly></td>
+		                                <td><input type="text" class="form-control" id="partname" readonly></td>
+		                                <td><input type="text" class="form-control" id="processname" readonly></td>
+		                                <td><input type="text" class="form-control" id="companyname" readonly></td>
+		                                <td><input type="text" class="form-control" id="price"></td>
+		                                <td><input type="text" class="form-control" id="whdate" maxlength="10"></td>
+		                                <td><input type="date" class="form-control" id="outsstarttime"></td>
+		                                <td><input type="date" class="form-control" id="outsendtime"></td>
+		                                <td style="text-align: center;"><input type="checkbox" id="faultycheck"></td>
+		                            </form>
 	                            </div>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">저장</button>
-                    <button type="button" class="btn btn-danger">삭제</button>
+                    <button type="button" class="btn btn-default float-right" data-dismiss="modal">닫기</button>
                 </div>
             </div>
             </div>
@@ -177,6 +211,59 @@ $(document).ready(function(){
 	dailyWorktsetting();
 });
 
+//검색
+$("#searchid").on("keydown", function(e){
+	if(e.keyCode == 13){
+		
+		let wk = $("#searchid").val();
+		let date = $("#searchdate").val();
+		
+		$.ajax({
+			type:"GET",
+			url:"./dailyWorksearch.jsp",
+			data:{page:"1", "wk":wk, "date":date},
+			dataType:"html",
+			success:function(data){
+	            $("#dailyWorkt").html(data);
+	        }
+		});
+	}
+});
+
+$("#searchdate").on("change", function(){
+	let wk = $("#searchid").val();
+	let date = $("#searchdate").val();
+	
+	$.ajax({
+		type:"GET",
+		url:"./dailyWorksearch.jsp",
+		data:{page:"1", "wk":wk, "date":date},
+		dataType:"html",
+		success:function(data){
+            $("#dailyWorkt").html(data);
+        }
+	});
+});
+
+//날짜 입력 시 자동 '-'입력
+$(document).on("keyup","#outsoumodal #whdate",function(e){
+	$(this).val( $(this).val().replace(/[^0-9-]/gi,"") );
+	
+	$(this).val(date_mask($(this).val()));
+});
+
+function date_mask(objValue) {
+	 var v = objValue.replace("--", "-");
+
+    if (v.match(/^\d{4}$/) !== null) {
+        v = v + '-';
+    } else if (v.match(/^\d{4}\-\d{2}$/) !== null) {
+        v = v + '-';
+    }
+ 
+    return v;
+}
+	
 //가격 입력 시 숫자만 입력 및 자동 콤마
 $(document).on("keyup", "#price", function(e) {
 	$(this).val( $(this).val().replace(/[^0-9-]/gi,"") );

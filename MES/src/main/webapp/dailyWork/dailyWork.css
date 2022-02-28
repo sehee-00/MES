@@ -70,9 +70,22 @@ body{
     border: 0px;
 }
 
+.btn-primary:disabled{
+	background: rgb(23, 162, 184);
+    border: 0px;
+    opacity: 1;
+    display: inline-block;
+}
+
 .btn-danger{
     border: 0px;
     background: #d9534f
+}
+
+.btn-default{
+	background:gray;
+	border: 0px;
+	color: white;
 }
 
 .buttongruops{
@@ -90,5 +103,6 @@ body{
 }
 
 .modal-dialog{
-    width:80vw;
+    width:95vw;
 }
+

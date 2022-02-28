@@ -45,7 +45,9 @@ public class dbcon {
 				es.setEt_com_name(rs.getString("et_com_id"));
 				es.setEt_price(rs.getInt("et_price"));
 				es.setEt_date(rs.getString("et_date"));
-				es.setEt_explain(rs.getString("et_explain"));
+				String et_explain = rs.getString("et_explain");
+				et_explain = et_explain.replace("\r\n", "!@#");
+				es.setEt_explain(et_explain);
 				v.add(es);
 			}
 			rs.close();
@@ -77,7 +79,9 @@ public class dbcon {
 					es.setEt_com_name(rs.getString("et_com_id"));
 					es.setEt_price(rs.getInt("et_price"));
 					es.setEt_date(rs.getString("et_date"));
-					es.setEt_explain(rs.getString("et_explain"));
+					String et_explain = rs.getString("et_explain");
+					et_explain = et_explain.replace("\r\n", "!@#");
+					es.setEt_explain(et_explain);
 					v.add(es);
 				}
 				rs.close();
@@ -95,7 +99,9 @@ public class dbcon {
 					es.setEt_com_name(rs.getString("et_com_id"));
 					es.setEt_price(rs.getInt("et_price"));
 					es.setEt_date(rs.getString("et_date"));
-					es.setEt_explain(rs.getString("et_explain"));
+					String et_explain = rs.getString("et_explain");
+					et_explain = et_explain.replace("\r\n", "!@#");
+					es.setEt_explain(et_explain);
 					v.add(es);
 				}
 				rs.close();
@@ -126,7 +132,9 @@ public class dbcon {
 					es.setEt_com_name(rs.getString("et_com_id"));
 					es.setEt_price(rs.getInt("et_price"));
 					es.setEt_date(rs.getString("et_date"));
-					es.setEt_explain(rs.getString("et_explain"));
+					String et_explain = rs.getString("et_explain");
+					et_explain = et_explain.replace("\r\n", "!@#");
+					es.setEt_explain(et_explain);
 					v.add(es);
 				}
 				rs.close();
@@ -144,7 +152,9 @@ public class dbcon {
 					es.setEt_com_name(rs.getString("et_com_id"));
 					es.setEt_price(rs.getInt("et_price"));
 					es.setEt_date(rs.getString("et_date"));
-					es.setEt_explain(rs.getString("et_explain"));
+					String et_explain = rs.getString("et_explain");
+					et_explain = et_explain.replace("\r\n", "!@#");
+					es.setEt_explain(et_explain);
 					v.add(es);
 				}
 				rs.close();
@@ -393,7 +403,7 @@ public class dbcon {
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, et_id);
 			pstmt.setString(2, degree);
-			ResultSet rs = pstmt.executeQuery();
+			ResultSet rs = pstmt.executeQuery(); 
 			while (rs.next()) {
 				proc_costdb pc = new proc_costdb();
 				pc.setStandard_proc(rs.getString("standard_proc"));
@@ -450,7 +460,9 @@ public class dbcon {
 				es.setEt_com_name(rs.getString("et_com_id"));
 				es.setEt_price(rs.getInt("et_price"));
 				es.setEt_date(rs.getString("et_date"));
-				es.setEt_explain(rs.getString("et_explain"));
+				String et_explain = rs.getString("et_explain");
+				et_explain = et_explain.replace("\r\n", "!@#");
+				es.setEt_explain(et_explain);
 				v.add(es);
 			}
 			rs.close();
@@ -466,7 +478,7 @@ public class dbcon {
 		Vector<String> v = new Vector<String>();
 		try {
 			dbconnect();
-			String sql = "select sub_code from code_sub where main_code = '��Ÿ����'";
+			String sql = "select sub_code from code_sub where main_code = '기타견적'";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -513,7 +525,7 @@ public class dbcon {
 		Vector<String> v = new Vector<String>();
 		try {
 			dbconnect();
-			String sql = "select sub_code from code_sub where main_code = '������Ȳ'";
+			String sql = "select sub_code from code_sub where main_code = '설비현황'";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -747,5 +759,231 @@ public class dbcon {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	//------------------------------------pminquiry----------------------------------
+	
+	public Vector<pmdb> pmtable(){
+		Vector<pmdb> v = new Vector<pmdb>();
+		try {
+			dbconnect();
+			String sql = "select part_type, part_name, unit_price, stock, safety_stock from part";
+			String sql2 = "select materials_name, unit_price, stock, safety_stock from materials";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				pmdb pm = new pmdb();
+				pm.setType(rs.getString("part_type"));
+				pm.setPm_name(rs.getString("part_name"));
+				pm.setPrice(rs.getString("unit_price"));
+				pm.setStock(rs.getString("stock"));
+				pm.setSafety_stock(rs.getString("safety_stock"));
+				v.add(pm);
+			}
+			pstmt = con.prepareStatement(sql2);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				pmdb pm = new pmdb();
+				pm.setType("자재");
+				pm.setPm_name(rs.getString("materials_name"));
+				pm.setPrice(rs.getString("unit_price"));
+				pm.setStock(rs.getString("stock"));
+				pm.setSafety_stock(rs.getString("safety_stock"));
+				v.add(pm);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public Vector<String> selecttype() {
+		Vector<String> v = new Vector<String>();
+		try {
+			dbconnect();
+			String sql = "select sub_code from code_sub where main_code = '부품구분'";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				v.add(rs.getString("sub_code"));
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public Vector<pmdb> searchpm(String searchtype, String searchpmname, String check){
+		Vector<pmdb> v = new Vector<pmdb>();
+		try {
+			dbconnect();
+			String sql = "";
+			PreparedStatement pstmt;
+			if(searchtype.equals("전체") && Integer.parseInt(check) == 0) {
+				sql = "select part_type, part_name, unit_price, stock, safety_stock from part where part_name like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchpmname+"%");
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
+					pmdb pm = new pmdb();
+					pm.setType(rs.getString("part_type"));
+					pm.setPm_name(rs.getString("part_name"));
+					pm.setPrice(rs.getString("unit_price"));
+					pm.setStock(rs.getString("stock"));
+					pm.setSafety_stock(rs.getString("safety_stock"));
+					v.add(pm);
+				}
+				sql = "select materials_name, unit_price, stock, safety_stock from materials where materials_name like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchpmname+"%");
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					pmdb pm = new pmdb();
+					pm.setType("자재");
+					pm.setPm_name(rs.getString("materials_name"));
+					pm.setPrice(rs.getString("unit_price"));
+					pm.setStock(rs.getString("stock"));
+					pm.setSafety_stock(rs.getString("safety_stock"));
+					v.add(pm);
+				}
+				rs.close();
+				pstmt.close();
+				con.close();
+			}
+			else if(searchtype.equals("전체") && Integer.parseInt(check) == 1) {
+				sql = "select part_type, part_name, unit_price, stock, safety_stock from part where part_name like ? and stock < safety_stock";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchpmname+"%");
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
+					pmdb pm = new pmdb();
+					pm.setType(rs.getString("part_type"));
+					pm.setPm_name(rs.getString("part_name"));
+					pm.setPrice(rs.getString("unit_price"));
+					pm.setStock(rs.getString("stock"));
+					pm.setSafety_stock(rs.getString("safety_stock"));
+					v.add(pm);
+				}
+				sql = "select materials_name, unit_price, stock, safety_stock from materials where materials_name like ? and stock < safety_stock";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchpmname+"%");
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					pmdb pm = new pmdb();
+					pm.setType("자재");
+					pm.setPm_name(rs.getString("materials_name"));
+					pm.setPrice(rs.getString("unit_price"));
+					pm.setStock(rs.getString("stock"));
+					pm.setSafety_stock(rs.getString("safety_stock"));
+					v.add(pm);
+				}
+				rs.close();
+				pstmt.close();
+				con.close();
+			}
+			else if(searchtype.equals("자재") && Integer.parseInt(check) == 0) {
+				sql = "select materials_name, unit_price, stock, safety_stock from materials where materials_name like ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchpmname+"%");
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
+					pmdb pm = new pmdb();
+					pm.setType("자재");
+					pm.setPm_name(rs.getString("materials_name"));
+					pm.setPrice(rs.getString("unit_price"));
+					pm.setStock(rs.getString("stock"));
+					pm.setSafety_stock(rs.getString("safety_stock"));
+					v.add(pm);
+				}
+				rs.close();
+				pstmt.close();
+				con.close();
+			}
+			else if(searchtype.equals("자재") && Integer.parseInt(check) == 1) {
+				sql = "select materials_name, unit_price, stock, safety_stock from materials where materials_name like ? and stock < safety_stock";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchpmname+"%");
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
+					pmdb pm = new pmdb();
+					pm.setType("자재");
+					pm.setPm_name(rs.getString("materials_name"));
+					pm.setPrice(rs.getString("unit_price"));
+					pm.setStock(rs.getString("stock"));
+					pm.setSafety_stock(rs.getString("safety_stock"));
+					v.add(pm);
+				}
+				rs.close();
+				pstmt.close();
+				con.close();
+			}
+			else if(Integer.parseInt(check) == 0) {
+				sql = "select part_type, part_name, unit_price, stock, safety_stock from part where part_name like ? and part_type = ?";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchpmname+"%");
+				pstmt.setString(2, searchtype);
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
+					pmdb pm = new pmdb();
+					pm.setType(rs.getString("part_type"));
+					pm.setPm_name(rs.getString("part_name"));
+					pm.setPrice(rs.getString("unit_price"));
+					pm.setStock(rs.getString("stock"));
+					pm.setSafety_stock(rs.getString("safety_stock"));
+					v.add(pm);
+				}
+				rs.close();
+				pstmt.close();
+				con.close();
+			}
+			else if(Integer.parseInt(check) == 1) {
+				sql = "select part_type, part_name, unit_price, stock, safety_stock from part where part_name like ? and part_type = ? and stock < safety_stock";
+				pstmt = con.prepareStatement(sql);
+				pstmt.setString(1, "%"+searchpmname+"%");
+				pstmt.setString(2, searchtype);
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
+					pmdb pm = new pmdb();
+					pm.setType(rs.getString("part_type"));
+					pm.setPm_name(rs.getString("part_name"));
+					pm.setPrice(rs.getString("unit_price"));
+					pm.setStock(rs.getString("stock"));
+					pm.setSafety_stock(rs.getString("safety_stock"));
+					v.add(pm);
+				}
+				rs.close();
+				pstmt.close();
+				con.close();
+			}
+			else {
+				sql = "select part_type, part_name, unit_price, stock, safety_stock from part";
+				pstmt = con.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery();
+				while(rs.next()) {
+					pmdb pm = new pmdb();
+					pm.setType(rs.getString("part_type"));
+					pm.setPm_name(rs.getString("part_name"));
+					pm.setPrice(rs.getString("unit_price"));
+					pm.setStock(rs.getString("stock"));
+					pm.setSafety_stock(rs.getString("safety_stock"));
+					v.add(pm);
+				}
+				rs.close();
+				pstmt.close();
+				con.close();
+			}
+
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
 	}
 }

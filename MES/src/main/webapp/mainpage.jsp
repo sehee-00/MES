@@ -34,13 +34,15 @@ else{
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>MES</title>
 
 <style>
 	#pframe{
-		margin-left: 310px;
-		width: 1610px;
-		height: 1000px;
+		margin-left: 14.5%;
+		width: 84%;
+		height: 95vh;
 		
 		overflow: scroll;
 	}

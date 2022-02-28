@@ -97,6 +97,7 @@
 			$(".tablecontent").css("background","white");
 			$(this).css("background","lightgray");
 			
+			$('#boardwriter').val($(this).children("#bwriter").text());
 			$('#boardidinput').val($(this).attr("id"));
 			$('#boardnuminput').val($(this).children("#bnum").text());
 			$('#writedayinput').val($(this).children("#bregdate").text());
@@ -117,11 +118,7 @@
 		}
 		
 		int startpage = (block-1) * 5 + 1;
-		int endpage = ((lastboardnum-1)/10);
-		
-		if(lastboardnum%10 != 0 || endpage == 0){
-			endpage += 1;
-		}
+		int endpage = ((lastboardnum-1)/10) + 1;
 		
 		int endexpage = endpage;
 		

@@ -14,8 +14,26 @@ public class outsourcingDTO {
 	String outstart_date;
 	String outend_date;
 	String status;
+	String worker;
+	String reg_date;
 	
 	
+	public String getReg_date() {
+		return reg_date;
+	}
+
+	public void setReg_date(String reg_date) {
+		this.reg_date = reg_date;
+	}
+
+	public String getWorker() {
+		return worker;
+	}
+
+	public void setWorker(String worker) {
+		this.worker = worker;
+	}
+
 	public outsourcingDTO() {
 		super();
 	}

@@ -15,6 +15,7 @@ public class DailyWorkDTO {
 	private String warehousing_exp_date;
 	private String facilities;
 	private String status;
+	private int work_id; //나의 작업일보 pk
 	
 	public String getWorker() {
 		return worker;
@@ -41,6 +42,14 @@ public class DailyWorkDTO {
 		this.regdate = regdate;
 	}
 	public String getPart_name() {
+		if(part_name == null) {
+			return "";
+		}else {
+			if(part_name.equals("null")) {
+				return "";
+			}
+		}
+		
 		return part_name;
 	}
 	public void setPart_name(String part_name) {
@@ -53,12 +62,36 @@ public class DailyWorkDTO {
 		this.process = process;
 	}
 	public String getStart_date() {
+		if(start_date == null) {
+			return "";
+		}else {
+			if(start_date.equals("null")) {
+				return "";
+			}
+		}
+		
+		if(dwtype.equals("외주")) {
+			return start_date.substring(0,10);
+		}
+		
 		return start_date;
 	}
 	public void setStart_date(String start_date) {
 		this.start_date = start_date;
 	}
 	public String getEnd_date() {
+		if(end_date == null) {
+			return "";
+		}else {
+			if(end_date.equals("null")) {
+				return "";
+			}
+		}
+		
+		if(dwtype.equals("외주")) {
+			return end_date.substring(0,10);
+		}
+		
 		return end_date;
 	}
 	public void setEnd_date(String end_date) {
@@ -100,5 +133,12 @@ public class DailyWorkDTO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public int getWork_id() {
+		return work_id;
+	}
+	public void setWork_id(int work_id) {
+		this.work_id = work_id;
+	}
+	
 	
 }

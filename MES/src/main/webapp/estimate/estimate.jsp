@@ -33,10 +33,18 @@ dbcon dbc = new dbcon();
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link rel="stylesheet" href="estimatecss.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <style>
 .tab-link {
 	font-size: 3rem;
 }
+
+.select2-container .select2-selection--single{
+	height:33px;
+	position:relative;
+}
+
 </style>
 <script>
 var cellstring = "";
@@ -62,7 +70,6 @@ int lastpage = (v.size()-1)/10 + 1;
 %>
 var hlastpage = <%=degreelastpage%>;
 
-
 $(function(){
     $("#estitabletbody tr").click(function(){
     	var tr = $(this);
@@ -71,9 +78,11 @@ $(function(){
     	var degree = td.eq(1).text();
         $("#et_id").val(td.eq(0).text());
         $("#et_degree").val(td.eq(1).text());
-    	$("#et_com_name").val(td.eq(2).text());
+    	$("#et_com_name").val(td.eq(2).text()).select2();
     	$("#et_price").val(td.eq(3).text());
-    	$("#et_explain").val(td.eq(5).text());
+    	var str = td.eq(5).text();
+    	str = str.replaceAll('!@#', '\n');
+    	document.getElementById('et_explain').value = str;
     	request.open("Post", "http://localhost:8080/MES/estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
     	request.onreadystatechange = searchestimate; 
     	request.send(null);
@@ -103,10 +112,10 @@ function searchestimate(){
 			'	<select id="material_name' + materialcnt +'" value='+ materialresult[i][0].value +' name="nmaterial_name" class="form-control" style="width: 70%; margin-top:10px;">'+
 			'</td>';
 			cell2.innerHTML ='<td>'+
-			'	<input type="text" id="material_no" value='+ materialresult[i][1].value + ' name="nmaterial_no" class="form-control" style="width:30%; margin-top:10px;">'+
+			'	<input type="number" id="material_no" value='+ materialresult[i][1].value + ' name="nmaterial_no" class="form-control" style="width:30%; margin-top:3px;">'+
 			'</td>';
 			cell3.innerHTML ='<td>'+
-			'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:10px;" onclick="selectdel(this);">'+
+			'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:3px;" onclick="selectdel(this);">'+
 			'</td>';
 			<%for (int i = 0; i < mv.size(); i++) {
 			String s = "<option>" + mv.get(i) + "</option>";%>
@@ -116,6 +125,10 @@ function searchestimate(){
 			$("#material_name" + materialcnt).val(materialresult[i][0].value);
 			materialcnt++;
 		}
+		$(document).ready(function() {
+		    $('select[name="nmaterial_name"]').select2();
+		});
+		
 		
 		for(var i=0; i < proc_costresult.length; i++){
 			var proc_costrow = proc_costtable.insertRow(0);
@@ -129,19 +142,19 @@ function searchestimate(){
 			'	<select id="standard_proc' + processcnt + '" value=' + proc_costresult[i][0].value + ' name="nstandard_proc" class="form-control" style="width: 70%; margin-top:10px;">'+
 			'</td>';
 			cell2.innerHTML ='<td>'+
-			'	<input type="date" id="proc_startday" value='+ proc_costresult[i][1].value + ' name="nproc_startday" class="form-control" style="width:80%; margin-top:10px;">'+
+			'	<input type="date" id="proc_startday" value='+ proc_costresult[i][1].value + ' name="nproc_startday" class="form-control" style="width:80%; margin-top:3px;">'+
 			'</td>';
 			cell3.innerHTML ='<td>'+
-			'	<input type="date" id="proc_endday" value='+ proc_costresult[i][2].value + ' name="nproc_endday" class="form-control" style="width:80%; margin-top:10px;">'+
+			'	<input type="date" id="proc_endday" value='+ proc_costresult[i][2].value + ' name="nproc_endday" class="form-control" style="width:80%; margin-top:3px;">'+
 			'</td>';
 			cell4.innerHTML ='<td>'+
-			'	<input type="text" id="md" value=' + proc_costresult[i][3].value + ' name="nmd" class="form-control" style="width:40%; margin-top:10px;">'+
+			'	<input type="number" id="md" value=' + proc_costresult[i][3].value + ' name="nmd" class="form-control" style="width:60%; margin-top:3px;">'+
 			'</td>';
 			cell5.innerHTML ='<td>'+
-			'	<input type="text" id="cost" value=' + proc_costresult[i][4].value + ' name="ncost" class="form-control" style="width:60%; margin-top:10px;">'+
+			'	<input type="number" id="cost" value=' + proc_costresult[i][4].value + ' name="ncost" class="form-control" style="width:60%; margin-top:3px;">'+
 			'</td>';
 			cell6.innerHTML ='<td>'+
-			'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:10px;" onclick="selectdel(this);">'+
+			'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:3px;" onclick="selectdel(this);">'+
 			'</td>';
 			<%for (int i = 0; i < pv.size(); i++) {
 			String s = "<option>" + pv.get(i) + "</option>";%>
@@ -151,6 +164,9 @@ function searchestimate(){
 			$("#standard_proc" + processcnt).val(proc_costresult[i][0].value);
 			processcnt++;
 		}
+		$(document).ready(function() {
+		    $('select[name="nstandard_proc"]').select2();
+		});
 		
 		for(var i=0; i < other_costresult.length; i++){
 			var other_costrow = other_costtable.insertRow(0);
@@ -161,10 +177,10 @@ function searchestimate(){
 			'	<select id="other_et_id' + othercnt + '" value=' + other_costresult[i][0].value + ' name="nother_et_id" class="form-control" style="width: 70%; margin-top:10px;">'+
 			'</td>';
 			cell2.innerHTML ='<td>'+
-			'	<input type="text" id="other_cost" value=' + other_costresult[i][1].value + ' name="nother_cost" class="form-control" style="width:70%; margin-top:10px;">'+
+			'	<input type="number" id="other_cost" value=' + other_costresult[i][1].value + ' name="nother_cost" class="form-control" style="width:70%; margin-top:3px;">'+
 			'</td>';
 			cell3.innerHTML ='<td>'+
-			'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:10px;" onclick="selectdel(this);">'+
+			'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:3px;" onclick="selectdel(this);">'+
 			'</td>';
 			<%for(int i=0; i<selectother.size(); i++){
 				String s = "<option>" + selectother.get(i) + "</option>";%>	
@@ -174,6 +190,9 @@ function searchestimate(){
 			$("#other_et_id" + othercnt).val(other_costresult[i][0].value);
 			othercnt++	;
 		}
+		$(document).ready(function() {
+		    $('select[name="nother_et"]').select2()
+		});
 	}
 }
 
@@ -198,6 +217,20 @@ function pagenation(page){
 		pagetable[i].style.display = "";	
 	}
 	paging = page;
+	for(var i=1; i<=hlastpage; i++){
+		document.getElementById('a' + i).style.color = 'rgb(23, 162, 184)';
+		document.getElementById('a' + i).style.background = 'white';	
+		document.getElementById('aprevious').style.color = 'rgb(23, 162, 184)';
+		document.getElementById('anext').style.color = 'rgb(23, 162, 184)';
+	}
+	document.getElementById('a' + page).style.background = 'rgb(23, 162, 184)';
+	document.getElementById('a' + page).style.color = 'white';
+	if(page == 1){
+		document.getElementById('aprevious').style.color = 'gray';
+	}
+	if(page == hlastpage){
+		document.getElementById('anext').style.color = 'gray';
+	}
 }
 
 function previous(){
@@ -217,11 +250,11 @@ function next(){
 function uladd(lastpage){
 	var ul_list = $('#pageul');
 	ul_list.empty();
-	ul_list.append('<li class="page-item pages" id="previous"' + i +'" onclick="previous()"><a class="page-link">Previous</a></li>')
+	ul_list.append('<li class="page-item pages" id="previous"' + i +'" onclick="previous()"><a id="aprevious" class="page-link" style="color:rgb(23, 162, 184);">Previous</a></li>')
 	for(var i=1; i<=lastpage; i++){
-		ul_list.append('<li class="page-item pages" id="page"' + i +'" onclick="pagenation(' + i + ')"><a class="page-link">' + i + '</a></li>')	
+		ul_list.append('<li class="page-item pages" id="page"' + i +'" onclick="pagenation(' + i + ')"><a id="a' + i + '" class="page-link" style="color:rgb(23, 162, 184);">' + i + '</a></li>')	
 	}
-	ul_list.append('<li class="page-item pages" id="next"' + i +'" onclick="next()"><a class="page-link">Next</a></li>')
+	ul_list.append('<li class="page-item pages" id="next"' + i +'" onclick="next()"><a id="anext" class="page-link" style="color:rgb(23, 162, 184);">Next</a></li>')
 }
 
 function searchestimatetable(){
@@ -247,8 +280,8 @@ function searchestimatetable(){
 			}
 		}
 		hlastpage = parseInt((result.length-1)/10)+1
-		pagenation(1);
 		uladd(hlastpage);
+		pagenation(1);
 		paging = 1;
 	}
 	$(function(){
@@ -261,7 +294,9 @@ function searchestimatetable(){
 	        $("#et_degree").val(td.eq(1).text());
 	    	$("#et_com_name").val(td.eq(2).text());
 	    	$("#et_price").val(td.eq(3).text());
-	    	$("#et_explain").val(td.eq(5).text());
+	    	var str = td.eq(5).text();
+	    	str = str.replaceAll('!@#', '\n');
+	    	document.getElementById('et_explain').value = str;
 	    	request.open("Post", "http://localhost:8080/MES/estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
 	    	request.onreadystatechange = searchestimate;
 	    	request.send(null);
@@ -312,15 +347,17 @@ function degreeclick(){
 	        $("#et_degree").val(td.eq(1).text());
 	    	$("#et_com_name").val(td.eq(2).text());
 	    	$("#et_price").val(td.eq(3).text());
-	    	$("#et_explain").val(td.eq(5).text());
+	    	var str = td.eq(5).text();
+	    	str = str.replaceAll('!@#', '\n');
+	    	document.getElementById('et_explain').value = str;
 	    	request.open("Post", "http://localhost:8080/MES/estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
 	    	request.onreadystatechange = searchestimate;
 	    	request.send(null);
 	    });
 	});
 	hlastpage = <%=lastpage%>;
-	pagenation(1);
 	uladd(hlastpage);
+	pagenation(1);
 }
 
 
@@ -368,7 +405,9 @@ function degreeclickoff(){
 	        $("#et_degree").val(td.eq(1).text());
 	    	$("#et_com_name").val(td.eq(2).text());
 	    	$("#et_price").val(td.eq(3).text());
-	    	$("#et_explain").val(td.eq(5).text());
+	    	var str = td.eq(5).text();
+	    	str = str.replaceAll('!@#', '\n');
+	    	document.getElementById('et_explain').value = str;
 	    	request.open("Post", "http://localhost:8080/MES/estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
 	    	request.onreadystatechange = searchestimate;
 	    	request.send(null);
@@ -399,19 +438,21 @@ function addrow1(){
 	var cell2 = row.insertCell(1);
 	var cell3 = row.insertCell(2);
 	cell1.innerHTML ='<td>'+
-	'	<select id="material_name' + materialcnt +'" name="nmaterial_name"class="form-control" style="width: 70%; margin-top:10px;">'+
+	'	<select id="material_name' + materialcnt +'" name="nmaterial_name"class="form-control" style="width:70%; margin-top:10px;">'+
 	'</td>';
 	cell2.innerHTML ='<td>'+
-	'	<input type="text" id="material_no" name="nmaterial_no" class="form-control" style="width:30%; margin-top:10px;">'+
+	'	<input type="number" id="material_no" name="nmaterial_no" class="form-control" style="width:30%; margin-top:3px;">'+
 	'</td>';
 	cell3.innerHTML ='<td>'+
-	'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:10px;" onclick="selectdel(this);">'+
+	'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:3px;" onclick="selectdel(this);">'+
 	'</td>';
 	<%for (int i = 0; i < mv.size(); i++) {
 	String s = "<option>" + mv.get(i) + "</option>";%>
 			$("#material_name" + materialcnt).append('<%=s%>');
 	<%}
-	materialcnt++;%>				
+	materialcnt++;%>			
+	$('select[id="material_name'+ materialcnt + '"]').select2();
+	$('select[id="material_name'+ materialcnt + '"]').val("").select2();																												
 	materialcnt++;
 }
 
@@ -428,25 +469,27 @@ function addrow2(){
 	'	<select id="standard_proc' + processcnt + '" class="form-control" name="nstandard_proc" style="width: 70%; margin-top:10px;">'+
 	'</td>';
 	cell2.innerHTML ='<td>'+
-	'	<input type="date" id="proc_startday" name="nproc_startday" class="form-control" style="width:80%; margin-top:10px;">'+
+	'	<input type="date" id="proc_startday" name="nproc_startday" class="form-control" style="width:80%; margin-top:3px;">'+
 	'</td>';
 	cell3.innerHTML ='<td>'+
-	'	<input type="date" id="proc_endday" name="nproc_endday" class="form-control" style="width:80%; margin-top:10px;">'+
+	'	<input type="date" id="proc_endday" name="nproc_endday" class="form-control" style="width:80%; margin-top:3px;">'+
 	'</td>';
 	cell4.innerHTML ='<td>'+
-	'	<input type="text" id="md" name="nmd" class="form-control" style="width:40%; margin-top:10px;">'+
+	'	<input type="number" id="md" name="nmd" class="form-control" style="width:60%; margin-top:3px;">'+
 	'</td>';
 	cell5.innerHTML ='<td>'+
-	'	<input type="text" id="cost" name="ncost" class="form-control" style="width:60%; margin-top:10px;">'+
+	'	<input type="number" id="cost" name="ncost" class="form-control" style="width:60%; margin-top:3px;">'+
 	'</td>';
 	cell6.innerHTML ='<td>'+
-	'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:10px;" onclick="selectdel(this);">'+
+	'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:3px;" onclick="selectdel(this);">'+
 	'</td>';
 	<%for (int i=0; i<pv.size(); i++) {
 		String s = "<option>" + pv.get(i) + "</option>";%>
 		$("#standard_proc" + processcnt).append('<%=s%>');
 	<%}
 	processcnt++;%>
+	$('select[id="standard_proc'+processcnt+'"]').select2();
+	$('select[id="standard_proc'+processcnt+'"]').val("").select2();
 	processcnt++;
 }
 
@@ -460,16 +503,18 @@ function addrow3(){
 	'	<select id="other_et_id' + othercnt + '" class="form-control" name="nother_et_id" style="width: 70%; margin-top:10px;">'+
 	'</td>';
 	cell2.innerHTML ='<td>'+
-	'	<input type="text" id="other_cost" name="nother_cost" class="form-control" style="width:70%; margin-top:10px;">'+
+	'	<input type="number" id="other_cost" name="nother_cost" class="form-control" style="width:70%; margin-top:3px;">'+
 	'</td>';
 	cell3.innerHTML ='<td>'+
-	'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:10px;" onclick="selectdel(this);">'+
+	'	<input class="btn btn-danger" type="submit" value="삭제" style="margin-top:3px;" onclick="selectdel(this);">'+
 	'</td>';
 	<%for(int i=0; i<selectother.size(); i++){
 		String s = "<option>" + selectother.get(i) + "</option>";%>	
 		$("#other_et_id" + othercnt).append('<%=s%>');
 	<%}
 	othercnt++;%>
+	$('select[id="other_et_id'+othercnt+'"]').select2();
+	$('select[id="other_et_id'+othercnt+'"]').val("").select2();
 	othercnt++;
 }
 
@@ -496,10 +541,9 @@ function selectdel(obj){
 	var td = tr.children();
 }
 
-function insertcheck(){
+function insertform(frm){
 	var et_com_name = document.getElementById('et_com_name');
 	var et_price = document.getElementById("et_price");
-	var et_explain = document.getElementById("et_explain");
 	var material_no = document.getElementsByName('nmaterial_no');
 	var material_name = document.getElementsByName('nmaterial_name');
 	var standard_proc = document.getElementsByName('nstandard_proc');
@@ -509,80 +553,113 @@ function insertcheck(){
 	var cost = document.getElementsByName('ncost');
 	var other_et_id = document.getElementsByName('nother_et_id');
 	var other_cost = document.getElementsByName('nother_cost');
-	if (et_com_name.value== ""){
-		alert("확인");
-		return false;
-	}
-	if (et_price.value == ""){
-		alert("확인");
-		return false;
-	}
 	
-	if (et_explain.value == ""){
+	var check = 0;
+	if (check == 0 && et_com_name.value== ""){	
 		alert("확인");
-		return false;
+		check = 1;
+	}
+	if (check == 0 && et_price.value == ""){
+		alert("확인");
+		check = 1;
 	}
 	for(var i=0; i<material_no.length; i++){
-		if(material[i].value == ""){
+		if(check == 0 && material_no[i].value == ""){
 			alert("확인");
-			return false;
+			check = 1;
+			break;
 		}	
 	}
 	for(var i=0; i<material_name.length; i++){
-		if(material[i].value == ""){
+		if(check == 0 && material_name[i].value == ""){
 			alert("확인");
-			return false;
+			check = 1;
+			break;
 		}
 	}
 	for(var i=0; i<standard_proc.length; i++){
-		if(standard_proc[i].value == ""){
+		if(check == 0 && standard_proc[i].value == ""){
 			alert("확인");
-			return false;
+			check = 1;
+			break;
 		}
 	}
 	for(var i=0; i<proc_startday.length; i++){
-		if(proc_startday[i].value == ""){
+		if(check == 0 && proc_startday[i].value == ""){
 			alert("확인");
-			return false;
+			check = 1;
+			break;
 		}
 	}
 	for(var i=0; i<proc_endday.length; i++){
-		if(proc_endday[i].value == ""){
+		if(check == 0 && proc_endday[i].value == ""){
 			alert("확인");
-			return false;
+			check = 1;
+			break;
 		}
 	}
 	for(var i=0; i<md.length; i++){
-		if(md[i].value == ""){
+		if(check == 0 && md[i].value == ""){
 			alert("확인");
-			return false;
+			check = 1;
+			break;
 		}
 	}
 	for(var i=0; i<cost.length; i++){
-		if(cost[i].value == ""){
+		if(check == 0 && cost[i].value == ""){
 			alert("확인");
-			return false;
+			check = 1;
+			break;
 		}
 	}
 	for(var i=0; i<other_et_id.length; i++){
-		if(other_et_id[i].value == ""){
+		if(check == 0 && other_et_id[i].value == ""){
 			alert("확인");
-			return false;
+			check = 1;
+			break;
 		}
 	}
 	for(var i=0; i<other_cost.length; i++){
-		if(other_cost[i].value == ""){
+		if(check == 0 && other_cost[i].value == ""){
 			alert("확인");
-			return false;
+			check = 1;
+			break;
 		}
 	}
-	return true;
+	if(check == 0){
+		frm.action='./estimateinsert.jsp';
+		frm.submit();
+	}
+}
+
+function deleteform(frm){
+	var et_id = document.getElementById('et_id');
+	var degree = document.getElementById('degree');
+	var check = 0;
+	if(check == 0 && et_id.value == ""){
+		alert("확인");
+		check = 1;
+	}
+	if(check == 0 && degree.value == ""){
+		alert("확인");
+		check = 1;
+	}
+	if(check == 0){
+		frm.action = './estimatedelete.jsp';
+		frm.submit();
+	}
 }
 $("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨에 따른 이벤트 처리
 	if(e.keyCode==13){	
 		searchet_idevent(dates);
 	}
 });
+
+$(document).ready(function() {
+    $('select[id="et_com_name"]').select2();
+    $('select[id="et_com_name"]').val("").select2();
+});
+
 
 </script>
 
@@ -613,7 +690,6 @@ $("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨�
 						request.send(null); 
 	                });
 	                
-	  
 			$("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨에 따른 이벤트 처리
 				if(e.keyCode==13){	
 					var searchword = document.getElementById("searchet_id").value;
@@ -622,6 +698,7 @@ $("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨�
 					request.send(null); 
 				}
 			});	
+			
 			function searchestimatetable(){
 				var estitable = document.getElementById("estitabletbody");
 				var resultpage = 0;
@@ -645,8 +722,8 @@ $("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨�
 						}
 					}
 					hlastpage = parseInt((result.length-1)/10)+1
-					pagenation(1);
 					uladd(hlastpage);
+					pagenation(1);
 					paging = 1;
 				}
 				$(function(){
@@ -659,18 +736,20 @@ $("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨�
 				        $("#et_degree").val(td.eq(1).text());
 				    	$("#et_com_name").val(td.eq(2).text());
 				    	$("#et_price").val(td.eq(3).text());
-				    	$("#et_explain").val(td.eq(5).text());
+				    	var str = td.eq(5).text();
+				    	str = str.replaceAll('!@#', '\n');
+				    	document.getElementById('et_explain').value = str;
 				    	request.open("Post", "http://localhost:8080/MES/estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
 				    	request.onreadystatechange = searchestimate;
 				    	request.send(null);
 				    });
 				});
-				
+
 			}
 			</script>
 		</div>
 	</div>
-	<form action="./estimateinsert.jsp" onsubmit="return insertcheck()">
+	<form>
 		<div class="row">
 			<div class="panel panel-default border boardlistbox col-md-6">
 				<div class="panel-heading" style="height:60px;">
@@ -703,12 +782,11 @@ $("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨�
 							<td><%=degreev.get(i).getEt_com_name()%></td>
 							<td><%=degreev.get(i).getEt_price()%></td>
 							<td><%=degreev.get(i).getEt_date()%></td>
-							<td style="display: none"><%=degreev.get(i).getEt_explain()%></td>
+							<td style="display:none;"><%=degreev.get(i).getEt_explain()%></td>
 						</tr>
 						<%
 							}
 							%>
-							<script>pagenation(1)</script>
 						</tbody>
 					</table>
 
@@ -717,6 +795,7 @@ $("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨�
 					</ul>
 					<script>
 						uladd(hlastpage);
+						pagenation(1)
 					</script>
 				</div>
 			</div>
@@ -749,7 +828,7 @@ $("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨�
 											<label for="writedayinput">업체명 <span style="color: red;">*</span></label>
 										</div>
 										<div class="col-12">
-										<select id="et_com_name" name="net_com_name" class="form-control com_nameselect">
+										<select id="et_com_name" name="net_com_name" class="form-control com_nameselect" style="margin-top:0px">
 											<%
 											Vector<String> v2 = new Vector<String>();
 											v2 = dbc.selectcomname();
@@ -771,7 +850,7 @@ $("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨�
 								<td>
 									<div class="form-group boardtitle">
 										<label for="boardtitleinput">금액(원) <span
-											style="color: red;">*</span></label> <input type="text" id="et_price"
+											style="color: red;">*</span></label> <input type="number" id="et_price"
 											name="net_price" class="form-control">
 									</div>
 									<div class="form-group writeday">
@@ -897,8 +976,8 @@ $("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨�
 					<input class="btn btn-primary" type="reset" value="초기화"
 						id="boardreset" /> <input class="btn btn-primary" type="submit"
 						value="견적서 출력" id="boardreset" onclick="if(bool()){btest();}"/>
-					<input class="btn btn-primary" type="submit" value="등록"> 
-					<input class="btn btn-danger" type="submit" value="삭제" formaction="./estimatedelete.jsp">
+					<input class="btn btn-primary" type="button" value="등록" onclick="insertform(this.form)"> 
+					<input class="btn btn-danger" type="button" value="삭제" onclick="deleteform(this.form)">
 				</div>
 			</div>
 		</div>

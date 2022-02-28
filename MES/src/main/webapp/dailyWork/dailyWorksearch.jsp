@@ -34,7 +34,7 @@
 	List<DailyWorkDTO> dwlist = null;
 	if(duration == null && wk == null){
 		dwlist = dao.getDailyWorkList(p);
-		lastnum = dwlist.size();
+		lastnum = dao.getDailyWorkNext();
 		
 	}
 	else{
@@ -58,35 +58,37 @@
 %>
 <table class="table table-bordered table-hover">
 	<thead class="tablehead">
-	    <th>작업자</th>
-	    <th>유형</th>
-	    <th>수주명</th>
-	    <th>부품명</th>
-	    <th>공정</th>
-	    <th>시작일</th>
-	    <th>종료일</th>
+	    <th style="width: 16%">작업자</th>
+	    <th style="width: 16%">유형</th>
+	    <th style="width: 17%">수주명</th> <!-- 금형번호? -->
+	    <th style="width: 17%">부품명</th>
+	    <th style="width: 17%">공정</th>
+	    <th style="width: 17%">등록일</th>
 	</thead>
 	
 	<%
 	if(dwlist != null){
+		int index = 0;
 		for(DailyWorkDTO dto : dwlist){
+			index += 1;
 	%>
-	<tr class="tablecontent dwtablecontent" id=""> 
+	<tr class="tablecontent dwtablecontent" id="#<%=index %>"> 
 	    <td id="dwmanager"><%=dto.getWorker() %></td>
 	    <td id="dwtype"><%=dto.getDwtype() %></td>
 	    <td id="dworder"><%=dto.getOrder_name() %></td>
 	    <td id="dwpart"><%=dto.getPart_name() %></td>
 	    <td id="dwproc"><%=dto.getProcess() %></td>
-	    <td id="dwstart"><%=dto.getStart_date() %></td>
-	    <td id="dwend"><%=dto.getEnd_date() %></td>
+	   <td id="dwregdate"><%=dto.getRegdate() %></td>
 	    
-	    <td id="dwregdate" style="display:none;"><%=dto.getRegdate() %></td>
+	    <td id="dwstart" style="display:none;"><%=dto.getStart_date() %></td>
+	    <td id="dwend" style="display:none;"><%=dto.getEnd_date() %></td>
 	    <td id="dwfaulty" style="display:none;"><%=dto.getFaulty() %></td>
 	    <td id="dwcom" style="display:none;"><%=dto.getCompany() %></td>
 	    <td id="dwprice" style="display:none;"><%=dto.getPrice() %></td>
 	    <td id="dwwed" style="display:none;"><%=dto.getWarehousing_exp_date() %></td>
 	    <td id="dwfac" style="display:none;"><%=dto.getFacilities() %></td>
 	    <td id="dwsta" style="display:none;"><%=dto.getStatus() %></td>
+	    <td id="dwwid" style="display:none;"><%=dto.getWork_id() %></td>
 	</tr>
 	<%
 		}
@@ -103,12 +105,90 @@
 //테이블 열 클릭 이벤트
 $(".dwtablecontent").on("click",function(){
 	if($(this).children("#dwtype").text() == "사내"){
+		$("#mwform").each(function(){this.reset();});
+		$("#mwform2").each(function(){this.reset();});
+		
+		$("#worklogmodal #ordername").val($(this).children("#dworder").text());
+		$("#worklogmodal #partname").val($(this).children("#dwpart").text());
+		$("#worklogmodal #processname").val($(this).children("#dwproc").text());
+		$("#worklogmodal #facilityname").val($(this).children("#dwfac").text());
+		
+		let wlst = toISO($(this).children("#dwstart").text());
+		let wled = toISO($(this).children("#dwend").text());
+		
+		$("#worklogmodal #startdtime").val(wlst);
+		$("#worklogmodal #enddtime").val(wled);
+		
+		if($(this).children("#dwfaulty").text() == "Y"){
+			$("#worklogmodal #faultycheck").attr("checked",true);
+		}else{
+			$("#worklogmodal #faultycheck").attr("checked",false);
+		}
+		
+		status($(this).children("#dwsta").text());
+		
+		$.ajax({
+			data: "GET",
+			asycn: false,
+			url: "./MyWorkSearch",
+			data:{workid:$(this).children("#dwwid").text()},
+			dataType:"JSON",
+			success:function(data){
+				$("#worklogmodal #comname").val(data.client);
+				$("#worklogmodal #dobun").val(data.dobun);
+				$("#worklogmodal #amount").val(data.quantity);
+				$("#worklogmodal #coretype").val(data.core);
+				$("#worklogmodal #worktime").val(data.work_time);
+				$("#worklogmodal #aworktime").val(data.real_processing_time);
+				$("#worklogmodal #npworktime").val(data.no_men_processing_time);
+				$("#worklogmodal #nworktime").val(data.un_processing_time);
+				$("#worklogmodal #totalwt").val(data.total_work_time);
+				$("#worklogmodal #totalmt").val(data.total_processing_time);
+			}
+		})
+		
 		$("#worklogmodalbtn").click();
 	}
-	else if(($(this).children("#dwtype").text() == "외주"){
+	else if($(this).children("#dwtype").text() == "외주"){
+		$("#osform").each(function(){this.reset();});
+		
+		$("#outsoumodal #ordername").val($(this).children("#dworder").text());
+		$("#outsoumodal #partname").val($(this).children("#dwpart").text());
+		$("#outsoumodal #processname").val($(this).children("#dwproc").text());
+		$("#outsoumodal #companyname").val($(this).children("#dwcom").text());
+		$("#outsoumodal #price").val($(this).children("#dwprice").text());
+		$("#outsoumodal #whdate").val($(this).children("#dwwed").text());
+
+		$("#outsoumodal #outsstarttime").val($(this).children("#dwstart").text());
+		$("#outsoumodal #outsendtime").val($(this).children("#dwend").text());
+		
+		if($(this).children("#dwfaulty").text() == "Y"){
+			$("#outsoumodal #faultycheck").attr("checked",true);
+		}else{
+			$("#outsoumodal #faultycheck").attr("checked",false);
+		}
+		
 		$("#outsoumodalbtn").click();
 	}   
 });
+
+function toISO(dtime){
+	let ymd = dtime.substring(0,10);
+	let h = dtime.substring(11,13);
+	let mm = dtime.substring(14,16);
+	let s = dtime.substring(17,19);
+	
+	let result = ymd + 'T' + h + ':' + mm + ':' + s;
+	return result;
+}
+
+function status(st){
+	let stt = "<button type='button' class='btn btn-primary' style='text-align:center;' id='sttdiv' disabled></button>";
+	
+	$("#statusdiv").html(stt);
+	$("#sttdiv").text(st);
+	
+}
 </script>
 <ul class="pagination">
 	<li><a class="preanpage">Previous</a></li>
@@ -120,12 +200,7 @@ $(".dwtablecontent").on("click",function(){
 	}
 	
 	int startpage = (block-1) * 5 + 1;
-	int endpage = ((lastnum-1)/10);
-	
-	if(lastnum%10 != 0 || endpage == 0){
-		endpage += 1;
-	}
-	
+	int endpage = ((lastnum-1)/10) + 1;
 	int endexpage = endpage;
 	
 	if(endexpage > 4 + startpage){
@@ -151,20 +226,20 @@ $(".dwtablecontent").on("click",function(){
 		var wk = "<%=request.getParameter("wk") %>";
 		var date = "<%=request.getParameter("date") %>";
 		
-		if(sUserid == "null"){
-			sUserid = null;
+		if(wk == "null"){
+			wk = null;
 		}
-		if(sUsername == "null"){
-			sUsername = null;
+		if(date == "null"){
+			date = null;
 		}
 		
 		$.ajax({
 			type:"GET",
-			url:"./usersearch.jsp",
-			data:{page:pnum, "sUserid":sUserid, "sUsername":sUsername},
+			url:"./dailyWorksearch.jsp",
+			data:{page:pnum, "wk":wk, "date":date},
 			dataType:"html",
 			success:function(data){
-	            $("#usert").html(data);
+	            $("#dailyWorkt").html(data);
 	        }
 		});
 	});
@@ -180,23 +255,23 @@ $(".dwtablecontent").on("click",function(){
 		$("#p" + k).addClass("active");
 		
 		var pnum = k;
-		var sUserid = "<%=request.getParameter("sUserid") %>";
-		var sUsername = "<%=request.getParameter("sUsername") %>";
+		var wk = "<%=request.getParameter("wk") %>";
+		var date = "<%=request.getParameter("date") %>";
 		
-		if(sUserid == "null"){
-			sUserid = null;
+		if(wk == "null"){
+			wk = null;
 		}
-		if(sUsername == "null"){
-			sUsername = null;
+		if(date == "null"){
+			date = null;
 		}
 		
 		$.ajax({
 			type:"GET",
-			url:"./usersearch.jsp",
-			data:{page:pnum, "sUserid":sUserid, "sUsername":sUsername},
+			url:"./dailyWorksearch.jsp",
+			data:{page:pnum, "wk":wk, "date":date},
 			dataType:"html",
 			success:function(data){
-	            $("#usert").html(data);
+	            $("#dailyWorkt").html(data);
 	        }
 		});
 		
@@ -223,7 +298,7 @@ $(".dwtablecontent").on("click",function(){
 		else{
 			$(".nextanpage").css({"color":"#337ab7"});
 		}
-	})
+	});
 	
 	$(".nextanpage").click(function(){
 		$("li").removeClass("active");
@@ -236,26 +311,26 @@ $(".dwtablecontent").on("click",function(){
 		$("#p" + k).addClass("active");
 		
 		var pnum = k;
-		var sUserid = "<%=request.getParameter("sUserid") %>";
-		var sUsername = "<%=request.getParameter("sUsername") %>";
+		var wk = "<%=request.getParameter("wk") %>";
+		var date = "<%=request.getParameter("date") %>";
 		
-		if(sUserid == "null"){
-			sUserid = null;
+		if(wk == "null"){
+			wk = null;
 		}
-		if(sUsernane == "null"){
-			sUsername = null;
+		if(date == "null"){
+			date = null;
 		}
 		
 		$.ajax({
 			type:"GET",
-			url:"./usersearch.jsp",
-			data:{page:pnum, "sUserid":sUserid, "sUsername":sUsername},
+			url:"./dailyWorksearch.jsp",
+			data:{page:pnum, "wk":wk, "date":date},
 			dataType:"html",
 			success:function(data){
-	            $("#usert").html(data);
+	            $("#dailyWorkt").html(data);
 	        }
 		});
 		
-	})
+	});
 	
 </script>

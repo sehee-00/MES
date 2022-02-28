@@ -34,6 +34,15 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <link rel="stylesheet" href="managepordercss.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<style>
+.select2-container .select2-selection--single{
+	height:33px;
+	position:relative;
+	bottom:5px;
+}
+</style>
 <script>
 	var request = new XMLHttpRequest();
 	var hlastpage = <%=lastpage%>;
@@ -78,7 +87,7 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 		}
 	}
 
-	function test(obj1) {
+	function changecolor(obj1) {
 		var obj = document.getElementById(obj1)
 		var trobj = obj.parentElement.parentElement;
 		var myid = document.getElementById(trobj.getAttribute("id"))
@@ -88,19 +97,33 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 		trcolor.style.background = 'rgb(23, 162, 184)';
 	}
 
-	function pagenation(page) {
+	function pagenation(page){
 		var pagetable = document.getElementsByName("page" + page);
 
-		for (var i = 1; i <= hlastpage; i++) {
+		for(var i=1; i<=hlastpage; i++){
 			var nopagetable = document.getElementsByName("page" + i);
-			for (var j = 0; j < nopagetable.length; j++) {
+			for(var j=0; j<nopagetable.length; j++){
 				nopagetable[j].style.display = "none";
 			}
 		}
-		for (var i = 0; i < pagetable.length; i++) {
-			pagetable[i].style.display = "";
+		for(var i=0; i<pagetable.length; i++){
+			pagetable[i].style.display = "";	
 		}
 		paging = page;
+		for(var i=1; i<=hlastpage; i++){
+			document.getElementById('a' + i).style.color = 'rgb(23, 162, 184)';
+			document.getElementById('a' + i).style.background = 'white';	
+			document.getElementById('aprevious').style.color = 'rgb(23, 162, 184)';
+			document.getElementById('anext').style.color = 'rgb(23, 162, 184)';
+		}
+		document.getElementById('a' + page).style.background = 'rgb(23, 162, 184)';
+		document.getElementById('a' + page).style.color = 'white';
+		if(page == 1){
+			document.getElementById('aprevious').style.color = 'gray';
+		}
+		if(page == hlastpage){
+			document.getElementById('anext').style.color = 'gray';
+		}
 	}
 
 	function previous() {
@@ -117,20 +140,14 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 		}
 	}
 
-	function uladd(lastpage) {
+	function uladd(lastpage){
 		var ul_list = $('#pageul');
 		ul_list.empty();
-		ul_list
-				.append('<li class="page-item pages" id="previous"'
-						+ i
-						+ '" onclick="previous()"><a class="page-link">Previous</a></li>')
-		for (var i = 1; i <= lastpage; i++) {
-			ul_list.append('<li class="page-item pages" id="page"' + i
-					+ '" onclick="pagenation(' + i + ')"><a class="page-link">'
-					+ i + '</a></li>')
+		ul_list.append('<li class="page-item pages" id="previous"' + i +'" onclick="previous()"><a id="aprevious" class="page-link" style="color:rgb(23, 162, 184);">Previous</a></li>')
+		for(var i=1; i<=lastpage; i++){
+			ul_list.append('<li class="page-item pages" id="page"' + i +'" onclick="pagenation(' + i + ')"><a id="a' + i + '" class="page-link" style="color:rgb(23, 162, 184);">' + i + '</a></li>')	
 		}
-		ul_list.append('<li class="page-item pages" id="next"' + i
-				+ '" onclick="next()"><a class="page-link">Next</a></li>')
+		ul_list.append('<li class="page-item pages" id="next"' + i +'" onclick="next()"><a id="anext" class="page-link" style="color:rgb(23, 162, 184);">Next</a></li>')
 	}
 
 	function search() {
@@ -154,8 +171,7 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 			var object = eval('(' + request.responseText + ')');
 			var result = object.result;
 			for (var i = 0; i < result.length; i++) {
-				var row = manage_pordertable
-						.insertRow(manage_pordertable.rows.length);
+				var row = manage_pordertable.insertRow(manage_pordertable.rows.length);
 				var resultpage = parseInt(i / 10) + 1;
 				$(row).attr('name', 'page' + resultpage);
 				$(row).attr('id', 'tr' + result[i][4].value);
@@ -167,7 +183,7 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 						cell.innerHTML = '<input type="checkbox" id="'
 								+ result[i][4].value
 								+ '" checked onclick="checkboxclick(this)">';
-						test(result[i][4].value);
+						changecolor(result[i][4].value);
 						checkarrtf = 1;
 						break;
 					}
@@ -189,52 +205,10 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 				}
 			}
 			hlastpage = parseInt((result.length - 1) / 10) + 1
-			pagenation(1);
 			uladd(hlastpage);
+			pagenation(1);
 			paging = 1;
 		}
-	}
-	function insertcheck(){
-		var odercom = document.getElementById('ordercom');
-		var partname = document.getElementsByName('npart_name');
-		var nor = document.getElementsByName('nnor');
-		var price = document.getElementsByName('nprice');
-		
-		if (odercom.value == ""){
-			alert("확인");
-			return false;
-		}
-		if(partname == null){
-			alert("확인");
-			return false;
-		}
-		if(nor == null){
-			alert("확인");
-			return false;
-		}
-		if(price == null){
-			alert("확인");
-			return false;
-		}
-		for(var i=0; i<partname.length; i++){
-			if(partname[i].value == ""){
-				alert("확인");
-				return false;
-			}	
-		}
-		for(var i=0; i<nor.length; i++){
-			if(nor[i].value == ""){
-				alert("확인");
-				return false;
-			}	
-		}
-		for(var i=0; i<price.length; i++){
-			if(price[i].value == ""){
-				alert("확인");
-				return false;
-			}	
-		}
-		return true;
 	}
 	
 	function insertform(frm){
@@ -299,6 +273,10 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 			frm.submit();
 		}
 	}
+	$(document).ready(function() {
+        $('select[id="ordercom"]').select2();
+        $('select[id="ordercom"]').val("").select2();
+    });
 </script>
 </head>
 <body>
@@ -357,8 +335,8 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 
 				</ul>
 				<script>
-					pagenation(1);
 					uladd(hlastpage);
+					pagenation(1);
 				</script>
 			</div>
 		</div>
@@ -385,6 +363,7 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 								<td><select id="ordercom" name="nordercom"
 									class="form-control"
 									style="width: 80%; margin-top: 10px; margin-bottom: 20px;">
+									<option value="" selected="selected" hidden="hidden"></option>
 										<%
 										Vector<String> v2 = new Vector<String>();
 										v2 = dbc.selectcomname();
@@ -420,8 +399,5 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 			</form>
 		</div>
 	</div>
-
-
-
 </body>
 </html>

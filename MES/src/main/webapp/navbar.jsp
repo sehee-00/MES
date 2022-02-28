@@ -15,7 +15,7 @@
         <!--bootstrap-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="sidemenu.css?ver3">
+        <link rel="stylesheet" href="sidemenu.css?ver4">
         <link rel="stylesheet" href="navbar.css?ver3">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
         
@@ -50,26 +50,26 @@
                 $(this).toggleClass("foldmenu");
 
                 if($(this).hasClass("foldmenu")){
-                    $("#sidemenu").animate({left:"-250px"}, 500);
-                    $(".glyphicon-menu-hamburger").animate({left:"-250px"}, 500);
-                    $("#pframe").animate({"margin-left":"-=250px", "width": "1860px"}, 500);
+                    $("#sidemenu").animate({left:"-12%"}, 500);
+                    $(".glyphicon-menu-hamburger").animate({left:"-=250px"}, 500);
+                    $("#pframe").animate({"margin-left":"-=12%", "width":"+=12%"}, 500);
                 }
                 else{
-                    $("#sidemenu").animate({left:"0px"}, 500);
-                    $(".glyphicon-menu-hamburger").animate({left:"0px"}, 500);
-                    $("#pframe").animate({"margin-left":"+=250px", "width":"1610px"}, 500);                   
+                    $("#sidemenu").animate({left:"+=12%"}, 500);
+                    $(".glyphicon-menu-hamburger").animate({left:"+=250px"}, 500);
+                    $("#pframe").animate({"margin-left":"+=12%", "width":"-=12%"}, 500);                   
                 }
             });
             
              $(document).ready(function(){
                 $("#sidemenu").hover(function(){
                     if($("#menuicon").hasClass("foldmenu")){
-                        $("#sidemenu").animate({left:"0px"}, 500);
+                        $("#sidemenu").animate({left:"0%"}, 500);
                     }
                 },
                 function(){
                     if($("#menuicon").hasClass("foldmenu")){
-                        $("#sidemenu").animate({left:"-250px"}, 500);
+                        $("#sidemenu").animate({left:"-12%"}, 500);
                     }
                 }
             );
@@ -458,7 +458,7 @@
     			break;
     			
     		case "facilities":
-    			$("#pframe").attr('src', 'facilites/facilites.jsp');
+    			$("#pframe").attr('src', 'facilities/facilities.jsp');
     			break;
     		
     		case "stanprocess":
@@ -483,6 +483,22 @@
     			
     		case "io":
     			$("#pframe").attr('src','inandout/inandout.jsp');
+    			break;
+    			
+    		case "allwork":
+    			$("#pframe").attr('src','dailyWork/dailyWork.jsp');
+    			break;
+    			
+    		case "mywork":
+    			$("#pframe").attr('src','my_work/my_work.jsp');
+    			break;
+    			
+    		case "materialcur":
+    			$("#pframe").attr('src','pminquiry/pminquiry.jsp');
+    			break;
+    		
+    		case "outsourcwork":
+    			$("#pframe").attr('src','Outregistration/outregistration.jsp');
     			break;
     	}
     });

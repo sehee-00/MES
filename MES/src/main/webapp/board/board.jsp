@@ -66,6 +66,7 @@
 
             <div class="panel-body">
                 <form method="post" id="boardform">
+                	<input type="text" id="boardwriter" style="display:none;"/>
                 	<input type="text" id="boardidinput" name="boardid" style="display:none"/>
                     <table style="border: 0; width: 98%;">
                         <tr>
@@ -140,35 +141,46 @@ function tsetting(){
 
 <!-- 등록 -->
 $("#boardinsert").on("click",function(){
-	let bd = 0;
+	let bw = $("#boardwriter").val();
+	let bd = $("#boardidinput").val();
+	
+	if(bd.length == 0){
+		bd = 0;
+	}else{
+		bd = parseInt(bd);
+	}
+	
 	let bn = $("input[name='num']").val();
 	let rd = $("input[name='day']").val();
 	let tt = $("input[name='title']").val();
 	let ct = $("#boardcontentsinput").val();
-	
-	
-	$.ajax({
-		type:"POST",
-		url:"./boardinsert.jsp",
-		data:{boardid:bd, num:bn, day:rd, title:tt, content:ct},
-		dataType:"html",
-		success:function(data){
-			var d = JSON.parse(data);
-			if(d.result == 1){
-				alert('등록되었습니다!');
-				tsetting();
-				$('form').each(function(){
-					this.reset();
-				});
+
+	if(bw == "<%=session.getAttribute("id") %>" || bw.length == 0){
+		$.ajax({
+			type:"POST",
+			url:"./boardinsert.jsp",
+			data:{boardid:bd, num:bn, day:rd, title:tt, content:ct},
+			dataType:"html",
+			success:function(data){
+				var d = JSON.parse(data);
+				if(d.result == 1){
+					alert('등록되었습니다!');
+					tsetting();
+					$('form').each(function(){
+						this.reset();
+					});
+				}
+				else{
+					alert('실패하였습니다!');
+				}
+			},
+			error:function(){
+				alert('error');
 			}
-			else{
-				alert('실패하였습니다!');
-			}
-		},
-		error:function(){
-			alert('error');
-		}
-	})
+		});
+	}else{
+		alert("해당 게시판에 수정 권한이 없습니다");
+	}
 })
 
 <!-- 검색 -->
@@ -247,30 +259,35 @@ function date_mask(objValue) {
 
 $('#deleteboard').on("click",function(){
 	let bnn = $("#boardidinput").val();
+	let bw = $("#boardwriter").val();
 	
-	if(bnn != 0){
-		$.ajax({
-			type:"GET",
-			url:"./boarddelete.jsp",
-			data:{bn:bnn},
-			dataType:"html",
-			success:function(data){
-				var d = JSON.parse(data);
-				if(d.result == 1){
-					alert("삭제하였습니다");
-					tsetting();
-					$('form').each(function(){
-						this.reset();
-					});
+	if(bw == "<%=session.getAttribute("id")%>"){
+		if(bnn != 0){
+			$.ajax({
+				type:"GET",
+				url:"./boarddelete.jsp",
+				data:{bn:bnn},
+				dataType:"html",
+				success:function(data){
+					var d = JSON.parse(data);
+					if(d.result == 1){
+						alert("삭제하였습니다");
+						tsetting();
+						$('form').each(function(){
+							this.reset();
+						});
+					}
+					else{
+						alert("실패하였습니다");
+					}
+				},
+				error:function(){
+					alert("error");
 				}
-				else{
-					alert("실패하였습니다");
-				}
-			},
-			error:function(){
-				alert("error");
-			}
-		});
+			});
+		}
+	}else{
+		alert("해당 게시물의 삭제 권한이 없습니다");
 	}
 });
 </script>
