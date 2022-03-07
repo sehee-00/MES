@@ -500,6 +500,14 @@
     		case "outsourcwork":
     			$("#pframe").attr('src','Outregistration/outregistration.jsp');
     			break;
+    			
+    		case "faulty":
+    			$("#pframe").attr('src','faulty/faulty.jsp');
+    			break;
+    			
+    		case "performancecur":
+    			$("#pframe").attr('src','performance_by_worker/performance_by_worker.jsp');
+    			break;
     	}
     });
     
