@@ -81,6 +81,8 @@ while(rs.next()){
 int datalastdivnum = 0;
 int lastdivnum = 0;
 
+
+
 %>
 
 
@@ -254,7 +256,7 @@ rs=stmt.executeQuery(query);
 										<input type="text" class = "form-control" value="<%=rs.getString("part_name") %>" name="part_name" disabled>
 									</td>
 									<td>
-										<input type="text" class = "form-control" value="<%=rs.getString("process") %>" name="process" disabled>
+										<input type="text" class = "form-control" value="<%=rs.getString("process") %>" name="process" readonly>
 									</td>
 									<td>
 										<input type="text" class = "form-control" value="<%=rs.getString("facilities") %>" name="facilities" disabled>
@@ -369,27 +371,49 @@ rs=stmt.executeQuery(query);
 						sel2.appendChild(option);
 					}
 					
-					var sel3 = tr1.children[1].children[0];
-					for(i=0;i<partname.length;i++){
-						var option = document.createElement("option");
-						option.text = partname[i];
-						option.value = partname[i];
-						sel3.appendChild(option);
-					}
+// 					var sel3 = tr1.children[1].children[0];
+// 					for(i=0;i<partname.length;i++){
+// 						var option = document.createElement("option");
+// 						option.text = partname[i];
+// 						option.value = partname[i];
+// 						sel3.appendChild(option);
+// 					}
 					
-					var sel4 = tr1.children[3].children[0];
-					for(i=0;i<facilitiesname.length;i++){
-						var option = document.createElement("option");
-						option.text = facilitiesname[i];
-						option.value = facilitiesname[i];
-						sel4.appendChild(option);
-					}
+// 					var sel4 = tr1.children[3].children[0];
+// 					for(i=0;i<facilitiesname.length;i++){
+// 						var option = document.createElement("option");
+// 						option.text = facilitiesname[i];
+// 						option.value = facilitiesname[i];
+// 						sel4.appendChild(option);
+// 					}
 				}
 				
 				function orderchange(element){
 					var order = element.value;
 					var com = ordertocom.get(order);
 					element.parentNode.parentNode.parentNode.parentNode.parentNode.children[2].children[1].children[0].children[0].children[0].value=com;
+					$.ajax({
+						type:"GET",
+			            url:"./partajax.jsp",
+			            data:{order:order},
+			            dataType:"html",
+			            success:function(data){
+			                $(element.parentNode.parentNode.children[1].children[0]).html(data);
+			          }
+			       });
+				}
+				
+				function processchange(element){
+					var process = element.value;
+					$.ajax({
+						type:"GET",
+			            url:"./facilityajax.jsp",
+			            data:{process:process},
+			            dataType:"html",
+			            success:function(data){
+			                $(element.parentNode.parentNode.children[3].children[0]).html(data);
+			          }
+			       });
 				}
 				
 				function deletebutton(element){
@@ -431,7 +455,7 @@ rs=stmt.executeQuery(query);
 						</select>
 					</td>
 					<td>
-						<select name="process">
+						<select name="process" onchange="processchange(this)">
 							<option value="">--선택--</option>
 						</select>
 					</td>

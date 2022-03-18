@@ -46,6 +46,11 @@ body{
 	margin-bottom: 20px;
 }
 
+#detailtablediv{
+	overflow-x: auto;
+	max-width:100%;
+}
+
 .pptable{
     width:auto;
     border-collapse: separate;
@@ -92,6 +97,7 @@ body{
     width:auto;
     border-collapse: separate;
     border: none;
+    white-space: nowrap;
 }
 
 .detailTable > tbody > tr> td{
@@ -184,4 +190,19 @@ body{
 }
 .modal-dialog{
     width:800px;
+}
+.orderI_col3{
+    display:inline-block;
+    zoom:1;
+    width: 31%;
+    margin-right:12px;
+    align-items: center;
+}
+
+.orderI_col4{
+    display:inline-block;
+    zoom:1;
+    width: 22%;
+    margin-right:17px;
+    align-items: center;
 }

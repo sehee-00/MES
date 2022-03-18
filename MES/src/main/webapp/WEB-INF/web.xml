@@ -59,4 +59,34 @@
     <servlet-name>searchpm</servlet-name>
     <url-pattern>/searchpm</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ordertable</display-name>
+    <servlet-name>ordertable</servlet-name>
+    <servlet-class>ajax.ordertable</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ordertable</servlet-name>
+    <url-pattern>/ordertable</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>outsourcing</display-name>
+    <servlet-name>outsourcing</servlet-name>
+    <servlet-class>ajax.outsourcing</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>outsourcing</servlet-name>
+    <url-pattern>/outsourcing</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>searchoutsourcing</display-name>
+    <servlet-name>searchoutsourcing</servlet-name>
+    <servlet-class>ajax.searchoutsourcing</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>searchoutsourcing</servlet-name>
+    <url-pattern>/searchoutsourcing</url-pattern>
+  </servlet-mapping>
 </web-app>

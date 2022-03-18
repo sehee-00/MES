@@ -133,13 +133,25 @@ if(worker==null || worker.equals("")){
 	worker = "로그인안하고값넣은사용자";
 }
 
+int manufacturing_cost = 0; //ok
+if(status.equals("완료")){
+	query = "select * from process where process_name='"+process+"'";
+	rs=stmt.executeQuery(query);
+	if(rs.next()){
+		int temp = rs.getInt("pay");
+		manufacturing_cost = ((int)work_time+no_men_processing_time)*temp;
+	}
+	
+	
+}
+
 if(order_name.equals("") || order_name == null){
 	response.sendRedirect("my_work.jsp");
 }
 else{
 	
 	
-	query = "insert into my_work(order_name,part_name,process,facilities,work_start,work_end,faulty,status,client,regdate,dobun,quantity,core,work_time,real_processing_time,no_men_processing_time,un_processing_time,total_work_time,total_processing_time,worker) values('"+order_name+"','"+part_name+"','"+process+"','"+facilities+"',"+work_start+","+work_end+",'"+faulty+"','"+status+"','"+client+"','"+regdate+"','"+dobun+"',"+quantity+",'"+core+"',"+work_time+","+real_processing_time+","+no_men_processing_time+","+un_processing_time+","+total_work_time+","+total_processing_time+",'"+worker+"')";
+	query = "insert into my_work(order_name,part_name,process,facilities,work_start,work_end,faulty,status,client,regdate,dobun,quantity,core,work_time,real_processing_time,no_men_processing_time,un_processing_time,total_work_time,total_processing_time,worker,manufacturing_cost) values('"+order_name+"','"+part_name+"','"+process+"','"+facilities+"',"+work_start+","+work_end+",'"+faulty+"','"+status+"','"+client+"','"+regdate+"','"+dobun+"',"+quantity+",'"+core+"',"+work_time+","+real_processing_time+","+no_men_processing_time+","+un_processing_time+","+total_work_time+","+total_processing_time+",'"+worker+"',"+manufacturing_cost+")";
 
 	
 	

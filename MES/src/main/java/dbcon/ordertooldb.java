@@ -1,0 +1,18 @@
+package dbcon;
+
+public class ordertooldb {
+	String tool_name;
+	int price;
+	public String getTool_name() {
+		return tool_name;
+	}
+	public void setTool_name(String tool_name) {
+		this.tool_name = tool_name;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
+}

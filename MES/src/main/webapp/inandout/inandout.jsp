@@ -761,8 +761,12 @@ rs=stmt.executeQuery(query);
 						if(rs.getString("outend_date") != null || rs.getString("warehousing_date") != null){
 							complete=" complete";
 						}
-						else if(today.equals(day) || today.after(day)){
-							complete=" notcomplete";
+						else if(day!= null){
+							if(today.equals(day) || today.after(day)){
+								complete=" notcomplete";
+							}else{
+								complete="";
+							}
 						}
 						else{
 							complete = "";

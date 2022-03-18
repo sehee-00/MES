@@ -1,0 +1,81 @@
+body{
+    background: rgb(238, 237, 237);
+}
+
+.panel-heading {
+    border-color: rgb(23, 162, 184);
+    border: 5px;
+    background:rgb(0 0 0 / 5%);
+}
+
+.panel {
+    box-shadow: 3px 3px 3px rgb(0 0 0 / 5%);
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-top: 0.5vw;
+
+    border:3px solid rgb(23, 162, 184);
+    border-bottom: 0px;
+    border-right: 0px;
+    border-left: 0px;
+}
+
+.box{
+    width: 98vw;
+}
+
+.processbox{
+	width: 48.5vw;
+	float:left;
+	margin:0px;
+	padding:0px;
+}
+
+.companybox{
+	width: 48.5vw;
+	float:right;
+	margin:0px;
+	padding:0px;
+}
+
+.title{
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-top: 1vw;
+    font-size: 20pt;
+}
+
+.panel-body{
+    font-weight: bold;
+}
+
+.searchtitle{
+    width: 20%;
+    display: table-cell;
+}
+
+.btn-primary{
+    background: rgb(23, 162, 184);
+    border: 0px;
+}
+
+.btn-danger{
+    border: 0px;
+    background: #d9534f;
+}
+
+.buttongroupsidv{
+	margin:15px 15px 15px 15px;
+	background:blue;
+}
+.buttongruops{
+    float: right;
+    margin:15px 15px 15px 15px;
+}
+.row{
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 1.5em;
+}	
+
+

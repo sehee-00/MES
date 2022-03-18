@@ -49,6 +49,7 @@ int total_work_time; //ok
 int total_processing_time; //ok
 String regdate = LocalDate.now().toString(); //ok
 String worker=""; //ok
+String process = request.getParameter("process");
 
 if(request.getParameter("work_start").equals("")){
 	work_start = "null";
@@ -109,8 +110,20 @@ if(worker==null || worker.equals("")){
 	worker = "로그인안하고값넣은사용자";
 }
 
+
+int manufacturing_cost = 0; //ok
+if(status.equals("완료")){
+	query = "select * from process where process_name='"+process+"'";
+	rs=stmt.executeQuery(query);
+	if(rs.next()){
+		int temp = rs.getInt("pay");
+		manufacturing_cost = ((int)work_time+no_men_processing_time)*temp;
+	}
 	
-query = "update my_work set work_start="+work_start+", work_end="+work_end+", faulty ='"+faulty+"', status='"+status+"', regdate='"+regdate+"', work_time="+work_time+", real_processing_time="+real_processing_time+", no_men_processing_time="+no_men_processing_time+", un_processing_time="+un_processing_time+", total_work_time="+total_work_time+", total_processing_time="+total_processing_time+", worker='"+worker+"' where work_id="+work_id;
+}
+
+
+query = "update my_work set work_start="+work_start+", work_end="+work_end+", faulty ='"+faulty+"', status='"+status+"', regdate='"+regdate+"', work_time="+work_time+", real_processing_time="+real_processing_time+", no_men_processing_time="+no_men_processing_time+", un_processing_time="+un_processing_time+", total_work_time="+total_work_time+", total_processing_time="+total_processing_time+", worker='"+worker+"', manufacturing_cost="+manufacturing_cost+" where work_id="+work_id;
 
 
 

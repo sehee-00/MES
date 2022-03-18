@@ -352,7 +352,7 @@ public class dbcon {
 		return null;
 	}
 
-	public Vector<material_etdb> getmaterial_etdb(String et_id, String degree) {
+ 	public Vector<material_etdb> getmaterial_etdb(String et_id, String degree) {
 		Vector<material_etdb> v = new Vector<material_etdb>();
 		try {
 			dbconnect();
@@ -546,9 +546,11 @@ public class dbcon {
 			String check = "select facilities_name from facilities where facilities_name = ?";
 			String updatesql = "update facilities set facilities_status = ?, pay = ?, mes.facilities.using = ?, using_all_day = ?, facilities_start = ?, facilities_end = ? where facilities_name = ?";
 			String insertsql = "insert into facilities values(?, ?, ?, ?, ?, ?, ?)";
+			String insertft = "insert into facility_time(facility_name, status, f_time) values (?, ?, sysdate())";
 			PreparedStatement pstmt = con.prepareStatement(check);
 			PreparedStatement pstmt2 = con.prepareStatement(updatesql);
 			PreparedStatement pstmt3 = con.prepareStatement(insertsql);
+			PreparedStatement pstmt4 = con.prepareStatement(insertft);
 			pstmt.setString(1, fn);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -571,10 +573,15 @@ public class dbcon {
 				pstmt3.setString(7, fe);
 				pstmt3.executeUpdate();
 			}
+			pstmt4.setString(1, fn);
+			pstmt4.setString(2, fs);
+			pstmt4.executeUpdate();
+			
 			rs.close();
 			pstmt.close();
 			pstmt2.close();
 			pstmt3.close();
+			pstmt4.close();
 			con.close();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -986,4 +993,259 @@ public class dbcon {
 		}
 		return v;
 	}
+	//-------------------------------dashboardorder------------------------
+	public Vector<String> selectorder() {
+		Vector<String> v = new Vector<String>();
+		try {
+			dbconnect();
+			String sql = "select item_no from mes.order";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				v.add(rs.getString("item_no"));
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	public String orderprice(String order_name) {
+		String price = "";
+		try {
+			dbconnect();
+			String sql = "select order_price from mes.order where item_no = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, order_name);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				price = rs.getString("order_price");
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}	
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return price;	
+	}
+	
+	public Vector<orderproc_cost> proctable(String order_name){
+		Vector<orderproc_cost> v = new Vector<orderproc_cost>();
+		try {
+			dbconnect();
+			String sql = "select process, sum(timestampdiff(minute, work_start, work_end)), pay, no_men_processing_time from my_work, process where my_work.process = process.process_name and status='완료' and order_name = ? group by process";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, order_name);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				orderproc_cost oc = new orderproc_cost();
+				double time = Math.round(0.01666666*rs.getDouble("sum(timestampdiff(minute, work_start, work_end))")*10/10.0);
+				time += rs.getInt("no_men_processing_time");
+				oc.setProc_name(rs.getString("process"));
+				oc.setTime(time);
+				oc.setPay(rs.getInt("pay"));
+				oc.setTotalpay((int) time * rs.getInt("pay"));
+				v.add(oc);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) { 
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public Vector<ordercosts> procordertable(String order_name){
+		Vector<ordercosts> v = new Vector<ordercosts>();
+		try {
+			dbconnect();
+			String sql = "select process, sum(price) from outsourcing where orders_name = ? group by process";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, order_name);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				ordercosts oc = new ordercosts();
+				oc.setName(rs.getString("process"));
+				oc.setPay(rs.getInt("sum(price)"));
+				v.add(oc);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public Vector<ordercosts> companyordertable(String order_name){
+		Vector<ordercosts> v = new Vector<ordercosts>();
+		try {
+			dbconnect();
+			String sql = "select company, sum(price) from outsourcing where orders_name = ? group by company";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, order_name);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				ordercosts oc = new ordercosts();
+				oc.setName(rs.getString("company"));
+				oc.setPay(rs.getInt("sum(price)"));
+				v.add(oc);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public Vector<ordertooldb> materialtable(String order_name){
+		Vector<ordertooldb> v = new Vector<ordertooldb>();
+		try {
+			dbconnect();
+			String sql = "select tool_name, unit_price, stock from tool where order_name = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, order_name);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				ordertooldb ot = new ordertooldb();
+				int price = rs.getInt("unit_price") * rs.getInt("stock");
+				ot.setTool_name(rs.getString("tool_name"));
+				ot.setPrice(price);
+				v.add(ot);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	//--------------------dashboardoutsourcing-----------------------
+	public String searchsum(String start_day, String end_day){
+		String sum = "0";
+		try {
+			dbconnect();
+			String sql = "select sum(price) from outsourcing where outend_date between ? and ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, start_day);
+			pstmt.setString(2, end_day);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				sum = rs.getString("sum(price)");
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return sum;
+	}
+	
+	public Vector<String> doscompany(){
+		Vector<String> v = new Vector<String>();
+		try {
+			dbconnect();
+			String sql = "select com_name from company";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				v.add(rs.getString("com_name"));
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public Vector<String> dosprocess(){
+		Vector<String> v = new Vector<String>();
+		try {
+			dbconnect();
+			String sql = "select process_name from process";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				v.add(rs.getString("process_name"));
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public Vector<ordercosts> searchcompanyordertable(String start_day, String end_day){
+		Vector<ordercosts> v = new Vector<ordercosts>();
+		try {
+			dbconnect();
+			String sql = "select company, sum(price) from outsourcing where outend_date between ? and ? group by company";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, start_day);
+			pstmt.setString(2, end_day);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				ordercosts oc = new ordercosts();
+				oc.setName(rs.getString("company"));
+				oc.setPay(rs.getInt("sum(price)"));
+				v.add(oc);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public Vector<ordercosts> searchprocordertable(String start_day, String end_day){
+		Vector<ordercosts> v = new Vector<ordercosts>();
+		try {
+			dbconnect();
+			String sql = "select process, sum(price) from outsourcing where outend_date between ? and ? group by process";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, start_day);
+			pstmt.setString(2, end_day);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()){
+				ordercosts oc = new ordercosts();
+				oc.setName(rs.getString("process"));
+				oc.setPay(rs.getInt("sum(price)"));
+				v.add(oc);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
 }

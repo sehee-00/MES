@@ -508,6 +508,22 @@
     		case "performancecur":
     			$("#pframe").attr('src','performance_by_worker/performance_by_worker.jsp');
     			break;
+    			
+    		case "productionprog":
+    			$("#pframe").attr('src','prodProgress/prodProgress.jsp');
+    			break;
+    			
+    		case "workcheck":
+    			$("#pframe").attr('src','dashboardorder/dashboardorder.jsp');
+    			break;
+    			
+    		case "outsourccostcur":
+    			$("#pframe").attr('src','dashboardoutsourcing/dashboardoutsourcing.jsp');
+    			break;
+    			
+    		case "facilitiesopercur":
+    			$("#pframe").attr('src','performance_by_facility/performance_by_facility.jsp');
+    			break;
     	}
     });
     
