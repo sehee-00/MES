@@ -316,14 +316,14 @@ public class ProdProgressDAO {
 			List<String> list = new ArrayList<String>();
 			
 			try {
-				String sql = "SELECT materials_name FROM mes.materials";
+				String sql = "SELECT * FROM mes.code_sub WHERE main_code='소재구분';";
 				
 				con = db.getCon();
 				stmt = con.createStatement();
 				rs = stmt.executeQuery(sql);
 				
 				while(rs.next()) {
-					list.add(rs.getString("materials_name"));
+					list.add(rs.getString("sub_code"));
 				}
 				
 				rs.close();

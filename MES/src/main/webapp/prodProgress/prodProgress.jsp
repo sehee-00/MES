@@ -255,7 +255,7 @@
                             <table id="toolsRtable" style="border-spacing: 15px; border-collapse: separate; width:100%;">
                                 <thead class="table_head">
                                     <tr>
-                                        <th style="width:30%;">공구</th>
+                                        <th style="width:30%;">기타</th>
                                         <th style="width:15%;">단가</th>
                                         <th style="width:15%;">수량</th>
                                         <th style="width:30%;">금액</th>
