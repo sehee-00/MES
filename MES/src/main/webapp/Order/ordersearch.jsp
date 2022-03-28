@@ -7,10 +7,7 @@
 <%@ page import="java.util.List" %>
 <%
 	request.setCharacterEncoding("UTF-8");
-
 	int LastListNum=-1;
-
-	// ajax로 부터 받은 값 저장 
 	String pagenum = request.getParameter("page");
 	int p = 1;
 	if(pagenum != null){
@@ -97,6 +94,7 @@
 			<td id="ordernote" style='display:none'><%=list.get(i).getO_note()%></td>
 			<td id="orderetid" style='display:none'><%=list.get(i).getO_et_id()%></td>
 			<td id="ordernum" style='display:none'><%=list.get(i).getO_num()%></td>
+			<td id="imgtext" style='display:none'><%=list.get(i).getImg()%></td>
 		</tr>
 		<%
 		}} else{ %>
@@ -179,6 +177,14 @@ $(document).ready(function(){
 				$("#prod_name").val($(this).children('#prodname').text());
 				$("#order_price").val($(this).children('#orderprice').text());
 				$("#nego_price").val($(this).children('#negoprice').text());
+				$("#item_img").val("");
+				var imgname = $(this).children('#imgtext').text();
+				if(imgname != 'null'){
+					document.getElementById("img_div").innerHTML = '<img style="width: 150px;" src="/MES/upload/' + imgname + '">'
+				}
+				else{
+					document.getElementById("img_div").innerHTML = "";
+				}
 				
 				if($(this).children('#deldate').text()!="null"){
 					$("#del_date").val($(this).children('#deldate').text().substr(0,10));

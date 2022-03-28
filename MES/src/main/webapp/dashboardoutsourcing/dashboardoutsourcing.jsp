@@ -36,7 +36,7 @@
 	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<link rel="stylesheet" href="dashboardoutsourcing.css">
+<link rel="stylesheet" href="dashboardoutsourcing.css?ver02">
 <link
 	href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
 	rel="stylesheet" />
@@ -165,9 +165,9 @@ function draw(){
 		<div class="panel-body">
 			<table class="table table-bordered table-hover" id="sumavg">
 				<tr>
-					<th style="background:rgb(23, 162, 184); color:white; width:25%;">합계</th>
+					<th style="background:rgb(68,80,132); color:white; width:25%;">합계</th>
 					<td id="sum" style="text-align:right; width:25%;">0원</td>
-					<th style="background:rgb(23, 162, 184); color:white; width:25%;">평균(원)</th>
+					<th style="background:rgb(68,80,132); color:white; width:25%;">평균(원)</th>
 					<td id="avg" style="text-align:right; width:25%;">0원</td>
 				</tr>
 			</table>  

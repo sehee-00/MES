@@ -51,6 +51,7 @@ public class orderDAO {
 	}
 	
 	//데이터 입력(등록)및 수정 메소드 
+	
 	public int write(orderDTO dto) {
 		int k = 0;
 		
@@ -72,7 +73,7 @@ public class orderDAO {
 			pstmt.setInt(9, dto.getN_price());
 			pstmt.setString(10, dto.getDel_date());
 			pstmt.setString(11, dto.getO_note());
-			pstmt.setString(12, null); //도면이미지
+			pstmt.setString(12, dto.getImg()); //도면이미지
 			pstmt.setString(13, dto.getO_et_id());
 			pstmt.setInt(14, dto.getO_num());
 			
@@ -89,7 +90,8 @@ public class orderDAO {
 			try {
 				String DEL_DATE="SELECT del_date FROM mes.order WHERE item_no=?";
 				String SQL="UPDATE mes.order SET order_com_id=?, order_date=?, order_status=?, part_status=?, car_name=?, "
-						+ "prod_name=?, order_price=?, nego_price=?, del_date=?, due_date=?, order_note=?, item_img=?, order_et_id=? WHERE item_no=?";
+						+ "prod_name=?, order_price=?, nego_price=?, del_date=?, due_date=?, order_note=?, order_et_id=? WHERE item_no=?";
+				String sql2="update mes.order set item_img = ? where item_no = ?";
 				connect();
 				PreparedStatement pstmt=con.prepareStatement(SQL);
 				
@@ -112,12 +114,16 @@ public class orderDAO {
 					pstmt.setString(10, dto.getDue_date());
 				}
 				pstmt.setString(11, dto.getO_note());
-				pstmt.setString(12, dto.getImg());
-				pstmt.setString(13, dto.getO_et_id());
-				pstmt.setString(14, dto.getItem_no());
+				pstmt.setString(12, dto.getO_et_id());
+				pstmt.setString(13, dto.getItem_no());
 				
 				k = pstmt.executeUpdate();
-				 
+				if(dto.getImg() != null) {
+					pstmt = con.prepareStatement(sql2);
+					pstmt.setString(1, dto.getImg());
+					pstmt.setString(2, dto.getItem_no());
+					pstmt.executeUpdate();
+				} 
 				pstmt.close();
 			}catch(Exception e) {
 				e.printStackTrace();

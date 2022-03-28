@@ -23,7 +23,7 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-        <link rel="stylesheet" href="dailyWork.css?ver05">
+        <link rel="stylesheet" href="dailyWork.css?ver06">
         
     </head>
     <body id="boardp">

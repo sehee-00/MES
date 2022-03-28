@@ -27,7 +27,7 @@ request.setCharacterEncoding("UTF-8");
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-<link rel="stylesheet" href="faultycontent.css?ver03">
+<link rel="stylesheet" href="faultycontent.css?ver04">
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 
@@ -106,12 +106,10 @@ request.setCharacterEncoding("UTF-8");
 								<select id="faultytypeinput" name="faulty_type" class="form-control">
 										<%
 											ArrayList<String> t_list=dao.getftype();
-											if(t_list != null){
-												for(int i=0; i<t_list.size(); i++){
+											for(int i=0; i<t_list.size(); i++){
 										%>
 										<option value="<%= t_list.get(i) %>"><%= t_list.get(i) %></option>
 										<%
-												}
 											}
 										%>
 								</select>
@@ -122,12 +120,10 @@ request.setCharacterEncoding("UTF-8");
 								<select id="faultydefectinput" name="cause_of_defect" class="form-control">
 										<%
 											ArrayList<String> c_list=dao.getfcause();
-											if(c_list != null){
-												for(int i=0; i<c_list.size(); i++){
+											for(int i=0; i<c_list.size(); i++){
 										%>
 										<option value="<%= c_list.get(i) %>"><%= c_list.get(i) %></option>
 										<%
-												}
 											}
 										%>
 								</select>
@@ -187,12 +183,10 @@ request.setCharacterEncoding("UTF-8");
 								<select id="faultyidinput" name="user_id" class="form-control">
 										<%
 											ArrayList<String> u_list=dao.getfuser();
-											if(u_list != null){
-												for(int i=0; i<u_list.size(); i++){
+											for(int i=0; i<u_list.size(); i++){
 										%>
 										<option value="<%= u_list.get(i) %>"><%= u_list.get(i) %></option>
 										<%
-												}
 											}
 										%>
 								</select>
@@ -263,12 +257,10 @@ request.setCharacterEncoding("UTF-8");
 							<select id="userinput" name="f_user" class="form-control" disabled>
 									<%
 										u_list=dao.getfuser();
-										if(u_list != null){
-											for(int i=0; i<u_list.size(); i++){
+										for(int i=0; i<u_list.size(); i++){
 									%>
 									<option value="<%= u_list.get(i) %>"><%= u_list.get(i) %></option>
 									<%
-											}
 										}
 									%>
 							</select>
@@ -286,12 +278,10 @@ request.setCharacterEncoding("UTF-8");
 							<select id="facilityinput" name="f_facility" class="form-control" disabled>
 									<%
 										ArrayList<String> faci_list=dao.getfacilities();
-										if(faci_list != null){
-											for(int i=0; i<faci_list.size(); i++){
+										for(int i=0; i<faci_list.size(); i++){
 									%>
 									<option value="<%= faci_list.get(i) %>"><%= faci_list.get(i) %></option>
 									<%
-											}
 										}
 									%>
 							</select>
@@ -351,7 +341,6 @@ request.setCharacterEncoding("UTF-8");
 		let link = $("#linkinfoinput").val();
 		
 		if(link.length > 0){
-			console.log(link);
 			$("#modalBtn").click();		
 		}
 		
@@ -415,8 +404,12 @@ request.setCharacterEncoding("UTF-8");
 	
 	              if(d.totalT != "null" && d.we != "null"){
 	              	$("#wtotalinput").val(d.totalT);
+	              }else{
+	            	  $("#payinput").val(null);
 	              }
-	              else{
+	              if(d.mc != "null"){
+		              	$("#mcostinput").val(d.mc);
+	              }else{
 	            	  $("#payinput").val(null);
 	              }
 	          }
@@ -522,6 +515,7 @@ request.setCharacterEncoding("UTF-8");
 	        dataType:"html",
 	        success:function(data){
 	            $("#faultyt").html(data);
+	            
 	        }
 	    });
 	}

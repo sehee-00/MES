@@ -5,6 +5,10 @@
 <%@ page import = "java.util.HashMap" %>
 <%@ page import = "java.util.Map" %>
 <%@ page import = "java.util.Map.Entry" %>
+<%@ page import = "java.util.Set" %>
+<%@ page import = "java.util.Iterator" %>
+<%@ page import = "org.json.simple.JSONObject" %>
+<jsp:useBean id="alarmDAO" class="login.alarmDAO"/>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,8 +19,8 @@
         <!--bootstrap-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="sidemenu.css?ver4">
-        <link rel="stylesheet" href="navbar.css?ver3">
+        <link rel="stylesheet" href="sidemenu.css?ver5">
+        <link rel="stylesheet" href="navbar.css?ver4">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
         
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -37,8 +41,34 @@
                     <% String userid = (String)session.getAttribute("id"); %>
                         <%=userid %>님 반갑습니다
                     </a>
-                    <a href="#" class="navbar-text" id="useralarm"><span id="useralarmicon" class="glyphicon glyphicon-comment"></span>
-                        <span id="useralarmicon2" class="badge">n</span></a>
+                    <%
+                    JSONObject alarm = alarmDAO.getAlarm();
+                    int acnt = 0;
+                    if(alarm != null){
+                    	acnt = alarm.size();
+                    }
+                    %>
+	                 <div class="dropdown">
+					  <button class="dropdown-toggle navbar-text" type="button" id="useralarm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="border:none; background:rgba(0,0,0,0);">
+					    <span id="useralarmicon" class="glyphicon glyphicon-comment"></span>
+	                    <span id="useralarmicon2" class="badge"><%=acnt %></span>
+					  </button>
+					  <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="useralarm">
+					  <%
+					  if(alarm != null){
+						  Set key = alarm.keySet();
+						  Iterator<String> iter = key.iterator();
+						  while(iter.hasNext()){
+							  String keyname = iter.next();
+						  
+					  %>
+					    <li><a class="dropdown-submenu" value="<%=keyname%>"><%=keyname %> : <%=alarm.get(keyname) %></a></li>
+					   <%
+						  }
+					  }					   
+					   %>
+					  </ul>
+					</div>
                 </div>
               </div>
             </div>
@@ -51,12 +81,12 @@
 
                 if($(this).hasClass("foldmenu")){
                     $("#sidemenu").animate({left:"-12%"}, 500);
-                    $(".glyphicon-menu-hamburger").animate({left:"-=250px"}, 500);
+                    $(".glyphicon-menu-hamburger").animate({left:"-=235px"}, 500);
                     $("#pframe").animate({"margin-left":"-=12%", "width":"+=12%"}, 500);
                 }
                 else{
                     $("#sidemenu").animate({left:"+=12%"}, 500);
-                    $(".glyphicon-menu-hamburger").animate({left:"+=250px"}, 500);
+                    $(".glyphicon-menu-hamburger").animate({left:"+=235px"}, 500);
                     $("#pframe").animate({"margin-left":"+=12%", "width":"-=12%"}, 500);                   
                 }
             });
@@ -85,7 +115,7 @@
           </script>
     
         <aside id="sidemenu" class="sidebar">
-            <div id="ptitle"><h3 style="font-weight: bold;">형제테크(주)</h3></div>
+            <div id="ptitle"><h3 style="font-weight: bold;">(회사이름)</h3></div>
             <div id="psubtitle"><h4>MES</h4></div>
 
             <ul>
@@ -278,12 +308,6 @@
                         </div>
                         </li>
 
-                        <li name="계획대비 실적원가분석">
-                        <div class="accordion-inner">
-                        <a class="sidemenuselect" id="costperform">계획대비<br>실적원가분석</a>
-                        </div>
-                        </li>
-
                         <li name="불량현황">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="faultycur">불량현황</a>
@@ -396,6 +420,7 @@
     //메뉴 display 처리(권한 처리)
     $(document).ready(function(){
     	$("li").hide();
+    	$(".dropdown-menu li").show();
     	<%
     	Map<String,String[]> allmenu = usermenudao.getUserMenu(userid);
     	if(allmenu != null){
@@ -411,6 +436,31 @@
 			}
     	}
     	%>
+    	
+    });
+    
+    //알람클릭 이벤트
+    $(".dropdown-submenu").on("click",function(){
+    	event.stopPropagation()
+    	let selectedid = $(this).attr('value');
+    	
+    	switch (selectedid){
+    	case "수주 비상":
+			$("#pframe").attr('src', 'Order/Order.jsp');
+			break;
+			
+    	case "불량 갯수":
+			$("#pframe").attr('src','faulty/faulty.jsp');
+			break;
+			
+    	case "부품 부족":
+			$("#pframe").attr('src', 'part/part_management.jsp');
+			break;
+			
+    	case "자재 부족":
+			$("#pframe").attr('src', 'material/material.jsp');
+			break;
+    	}
     });
     
     
@@ -524,6 +574,22 @@
     		case "facilitiesopercur":
     			$("#pframe").attr('src','performance_by_facility/performance_by_facility.jsp');
     			break;
+    		
+    		case "faultycur":
+    			$("#pframe").attr('src','defectivePerform/defectiveP.jsp');
+    			break;
+    			
+    		case "suppliescur":
+    			$("#pframe").attr('src','consumables/consumables.jsp');
+    			break;
+    			
+    		case "pqcdcur":
+    			$("#pframe").attr('src','pqcd/pqcd.jsp');
+    			break;
+    			
+    		case "progress":
+    			window.open("statusProgress/statusProgress.jsp");
+    			break;
     	}
     });
     
@@ -531,7 +597,7 @@
     	let mainbool = false;
 		mainbool = window.confirm("작업한 내용이 모두 사라집니다. 홈으로 돌아가시겠습니까?");
 		if(mainbool){
-			$("#pframe").attr('src', '');
+			location.reload();
 		}
     });
     </script>

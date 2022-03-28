@@ -12,7 +12,11 @@ body {
 }
 
 .inputformdiv{
-	background: rgb(28, 101, 112);
+	background: rgb(68,80,132);
+	width: 375px;
+	height: 235px;
+	border-radius : 5px;
+	padding-top: 25px;
 }
 
 .form-signin {
@@ -40,4 +44,9 @@ body {
   margin-bottom: 10px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
+}
+
+.form-floating{
+	width: 80%;
+	margin: auto;
 }

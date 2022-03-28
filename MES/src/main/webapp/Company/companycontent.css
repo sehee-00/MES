@@ -3,7 +3,7 @@ body{
 }
 
 .panel-heading {
-    border-color: rgb(23, 162, 184);
+    border-color: rgb(68, 80, 132);
     border: 5px;
     height: 60px;
 }
@@ -19,7 +19,7 @@ body{
     margin-right: 1vw;
     margin-top: 0.5vw;
 
-    border:3px solid rgb(23, 162, 184);
+    border:3px solid rgb(68, 80, 132);
     border-bottom: 0px;
     border-right: 0px;
     border-left: 0px;
@@ -48,7 +48,7 @@ body{
 }
 
 .table_head{
-    background: rgb(23, 162, 184);
+    background: rgb(68, 80, 132);
     color: white;
 }
 
@@ -83,7 +83,7 @@ body{
 }
 
 #cover1{
-	text-align:center;	
+   text-align:center;   
 }
 .com_name, .abbreviation, .customers_sortation, .client_status, .customers_group, .representative, .manager_phone, .email, .using_YN{
     display:inline-block;
@@ -96,11 +96,11 @@ body{
     display:inline-block;
     zoom:1;
     width: 22%;
-    margin-right:19px;
+    margin-right:20px;
 }
 
 .btn-primary{
-    background: rgb(23, 162, 184);
+    background: rgb(68, 80, 132);
     border: 0px;
 }
 
@@ -129,6 +129,5 @@ body{
     color: gray;
 }
 .excel{
-	float:right;
+   float:right;
 }
-

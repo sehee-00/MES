@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -544,7 +546,7 @@ public class ProdProgressDAO {
 		public int writeOrderTools(OrderToolsDTO dto) { //공구등록 - 저장(입력한 공구 데이터 저장) 
             int res=0;
             try {
-               String sql="INSERT INTO mes.tool VALUES(?,?,?,?,?,?)";
+               String sql="INSERT INTO mes.tool VALUES(?,?,?,?,?,?,?)";
                
                con=db.getCon();
                pstmt=con.prepareStatement(sql);
@@ -554,6 +556,12 @@ public class ProdProgressDAO {
                pstmt.setInt(4, dto.getUnit_price());
                pstmt.setInt(5, dto.getStock());
                pstmt.setInt(6, dto.getPrice());
+               
+               LocalDate today = LocalDate.now();
+               DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+               String now = today.format(formatter);
+               
+               pstmt.setString(7, now);
                
                res=pstmt.executeUpdate();
                pstmt.close();

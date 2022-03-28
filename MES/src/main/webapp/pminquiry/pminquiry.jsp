@@ -34,7 +34,7 @@ int lastpage = (pm.size() - 1) / 10 + 1;
 	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<link rel="stylesheet" href="pminquirycss.css">
+<link rel="stylesheet" href="pminquirycss.css?ver02">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <style>
@@ -77,7 +77,7 @@ int lastpage = (pm.size() - 1) / 10 + 1;
 			cell3.innerHTML = '<input type="number" name="nprice" value="' + stock + '" class="form-control" style="width:80%; margin-top:10px;">';
 			cell4.innerHTML = '<input type="text" name="ntype" value="'+ type +'" class="form-control" style="display:none;">';
 
-			trcolor.style.background = 'rgb(23, 162, 184)';
+			trcolor.style.background = 'rgb(68,80,132)';
 			checkarr.push(pushid);
 		}
 		if (obj.checked == false) {
@@ -96,7 +96,7 @@ int lastpage = (pm.size() - 1) / 10 + 1;
 				.getAttribute("id");
 		var tr = $("#" + myid);
 		var trcolor = document.getElementById(myid);
-		trcolor.style.background = 'rgb(23, 162, 184)';
+		trcolor.style.background = 'rgb(68,80,132)';
 	}
 
 	function pagenation(page){
@@ -113,12 +113,12 @@ int lastpage = (pm.size() - 1) / 10 + 1;
 		}
 		paging = page;
 		for(var i=1; i<=hlastpage; i++){
-			document.getElementById('a' + i).style.color = 'rgb(23, 162, 184)';
+			document.getElementById('a' + i).style.color = 'rgb(51,122,183)';
 			document.getElementById('a' + i).style.background = 'white';	
-			document.getElementById('aprevious').style.color = 'rgb(23, 162, 184)';
-			document.getElementById('anext').style.color = 'rgb(23, 162, 184)';
+			document.getElementById('aprevious').style.color = 'rgb(51,122,183)';
+			document.getElementById('anext').style.color = 'rgb(51,122,183)';
 		}
-		document.getElementById('a' + page).style.background = 'rgb(23, 162, 184)';
+		document.getElementById('a' + page).style.background = 'rgb(51,122,183)';
 		document.getElementById('a' + page).style.color = 'white';
 		if(page == 1){
 			document.getElementById('aprevious').style.color = 'gray';
@@ -145,11 +145,11 @@ int lastpage = (pm.size() - 1) / 10 + 1;
 	function uladd(lastpage){
 		var ul_list = $('#pageul');
 		ul_list.empty();
-		ul_list.append('<li class="page-item pages" id="previous"' + i +'" onclick="previous()"><a id="aprevious" class="page-link" style="color:rgb(23, 162, 184);">Previous</a></li>')
+		ul_list.append('<li class="page-item pages" id="previous"' + i +'" onclick="previous()"><a id="aprevious" class="page-link" style="color:rgb(51,122,183);">Previous</a></li>')
 		for(var i=1; i<=lastpage; i++){
-			ul_list.append('<li class="page-item pages" id="page"' + i +'" onclick="pagenation(' + i + ')"><a id="a' + i + '" class="page-link" style="color:rgb(23, 162, 184);">' + i + '</a></li>')	
+			ul_list.append('<li class="page-item pages" id="page"' + i +'" onclick="pagenation(' + i + ')"><a id="a' + i + '" class="page-link" style="color:rgb(51,122,183);">' + i + '</a></li>')	
 		}
-		ul_list.append('<li class="page-item pages" id="next"' + i +'" onclick="next()"><a id="anext" class="page-link" style="color:rgb(23, 162, 184);">Next</a></li>')
+		ul_list.append('<li class="page-item pages" id="next"' + i +'" onclick="next()"><a id="anext" class="page-link" style="color:rgb(51,122,183);">Next</a></li>')
 	}
 
 	function search() {

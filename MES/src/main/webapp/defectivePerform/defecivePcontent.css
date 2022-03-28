@@ -1,0 +1,205 @@
+body{
+    background: rgb(238, 237, 237);
+}
+
+.panel-heading {
+    border-color: rgb(68,80,132);
+    border: 5px;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+}
+
+.panel {
+    box-shadow: 3px 3px 3px rgb(0 0 0 / 5%);
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-top: 1vw;
+
+    border:3px solid rgb(68,80,132);
+    border-bottom: 0px;
+    border-right: 0px;
+    border-left: 0px;
+}
+
+.searchbox{
+    width: 97vw;
+}
+
+.graph{
+    width: 97vw;
+    height: auto;
+    
+    box-shadow: 3px 3px 3px rgb(0 0 0 / 5%);
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-top: 1vw;
+    
+    border-bottom: 0px;
+    border-right: 0px;
+    border-left: 0px;
+}
+
+.gtitle{
+    width: 97vw;
+    margin-bottom : 0vw;
+}
+.title{
+    margin-left: 1vw;
+    margin-right: 1vw;
+    margin-top: 1vw;
+    font-size: 13pt;
+}
+
+.panel-body{
+    font-weight: bold;
+   
+}
+
+.boardlistbox{
+    float: left;
+    width: 48.5vw;
+    margin: 0px;
+    padding: 0px;
+}
+
+.tablehead{
+    background: rgb(68,80,132);
+    color: white;
+}
+
+.tablecontent{
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.boardinputbox{
+    float: right;
+    width: 48.5vw;
+    margin: 0px;
+    padding: 0px;
+}
+
+.pagination{
+    float: right;
+}
+
+.pagination>li>a, .pagination>li>span{
+    color: gray;
+}
+
+.boardnum{
+    float: left;
+    width: 48%;
+}
+
+.writeday{
+    float: right;
+    width: 48%;
+}
+
+.btn-primary{
+    background: rgb(68,80,132);
+    border: 0px;
+}
+
+.btn-danger{
+    border: 0px;
+    background: #d9534f
+}
+
+.buttongruops{
+    float: right;
+}
+
+.searchtitle{
+    width: 10%;
+    display: table-cell;
+}
+
+.row{
+    margin-left: 1em;
+    margin-right: 1em;
+}
+
+.faulty-type{
+	display:inline-block;
+    zoom:1;
+    width: 32%;
+    margin-right:5px;
+}
+
+.left{
+    float: left;
+    width: 48%;
+}
+
+.right{
+    float: right;
+    width: 48%;
+}
+
+.first {
+    border: 1px solid red;
+    float: left;
+    width:30%;
+    box-sizing: border-box;
+}
+
+.second{
+    border: 1px solid green;
+    float: left;
+    margin-left: 5%;
+    width:30%;
+    box-sizing: border-box;
+}
+
+.third{
+    border: 1px solid blue;
+    float: right;
+    width:30%;
+    box-sizing: border-box;
+}
+
+#linkinfoinput{
+	cursor: pointer;
+}
+
+.one{
+    float: left;
+    width: 24%;
+    margin-left: 1%;
+}
+
+.two{
+    float: left;
+    width: 24%;
+    margin-left: 1%;
+}
+.three{
+    float: right;
+    width: 24%;
+    margin-left: 1%;
+}
+
+.four{
+    float: right;
+    width: 24%;
+    margin-left: 1%;
+}
+
+.five{
+	float: right;
+    width: 24%;
+    margin-left: 1%;
+}
+
+.work{
+	float: right;
+	width: 60%;
+	margin-left: 1%
+}
+
+

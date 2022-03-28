@@ -32,14 +32,10 @@ dbcon dbc = new dbcon();
 	src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css"
 	href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<link rel="stylesheet" href="estimatecss.css">
+<link rel="stylesheet" href="estimatecss.css?ver03">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <style>
-.tab-link {
-	font-size: 3rem;
-}
-
 .select2-container .select2-selection--single{
 	height:33px;
 	position:relative;
@@ -218,12 +214,12 @@ function pagenation(page){
 	}
 	paging = page;
 	for(var i=1; i<=hlastpage; i++){
-		document.getElementById('a' + i).style.color = 'rgb(23, 162, 184)';
+		document.getElementById('a' + i).style.color = 'rgb(51,122,183)';
 		document.getElementById('a' + i).style.background = 'white';	
-		document.getElementById('aprevious').style.color = 'rgb(23, 162, 184)';
-		document.getElementById('anext').style.color = 'rgb(23, 162, 184)';
+		document.getElementById('aprevious').style.color = 'rgb(51,122,183)';
+		document.getElementById('anext').style.color = 'rgb(51,122,183)';
 	}
-	document.getElementById('a' + page).style.background = 'rgb(23, 162, 184)';
+	document.getElementById('a' + page).style.background = 'rgb(51,122,183)';
 	document.getElementById('a' + page).style.color = 'white';
 	if(page == 1){
 		document.getElementById('aprevious').style.color = 'gray';
@@ -250,11 +246,11 @@ function next(){
 function uladd(lastpage){
 	var ul_list = $('#pageul');
 	ul_list.empty();
-	ul_list.append('<li class="page-item pages" id="previous"' + i +'" onclick="previous()"><a id="aprevious" class="page-link" style="color:rgb(23, 162, 184);">Previous</a></li>')
+	ul_list.append('<li class="page-item pages" id="previous"' + i +'" onclick="previous()"><a id="aprevious" class="page-link" style="color:rgb(51,122,183);">Previous</a></li>')
 	for(var i=1; i<=lastpage; i++){
-		ul_list.append('<li class="page-item pages" id="page"' + i +'" onclick="pagenation(' + i + ')"><a id="a' + i + '" class="page-link" style="color:rgb(23, 162, 184);">' + i + '</a></li>')	
+		ul_list.append('<li class="page-item pages" id="page"' + i +'" onclick="pagenation(' + i + ')"><a id="a' + i + '" class="page-link" style="color:rgb(51,122,183);">' + i + '</a></li>')	
 	}
-	ul_list.append('<li class="page-item pages" id="next"' + i +'" onclick="next()"><a id="anext" class="page-link" style="color:rgb(23, 162, 184);">Next</a></li>')
+	ul_list.append('<li class="page-item pages" id="next"' + i +'" onclick="next()"><a id="anext" class="page-link" style="color:rgb(51,122,183);">Next</a></li>')
 }
 
 function searchestimatetable(){
@@ -419,13 +415,15 @@ function degreeclickoff(){
 
 $(document).ready(function(){
 	  
-	  $('ul.tabs li').click(function(){
+	  $('ul.nav-tabs li').click(function(){
 	    var tab_id = $(this).attr('data-tab');
 
-	    $('ul.tabs li').removeClass('current');
+	    $('ul.nav-tabs li').removeClass('current');
 	    $('.tab-content').removeClass('current');
+	    
+	    $('ul.nav-tabs li').removeClass('active');
 
-	    $(this).addClass('current');
+	    $(this).addClass('active');
 	    $("#"+tab_id).addClass('current');
 	  })
 
@@ -801,19 +799,17 @@ $(document).ready(function() {
 			</div>
 			<div class="panel panel-default border boardinputbox col-md-6">
 				<div class="contab" style="background: blue;">
-					<ul class="tabs" style="background: white;">
-						<li class="tab-link current" data-tab="tab-1">기본정보</li>
-						<li class="tab-link" data-tab="tab-2">자재</li>
-						<li class="tab-link" data-tab="tab-3">가공비</li>
-						<li class="tab-link" data-tab="tab-4">기타 비용</li>
+					<ul class="nav nav-tabs" style="background: white;">
+						<li role="presentation" class="active" data-tab="tab-1"><a>기본정보</a></li>
+						<li role="presentation" data-tab="tab-2"><a>자재</a></li>
+						<li role="presentation" data-tab="tab-3"><a>가공비</a></li>
+						<li role="presentation" data-tab="tab-4"><a>기타 비용</a></li>
 					</ul>
 				</div>
 
 				<div id="tab-1" class="tab-content current">
-					<div class="panel-heading">
-						<h5 class="panel-title">견적서 등록/수정</h5>
-					</div>
 					<div class="panel-body">
+						<h5 class="rigth-panel-title panel-title">견적서 등록/수정</h5>
 						<table style="border: 0; width: 98%; margin-left: 10px;">
 							<tr>
 								<td>
@@ -875,18 +871,13 @@ $(document).ready(function() {
 					</div>
 				</div>
 				<div id="tab-2" class="tab-content">
-					<div class="panel-heading">
-						<div style="margin-right: 40%; float: left;">
-							<h5 class="panel-title">견적서 등록/수정</h5>
-						</div>
-						<div style="margin-left: 80%;">
-							<input class="btn btn-primary" type="button" value="추가"
-								name="addtable" onClick="addrow1();"> <input
-								class="btn btn-danger" type="button" id="alldelbutton"
-								value="전체삭제" onclick="alldel();">
-						</div>
-					</div>
 					<div class="panel-body">
+						<h5 class="rigth-panel-title panel-title" style="display:inline-block">견적서 등록/수정</h5>
+						<div style="display:inline-block; margin-left:580px;">
+							<input class="btn btn-primary" type="button" value="추가" name="addtable" onClick="addrow1();"> 
+							<input class="btn btn-danger" type="button" id="alldelbutton" value="전체삭제" onclick="alldel();">
+						</div>
+						
 						<table id="estimatetable"
 							style="border: 0; width: 98%; margin-left: 10px;">
 							<thead>
@@ -904,18 +895,12 @@ $(document).ready(function() {
 					</div>
 				</div>
 				<div id="tab-3" class="tab-content">
-					<div class="panel-heading">
-						<div style="margin-right: 40%; float: left;">
-							<h5 class="panel-title">견적서 등록/수정</h5>
-						</div>
-						<div style="margin-left: 80%;">
-							<input class="btn btn-primary" type="button" value="추가"
-								name="addtable" onClick="addrow2();"> <input
-								class="btn btn-danger" type="button" id="alldelbutton"
-								value="전체삭제" onclick="alldel2();">
-						</div>
-					</div>
 					<div class="panel-body">
+						<h5 class="rigth-panel-title panel-title" style="display:inline-block">견적서 등록/수정</h5>
+						<div style="display:inline-block; margin-left:580px;">
+							<input class="btn btn-primary" type="button" value="추가" name="addtable" onClick="addrow1();"> 
+							<input class="btn btn-danger" type="button" id="alldelbutton" value="전체삭제" onclick="alldel();">
+						</div>
 						<table id="estimatetable2"
 							style="border: 0; width: 98%; margin-left: 10px;">
 							<thead>
@@ -944,18 +929,12 @@ $(document).ready(function() {
 					</div>
 				</div>
 				<div id="tab-4" class="tab-content">
-					<div class="panel-heading">
-						<div style="margin-right: 40%; float: left;">
-							<h5 class="panel-title">견적서 등록/수정</h5>
-						</div>
-						<div style="margin-left: 80%;">
-							<input class="btn btn-primary" type="button" value="추가"
-								name="addtable" onClick="addrow3();"> <input
-								class="btn btn-danger" type="button" id="alldelbutton"
-								value="전체삭제" onclick="alldel3();">
-						</div>
-					</div>
 					<div class="panel-body">
+						<h5 class="rigth-panel-title panel-title" style="display:inline-block">견적서 등록/수정</h5>
+						<div style="display:inline-block; margin-left:580px;">
+							<input class="btn btn-primary" type="button" value="추가" name="addtable" onClick="addrow1();"> 
+							<input class="btn btn-danger" type="button" id="alldelbutton" value="전체삭제" onclick="alldel();">
+						</div>
 						<table id="estimatetable3"
 							style="border: 0; width: 98%; margin-left: 10px;">
 							<thead>

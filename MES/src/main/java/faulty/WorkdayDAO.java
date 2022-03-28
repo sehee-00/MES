@@ -112,8 +112,28 @@ public class WorkdayDAO {
 		String result=null;
 		
 		try {
+			con = db.getCon();
+			stmt = con.createStatement();
+			rs = stmt.executeQuery(SQL);
+			while(rs.next()) {
+				result = rs.getString(1);
+			}
 			
-			
+			con.close();
+			stmt.close();
+			rs.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	public String getMcost(String ln) {
+		String SQL="select manufacturing_cost from my_work where work_id = " + ln + "";
+		String result=null;
+		
+		try {
 			con = db.getCon();
 			stmt = con.createStatement();
 			rs = stmt.executeQuery(SQL);

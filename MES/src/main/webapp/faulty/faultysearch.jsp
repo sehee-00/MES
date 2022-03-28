@@ -10,6 +10,7 @@
 
 <%
 	request.setCharacterEncoding("UTF-8");
+
 	int LastListNum = -1;
 	String pagenum = request.getParameter("page");
 	int p = 1;
@@ -67,13 +68,12 @@
 		LastListNum=dao.getSearchAmount(txt_where);
 		list=dao.getFaultyList(p, txt_where);
 	}
-	System.out.println(LastListNum);
 	
 %>
 <table class="table table-bordered table-hover">
 		<thead class="tablehead">
-			<th style="width: 10%;">유형</th>
-			<th style="width: 30%;">발생일자</th>
+			<th style="width: 12%;">유형</th>
+			<th style="width: 28%;">발생일자</th>
 			<th style="width: 30%;">부품명</th>
 			<th style="width: 30%;">공정</th>
 		</thead>
@@ -150,18 +150,24 @@
 	</script>
 </table>
 	
+
+
 <ul class="pagination">
-	<li><a class="preanpage">Previous</a></li>
-	<%
-		// 페이지네이션
-		int block = p / 5 + 1;
+		<li><a class="preanpage">Previous</a></li>
+		<%
+		int block = p/5 + 1;
+		
 		if(p % 5 == 0){
 			block = block -1;
 		}
 		
 		int startpage = (block-1) * 5 + 1;
-		int endpage = ((LastListNum-1)/10) + 1;
-	
+		int endpage = ((LastListNum-1)/10);
+		
+		if(LastListNum%10 != 0 || endpage == 0){
+			endpage += 1;
+		}
+		
 		int endexpage = endpage;
 		
 		if(endexpage > 4 + startpage){
@@ -169,11 +175,11 @@
 		}
 		
 		for(; startpage<=endexpage; startpage++){
-	%>
+		%>
 		<li id="p<%=startpage%>"><a class="anpage"><%=startpage %></a></li>
 		<%} %>
 		<li><a class="nextanpage">Next</a></li>
-</ul>
+	</ul>
 <script>
 // 페이지네이션
 		var pdate=null;

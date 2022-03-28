@@ -33,7 +33,7 @@
 <jsp:useBean id="orderDAO" class="order.orderDAO" scope="page"/>
 <%
 	String itemno=request.getParameter("item_no");
-	
+	System.out.println(orderDTO.getDel_date());
 	if(orderDTO.getO_num()==0){
 		orderDTO.setO_num(orderDAO.getNext());
 	}

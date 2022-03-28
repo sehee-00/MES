@@ -3,7 +3,7 @@ body{
 }
 
 .panel-heading {
-    border-color: rgb(23, 162, 184);
+    border-color: rgb(68,80,132);
     border: 5px;
     background:rgb(0 0 0 / 5%);
 }
@@ -14,7 +14,7 @@ body{
     margin-right: 1vw;
     margin-top: 0.5vw;
 
-    border:3px solid rgb(23, 162, 184);
+    border:3px solid rgb(68,80,132);
     border-bottom: 0px;
     border-right: 0px;
     border-left: 0px;
@@ -43,7 +43,7 @@ body{
 }
 
 .tablehead{
-    background: rgb(23, 162, 184);
+    background: rgb(68,80,132);
     color: white;
 }
 
@@ -82,7 +82,7 @@ body{
 }
 
 .btn-primary{
-    background: rgb(23, 162, 184);
+    background: rgb(68,80,132);
     border: 0px;
 }
 
@@ -147,3 +147,11 @@ ul.tabs li.current{
 	display:none;
 }
 
+a{
+	color: black;
+}
+
+.rigth-panel-title{
+	margin-top:20px;
+	margin-bottom:20px;
+}
