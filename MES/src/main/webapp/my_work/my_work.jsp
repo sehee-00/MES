@@ -107,35 +107,7 @@ int lastdivnum = 0;
 
 
 <title>Insert title here</title>
-<style>
-	.card {
-		border-top: 5px solid #17a2b8;
-		margin: 30px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-	.card-header {
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	
-	.card-body {
-		padding-top: 30px;
-		padding-bottom: 20px;
-	}
-	
-	.btn-info {
-		background-color: #17A2B8;
-		color: white;
-		border-color: #17A2B8;
-	}
-	
-	.float-right {
-		float: right;
-	}
-
-</style>
+<link rel="stylesheet" href="../jhcss.css">
 </head>
 <body>
 <script>
@@ -191,6 +163,8 @@ query = "select * from my_work";
 rs=stmt.executeQuery(query);
 %>
 </script>
+
+<label class="title" style="margin-left: 30px; margin-top: 10px;">나의 작업일보</label>
 <div class="card">
 	<div class="card-header">
 		작업일보 등록/수정
@@ -238,7 +212,7 @@ rs=stmt.executeQuery(query);
 									<th>설비</th>
 									<th>시작시간</th>
 									<th>종료시간</th>
-									<th>불량</th>
+									<th style="width:5%">불량</th>
 									<th>상태</th>
 									<th></th>
 									<th></th>
@@ -250,7 +224,6 @@ rs=stmt.executeQuery(query);
 									<td>
 									
 										<input type="text" class = "form-control" value="<%=rs.getString("order_name")%>" name="order_name" disabled>
-										
 									</td>
 									<td>
 										<input type="text" class = "form-control" value="<%=rs.getString("part_name") %>" name="part_name" disabled>
@@ -261,7 +234,6 @@ rs=stmt.executeQuery(query);
 									<td>
 										<input type="text" class = "form-control" value="<%=rs.getString("facilities") %>" name="facilities" disabled>
 									</td>
-									
 									<td>
 										<input type="datetime-local" class="form-control" value="<%=workstart%>" name="work_start">
 									</td>
@@ -274,10 +246,10 @@ rs=stmt.executeQuery(query);
 									<td>
 										<input type="text" class="form-control" value="<%=rs.getString("status")%>" name="status">
 									</td>
-									<td>
+									<td style="width:5%">
 										<button class="btn btn-danger" type="submit" formaction="delete.jsp" formmethod="post">삭제</button>
 									</td>
-									<td>
+									<td style="width:5%">
 										<button class="btn btn-info" type="submit" formaction="update.jsp" formmethod="post">수정</button>
 									</td>
 								</tr>
@@ -371,21 +343,6 @@ rs=stmt.executeQuery(query);
 						sel2.appendChild(option);
 					}
 					
-// 					var sel3 = tr1.children[1].children[0];
-// 					for(i=0;i<partname.length;i++){
-// 						var option = document.createElement("option");
-// 						option.text = partname[i];
-// 						option.value = partname[i];
-// 						sel3.appendChild(option);
-// 					}
-					
-// 					var sel4 = tr1.children[3].children[0];
-// 					for(i=0;i<facilitiesname.length;i++){
-// 						var option = document.createElement("option");
-// 						option.text = facilitiesname[i];
-// 						option.value = facilitiesname[i];
-// 						sel4.appendChild(option);
-// 					}
 				}
 				
 				function orderchange(element){
@@ -444,23 +401,23 @@ rs=stmt.executeQuery(query);
 			<tbody>
 				<tr>
 					<td>
-						<select onchange="orderchange(this)" name="order_name">
+						<select class="form-select" onchange="orderchange(this)" name="order_name">
 							<option value="">--선택--</option>
 						</select>
 					</td>
 					
 					<td>
-						<select name="part_name">
+						<select class="form-select" name="part_name">
 							<option value="">--선택--</option>
 						</select>
 					</td>
 					<td>
-						<select name="process" onchange="processchange(this)">
+						<select class="form-select" name="process" onchange="processchange(this)">
 							<option value="">--선택--</option>
 						</select>
 					</td>
 					<td>
-						<select name="facilities">
+						<select class="form-select" name="facilities">
 							<option value="">--선택--</option>
 						</select>
 					</td>

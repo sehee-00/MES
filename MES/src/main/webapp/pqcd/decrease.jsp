@@ -20,39 +20,7 @@
 	crossorigin="anonymous">
     </script>
 <title>Insert title here</title>
-<style>
-	.card {
-		border-top: 5px solid #17a2b8;
-		margin: 30px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-	.card-header {
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	
-	.card-body {
-		padding-top: 30px;
-		padding-bottom: 20px;
-	}
-	
-	.active, .btn-info {
-		background-color: #17A2B8;
-		color: white;
-		border-color: #17A2B8;
-	}
-	
-	thead {
-		background-color: #17A2B8;
-		color: white;
-	}
-	
-	.float-right {
-		float: right;
-	}
-</style>
+<link rel="stylesheet" href="../jhcss.css">
 </head>
 <body>
 	<div class="card">

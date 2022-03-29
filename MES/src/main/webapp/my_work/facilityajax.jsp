@@ -33,7 +33,7 @@
 <body>
 <%
 String process = request.getParameter("process");
-query = "select * from process_multi where proc_name='"+process+"' AND sortation='f'";
+query = "select * from process_multi where proc_name='"+process+"' and sortation='f'";
 rs=stmt.executeQuery(query);
 %>
 <option value="">--선택--</option>

@@ -21,44 +21,17 @@
 	crossorigin="anonymous">
     </script>
 <title>Insert title here</title>
-<style>
-	.card {
-		border-top: 5px solid #17a2b8;
-		margin: 30px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-	.card-header {
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	
-	.card-body {
-		padding-top: 30px;
-		padding-bottom: 20px;
-	}
-	
-	.active, .btn-info {
-		background-color: #17A2B8;
-		color: white;
-		border-color: #17A2B8;
-	}
-	
-	.float-right {
-		float: right;
-	}
-</style>
+<link rel="stylesheet" href="../jhcss.css">
 </head>
 <body>
-	<label style="margin-left: 30px; margin-top: 10px;">Dashboard / PQCD 현황</label>
+	<label class="title" style="margin-left: 30px; margin-top: 10px;">Dashboard / PQCD 현황</label>
 	<!--------------------------------------------- 윗 섹션 ----------------------------------------------->
 
 	<div class="card">
 		<div class="card-body">
 			<div class="form-inline">
 				<label>PQCD</label>
-				<select id="selectbox" onchange="selectchange(this)">
+				<select class="form-select search" style="width:10%" id="selectbox" onchange="selectchange(this)">
 					<option value="">--선택--</option>
 					<option value="설비가동률(증가)">설비가동률(증가)</option>
 					<option value="납기단축(감소)">납기단축(감소)</option>

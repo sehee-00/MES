@@ -49,40 +49,9 @@
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous">
     </script>
+<link rel="stylesheet" href="../jhcss.css">
 <title>Insert title here</title>
-<style>
-	.card {
-		border-top: 5px solid #17a2b8;
-		margin: 30px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-	.card-header {
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	
-	.card-body {
-		padding-top: 30px;
-		padding-bottom: 20px;
-	}
-	
-	.active, .btn-info {
-		background-color: #17A2B8;
-		color: white;
-		border-color: #17A2B8;
-	}
-	
-	thead {
-		background-color: #17A2B8;
-		color: white;
-	}
-	
-	.float-right {
-		float: right;
-	}
-</style>
+
 </head>
 <body>
 	<table class="table table-bordered table-hover">

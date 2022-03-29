@@ -10,7 +10,7 @@
 
 <%
 // 	데이터베이스 연결
-	Class.forName("com.mysql.cj.jdbc.Driver");
+	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = null;
 	Statement stmt = null;
 	Statement stmt2 = null;
@@ -47,6 +47,7 @@ rs=stmt.executeQuery(query);
 <html>
 <head>
 <meta charset="UTF-8">
+
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <link
@@ -61,70 +62,80 @@ rs=stmt.executeQuery(query);
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous">
     </script>
+<link rel="stylesheet" href="../jhcss.css">
 <title>MES</title>
 
-<style>
-	.card {
-		border-top: 5px solid #17a2b8;
-		margin: 30px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-	.card-header {
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	
-	.card-body {
-		padding-top: 30px;
-		padding-bottom: 20px;
-	}
-	
-	.active, .btn-info {
-		background-color: #17A2B8;
-		color: white;
-		border-color: #17A2B8;
-	}
-	
-	thead {
-		background-color: #17A2B8;
-		color: white;
-	}
-	
-	.float-right {
-		float: right;
-	}
-</style>
+
 
 </head>
 <body>
-	<label style="margin-left: 30px; margin-top: 10px;">자재 제품 관리 / 부품 관리</label>
+	<label class="title">자재 제품 관리 / 부품 관리</label>
 	
 <!--------------------------------------------- 윗 섹션 ----------------------------------------------->
 
 	<div class="card">
 		<div class="card-body">
 			<div class="form-inline">
-				<label>부품명:</label> <input id="search" type="text" onKeypress="javascript:if(event.keyCode==13) {pressEnter()}">
+				<label>부품명:</label> <input id="search" class="form-control search" type="text" onKeypress="javascript:if(event.keyCode==13) {search()}">
 				<script>
-				function pressEnter(){
+				function search(){
+					
 					var text = document.getElementById("search").value;
 					var trs = document.querySelectorAll(".trs");
 					
 					if(text!=""){
+						document.getElementById("pageul").style.display="none";
+						for(var i=0; i<trs.length; i++){
+							var item = trs.item(i);
+							if(item.children[2].innerHTML.search(text) == -1){
+								item.style.display="none";
+							}
+							else{
+								item.style.display="";
+							}
+						}
+					}
+					
+					else{
+						document.getElementById("pageul").style.display="";
+						groupnumber=1;
+
 						for(var i=0; i<trs.length; i++){
 							var item = trs.item(i);
 							item.style.display="none";
 						}
 						
-						document.getElementById(text).style.display="";
-					}
-					
-					else{
+						trs = document.querySelectorAll(".pagegroup1");
 						for(var i=0; i<trs.length; i++){
 							var item = trs.item(i);
 							item.style.display="";
+						}
+						
+						var pages = document.querySelectorAll(".pages");
+						for(var i=0; i<pages.length; i++){
+							var item = pages.item(i);
+							item.classList.remove('active');
+						}
+						document.getElementById("page1").className += ' active';
+						
+						//previous버튼처리
+						if(groupnumber==1){
+							document.getElementById("previous").className += ' disabled';
+							document.getElementById("previous").style.pointerEvents="none";
+						}
+						else{
+							document.getElementById("previous").classList.remove('disabled');
+							document.getElementById("previous").style.pointerEvents="auto";
+						}
+						
+						//next버튼처리
+						if(groupnumber==document.querySelector(".lastpage").children[0].innerHTML*1){
+							document.getElementById("next").className += ' disabled';
+							document.getElementById("next").style.pointerEvents="none";
+						}
+						else{
+							document.getElementById("next").classList.remove('disabled');
+							document.getElementById("next").style.pointerEvents="auto";
 						}
 					}
 					
@@ -139,8 +150,7 @@ rs=stmt.executeQuery(query);
 <!----------------------------------------------- 왼쪽 섹션 -------------------------------------------->
 		<div class="col-6" style="margin-right: 0px;">
 			<div class="card" style="margin-right: 0px;">
-				<div class="card-header"
-					style="font-size: 20px; background-color: white;">부품 관리</div>
+				<div class="card-header">부품 관리</div>
 				<div class="card-body">
 					<table id="mytable" class="table table-bordered" style="width: 100%;"
 						role="grid">
@@ -197,7 +207,7 @@ rs=stmt.executeQuery(query);
 							
 							// 테이블 배경색 설정
 							resetbutton();
-							element.style.backgroundColor="#17A2B8";
+							element.style.backgroundColor="rgb(68,80,132)";
 						}
 						
 						//페지네이션
@@ -252,7 +262,7 @@ rs=stmt.executeQuery(query);
 						</script>
 						</tbody>
 					</table>
-					<ul class="pagination justify-content-end">
+					<ul class="pagination justify-content-end" id="pageul">
 						<li class="page-item" id="previous" onclick="previousbutton()"><a class="page-link">Previous</a></li>
 						<%
 						int pagecount = ((rowcount-1)/10)+1;
@@ -345,7 +355,7 @@ rs=stmt.executeQuery(query);
 								<button class="btn btn-danger float-right" type="button" onclick="deletebutton()">삭제</button>
 								<button class="btn btn-info float-right"
 									style="margin-right: 5px;" type="submit" formaction="insert.jsp" formmethod="post">등록</button>
-								<button class="btn btn-info float-right" type="button" style="margin-right: 5px;">발주</button>
+								<button class="btn btn-info float-right" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-right: 5px;">발주</button>
 								<button class="btn btn-info float-right" type="reset" style="margin-right: 5px;" onclick="resetbutton()">초기화</button>
 								<script>
 								function deletebutton(){
@@ -361,6 +371,30 @@ rs=stmt.executeQuery(query);
 									}
 								}
 								</script>
+								
+								<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								  <div class="modal-dialog" style="max-width: 100%; width: auto; display: table;">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <h5 class="modal-title" id="exampleModalLabel">발주등록</h5>
+								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+								      </div>
+								      <div class="modal-body" style="padding:1px">
+								      	<div class="row" style="width:300px">
+								      		<div class="col-12">
+								      			<label style="margin:10px;">발주요청 수량</label>
+								      		</div>
+								      		<div class="col-12">
+								      			<input type="text" style="margin:10px; width:250px;" class="form-control" name="number_of_request">
+								      		</div>
+								      	</div>
+								      <div class="modal-footer">
+								      	<button type="submit" class="btn btn-info" formaction="order.jsp" formmethod="post">저장</button>
+								        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+								      </div>
+								    </div>
+								  </div>
+								</div>
 							</div>
 						</div>
 						</form>

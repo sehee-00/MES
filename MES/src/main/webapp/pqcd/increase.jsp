@@ -20,33 +20,7 @@
 	crossorigin="anonymous">
     </script>
 <title>Insert title here</title>
-<style>
-	.card {
-		border-top: 5px solid #17a2b8;
-		margin: 30px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-	.card-header {
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	
-	.card-body {
-		padding-top: 30px;
-		padding-bottom: 20px;
-	}
-	
-	.active, .btn-info {
-		background-color: #17A2B8;
-		color: white;
-		border-color: #17A2B8;
-	}
-	.float-right {
-		float: right;
-	}
-</style>
+<link rel="stylesheet" href="../jhcss.css">
 </head>
 <body>
 
@@ -54,12 +28,12 @@
 		<div class="card-body">
 			<div class="form-inline">
 				<label>조회(년월)</label>
-				<select id="selectyear">
+				<select class="form-select search" style="width:5%" id="selectyear">
 					<option value="2020">2020</option>
 					<option value="2021">2021</option>
 					<option value="2022">2022</option>
 				</select>
-				<select id="selectmonth">
+				<select class="form-select search" style="width:5%" id="selectmonth">
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="3">3</option>

@@ -11,7 +11,7 @@
 
 <%
 // 	데이터베이스 연결
-	Class.forName("com.mysql.cj.jdbc.Driver");
+	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = null;
 	Statement stmt = null;
 	Statement stmt2 = null;
@@ -68,71 +68,8 @@ rs=stmt.executeQuery(query);
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous">
     </script>
-    
+<link rel="stylesheet" href="../jhcss.css">
 <title>Insert title here</title>
-
-<style>
-	.card {
-		border-top: 5px solid #17a2b8;
-		margin: 30px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-	.card-header {
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	
-	.card-body {
-		padding-top: 30px;
-		padding-bottom: 20px;
-	}
-	
-	.active, .btn-info {
-		background-color: #17A2B8;
-		color: white;
-		border-color: #17A2B8;
-	}
-	.active2{
-		color: #fff;
-		background-color: #0d6efd;
-		border-color: #0d6efd;
-	}
-	.active2 .page-link{
-        background-color:rgba(0, 0, 0, 0);
-        color: white;
-    }
-	thead {
-		background-color: #17A2B8;
-		color: white;
-	}
-	
-	.float-right {
-		float: right;
-	}
-	.completegreenbox{
-		background:rgb(214, 233, 198);
-		width:30px;
-		height:40px;
-	}
-	.warningredbox, .warningboxexp, .completegreenbox, .completegreenexp{
-	    border-radius: 5px;
-	    box-shadow: 3px 3px 3px rgb(0 0 0 / 5%);
-	}
-
-	.warningredbox{
-	    background:rgb(227, 183, 190);
-	    width:30px;
-	    height:40px;
-	}
-	.complete{
-		color:green;
-	}
-	.notcomplete{
-		color:red;
-	}
-</style>
 
 </head>
 <body>
@@ -143,7 +80,7 @@ rs=stmt.executeQuery(query);
 	var orderlastpage = <%=orderlastpagenumber%>
 	var outsourcinglastpage = <%=outsourcinglastpagenumber%>
 </script>
-	<label style="margin-left: 30px; margin-top: 10px;">발주입고 관리 / 입출고 관리</label>
+	<label class="title" style="margin-left: 30px; margin-top: 10px;">발주입고 관리 / 입출고 관리</label>
 
 <!--------------------------------------------- 윗 섹션 ----------------------------------------------->
 
@@ -151,12 +88,12 @@ rs=stmt.executeQuery(query);
 		<div class="card-body">
 			<div class="form-inline">
 				<label>구분</label>
-				<select id="selectbox" onchange="divisionchange()">
+				<select class="form-select search" id="selectbox" onchange="divisionchange()">
 					<option value="발주">발주</option>
 					<option value="외주">외주</option>
 				</select>
 				<label>자재명</label>
-				<input id="search" type="text" onKeypress="javascript:if(event.keyCode==13) {search(this)}">
+				<input class="form-control search" id="search" type="text" onKeypress="javascript:if(event.keyCode==13) {search(this)}">
 				<label>긴급</label>
 				<input type="checkbox" id="hurryup" onclick="checkboxchange(this)">
 				<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">입고</button>
@@ -199,6 +136,7 @@ rs=stmt.executeQuery(query);
 			document.getElementById("number_of_request").value = "";
 			document.getElementById("unit_price").value = "";
 		}
+		
 		else{
 			var target = document.getElementById("order"+selectedorder);
 			document.getElementById("porder_company").value = target.children[4].innerHTML;
@@ -395,6 +333,7 @@ rs=stmt.executeQuery(query);
 				item.classList.remove('outsourcingpagegroup'+i2);
 			}
 		}
+		
 		tempitem = document.querySelector(".outsourcinglastpage");
 		tempitem.classList.remove('outsourcinglastpage');
 		document.getElementById("outsourcingpage"+outsourcinglastpage).className += ' outsourcinglastpage';
@@ -552,7 +491,6 @@ rs=stmt.executeQuery(query);
 						
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-info">발주서 출력</button>
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
 					</div>
 				</div>
@@ -637,7 +575,7 @@ rs=stmt.executeQuery(query);
 				else{
 					selectedorder = element.children[0].innerHTML;
 					selectedoutsourcing = "";
-					element.style.backgroundColor="#17A2B8";
+					element.style.backgroundColor="rgb(68,80,132)";
 				}
 			}
 			
@@ -761,17 +699,12 @@ rs=stmt.executeQuery(query);
 						if(rs.getString("outend_date") != null || rs.getString("warehousing_date") != null){
 							complete=" complete";
 						}
-						else if(day!= null){
-							if(today.equals(day) || today.after(day)){
-								complete=" notcomplete";
-							}else{
-								complete="";
-							}
+						else if(day == null || today.equals(day) || today.after(day)){
+							complete=" notcomplete";
 						}
 						else{
 							complete = "";
 						}
-						
 					%>
 					<tr class="outsourcingtrs<%=complete%> outsourcingpagegroup<%=outsourcingpagegroup%>" id="outsourcing<%=temp%>" onclick="outsourcingclickevent(this)">
 						<td style="display:none"><%=rs.getInt("outsourcing_no")%></td>
@@ -786,7 +719,6 @@ rs=stmt.executeQuery(query);
 						<td><%=rs.getString("warehousing_date")%></td>
 						<td><%=rs.getString("faulty")%></td>
 					</tr>
-					
 					<%
 					}
 					%>
@@ -820,7 +752,7 @@ rs=stmt.executeQuery(query);
 				else{
 					selectedorder = "";
 					selectedoutsourcing = element.children[0].innerHTML;
-					element.style.backgroundColor="#17A2B8";
+					element.style.backgroundColor="rgb(68,80,132)";
 				}
 			}
 			
@@ -876,7 +808,6 @@ rs=stmt.executeQuery(query);
 			
 			outsourcingsetdisplay(1);
 			</script>
-			
         </div>
 	</div>
 </body>

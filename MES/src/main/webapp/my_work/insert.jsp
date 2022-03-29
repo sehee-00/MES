@@ -124,7 +124,6 @@ else{
 total_work_time = (int)work_time + no_men_processing_time;
 total_processing_time = real_processing_time + no_men_processing_time;
 
-
 Object workeridob = session.getAttribute("id");
 worker = (String)workeridob;
 
@@ -151,7 +150,7 @@ if(order_name.equals("") || order_name == null){
 else{
 	
 	
-	query = "insert into my_work(order_name,part_name,process,facilities,work_start,work_end,faulty,status,client,regdate,dobun,quantity,core,work_time,real_processing_time,no_men_processing_time,un_processing_time,total_work_time,total_processing_time,worker,manufacturing_cost) values('"+order_name+"','"+part_name+"','"+process+"','"+facilities+"',"+work_start+","+work_end+",'"+faulty+"','"+status+"','"+client+"','"+regdate+"','"+dobun+"',"+quantity+",'"+core+"',"+work_time+","+real_processing_time+","+no_men_processing_time+","+un_processing_time+","+total_work_time+","+total_processing_time+",'"+worker+"',"+manufacturing_cost+")";
+	query = "insert into mes.my_work(order_name,part_name,process,facilities,work_start,work_end,faulty,status,client,regdate,dobun,quantity,core,work_time,real_processing_time,no_men_processing_time,un_processing_time,total_work_time,total_processing_time,worker,manufacturing_cost) values('"+order_name+"','"+part_name+"','"+process+"','"+facilities+"',"+work_start+","+work_end+",'"+faulty+"','"+status+"','"+client+"','"+regdate+"','"+dobun+"',"+quantity+",'"+core+"',"+work_time+","+real_processing_time+","+no_men_processing_time+","+un_processing_time+","+total_work_time+","+total_processing_time+",'"+worker+"',"+manufacturing_cost+")";
 
 	
 	

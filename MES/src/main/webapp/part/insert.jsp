@@ -22,7 +22,6 @@ conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
 %>
 
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -57,11 +56,17 @@ else{
 		stmt.close();
 	}
 	query = "insert into part values('"+part_name+"','"+part_type+"','"+core+"',"+unit_price+","+stock+","+safety_stock+",'"+standard+"','"+unit+"','')";
-	
-	stmt = conn.createStatement();
-	stmt.executeUpdate(query);
 
-	response.sendRedirect("part_management.jsp");
+	try{
+		stmt = conn.createStatement();
+		stmt.executeUpdate(query);
+		response.sendRedirect("part_management.jsp");
+	}catch(Exception e){
+		out.println("<script>alert('이미있는 부품명 입니다.');document.location.href='part_management.jsp';</script>");
+	}
+	
+
+	
 }
 
 

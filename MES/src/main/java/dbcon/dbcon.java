@@ -7,6 +7,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+
 public class dbcon {
 	Connection con = null;
 	String url = "jdbc:mysql://192.168.0.0115:3306/mes?" + "useUnicode=true&characterEncoding=utf8";
@@ -1248,4 +1255,257 @@ public class dbcon {
 		return v;
 	}
 	
+	public Vector<mainorder> mainorder(){
+		Vector<mainorder> v = new Vector<mainorder>();
+		try {
+			dbconnect();
+			String sql = "select item_no, order_status, car_name, order_com_id, order_date from mes.order where due_date is null";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				mainorder mo = new mainorder();
+				mo.setOrdername(rs.getString("item_no"));
+				mo.setOrderstatus(rs.getString("order_status"));
+				mo.setCar_name(rs.getString("car_name"));
+				mo.setOrder_com_id(rs.getString("order_com_id"));
+				mo.setOrder_date(rs.getString("order_date"));
+				v.add(mo);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	//---------------------------main-------------------------
+	public String[][] mainfc(){
+		String[][] array = new String[0][0];
+		try {
+			dbconnect();
+			Statement stmt = null;
+			Statement stmt2 = null;
+			ResultSet rs = null;
+			ResultSet rs2 = null;
+			String query = null;
+
+			stmt = con.createStatement();
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			int month = now.getMonthValue();
+			Calendar cal = Calendar.getInstance();
+			cal.set(year, month-1, 1);
+			int lastday = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+			String date1 = Integer.toString(year) + "-" + Integer.toString(month) + "-01";
+			String date2 = Integer.toString(year) + "-" + Integer.toString(month) + "-" + Integer.toString(lastday);
+			String strFormat = "yyyy-MM-dd";
+			SimpleDateFormat sdf = new SimpleDateFormat(strFormat);
+			Date d1 = sdf.parse(date1);
+			Date d2 = sdf.parse(date2);
+
+			long totalday = (long) (d2.getTime() - d1.getTime()) / (24 * 60 * 60 * 1000) + 1;
+
+			strFormat = "yyyy-MM-dd HH:mm:ss";
+			sdf = new SimpleDateFormat(strFormat);
+			d1 = sdf.parse(date1 + " 00:00:00");
+			d2 = sdf.parse(date2 + " 23:59:59");
+			query = "select count(*) from facilities";
+			rs = stmt.executeQuery(query);
+
+			int facilitycount = 0;
+			if (rs.next()) {
+				facilitycount = rs.getInt(1);
+			}
+			query = "select * from facilities";
+			rs = stmt.executeQuery(query);
+			String[] facilityname = new String[facilitycount];
+
+			int i = 0;
+			while (rs.next()) {
+				facilityname[i] = rs.getString("facilities_name");
+				i++;
+			}
+			i = 0;
+
+			array = new String[facilitycount][3];
+			
+
+			SimpleDateFormat dateParser = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+			double sumon = 0;
+			double sumoff = 0;
+			double averageon = 0;
+			double averageoff = 0;
+
+			for (i = 0; i < facilitycount; i++) {
+				int totaltemp = -1;
+				double ontimeday = 0;
+				double offtimeday = 0;
+				query = "select count(*) from facility_time where facility_name='" + facilityname[i]
+						+ "' and DATE(f_time) between '" + date1 + "' and '" + date2 + "'";
+				rs = stmt.executeQuery(query);
+				if (rs.next()) {
+					if (rs.getInt(1) == 0) {
+						totaltemp = -1;
+					} else {
+						totaltemp = rs.getInt(1);
+					}
+
+				}
+				query = "select * from facility_time where facility_name='" + facilityname[i]
+						+ "' and DATE(f_time) between '" + date1 + "' and '" + date2 + "'";
+				rs = stmt.executeQuery(query);
+				int temp = 0;
+				long ontimesecond = 0;
+				String previous = "";
+				if (totaltemp == -1) {
+					query = "select * from facility_time where facility_name='" + facilityname[i]
+							+ "' order by num desc limit 1";
+					rs = stmt.executeQuery(query);
+					if (rs.next()) {
+						if (rs.getString("status").equals("가동")) {
+							ontimeday = totalday;
+							offtimeday = 0;
+
+						} else {
+							ontimeday = 0;
+							offtimeday = totalday;
+						}
+					}
+				} else {
+					while (rs.next()) {
+						if (temp == 0) {
+							if (rs.getString("status").equals("비가동")) {
+								ontimesecond += (sdf.parse(rs.getString("f_time")).getTime() - d1.getTime()) / (1000);
+							} else {
+								previous = rs.getString("f_time");
+							}
+							temp++;
+						} else {
+							if (rs.getString("status").equals("비가동")) {
+								ontimesecond += (sdf.parse(rs.getString("f_time")).getTime()
+										- sdf.parse(previous).getTime()) / (1000);
+							} else {
+								if ((temp + 1) == totaltemp) {
+									ontimesecond += (d2.getTime() - sdf.parse(rs.getString("f_time")).getTime()) / 1000;
+								} else {
+									previous = rs.getString("f_time");
+								}
+
+							}
+							temp++;
+						}
+					}
+
+					ontimeday = Math.round(ontimesecond / (60.0 * 60 * 24) * 100.0) / 100.0;
+					offtimeday = Math.round(((double) totalday - ontimeday) * 100.0) / 100.0;
+
+				}
+
+				array[i][0] = facilityname[i];
+				array[i][1] = String.valueOf(ontimeday);
+				array[i][2] = String.valueOf(offtimeday);
+				sumon += ontimeday;
+				sumoff += offtimeday;
+				averageon = Math.round((double) sumon / (double) totalday * 100.0) / 100.0;
+				averageoff = Math.round((double) sumoff / (double) totalday * 100.0) / 100.0;
+			}
+
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return array;
+	}
+	public Vector<mainwork> mainwt(){
+		Vector<mainwork> v = new Vector<mainwork>();
+		try {
+			dbconnect();
+			String sql = "select sum(work_time) from my_work where work_end between ? and ?";
+			String date1 = "";
+			String date2 = "";
+			int lastday = 0;
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = null;
+			Calendar cal = Calendar.getInstance();
+			LocalDate now = LocalDate.now();
+			int year = now.getYear();
+			for(int i=0; i<12; i++) {
+				mainwork mw = new mainwork();
+				cal.set(year, i, 1);
+				lastday = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+				date1 = Integer.toString(year) + "-" + Integer.toString(i+1) + "-01";
+				date2 = Integer.toString(year) + "-" + Integer.toString(i+1) + "-" + Integer.toString(lastday);
+				pstmt.setString(1, date1);
+				pstmt.setString(2, date2);
+				rs = pstmt.executeQuery();
+				mw.setMonth(Integer.toString(i+1) + "월");
+				if(rs.next()) {
+					if(rs.getString("sum(work_time)") == null) {
+						mw.setWt("0");
+					}
+					else {
+						mw.setWt(rs.getString("sum(work_time)"));
+					}
+				}
+				else {
+					mw.setWt("0");
+				}
+				v.add(mw);
+			}
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();		}
+		return v;
+	}
+	
+	public Vector<String> mainnumber(){
+		Vector<String> v = new Vector<String>();
+		try {
+			dbconnect();
+			String sql = "select count(*) from mes.order where due_date is null";
+			String sql2 = "select count(*) from outsourcing where outend_date is null";
+			String sql3 = "select count(*) from facilities";
+			String sql4 = "select count(*) from faulty";
+			
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			if(rs.next()) {
+				v.add(rs.getString("count(*)"));
+			}
+			else {
+				v.add("0");
+			}
+			pstmt = con.prepareStatement(sql2);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				v.add(rs.getString("count(*)"));
+			}
+			else {
+				v.add("0");
+			}
+			pstmt = con.prepareStatement(sql3);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				v.add(rs.getString("count(*)"));
+			}
+			else {
+				v.add("0");
+			}
+			pstmt = con.prepareStatement(sql4);
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				v.add(rs.getString("count(*)"));
+			}
+			else {
+				v.add("0");
+			}
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
 }

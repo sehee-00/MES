@@ -40,7 +40,7 @@ if(part_name.equals("")){
 }
 else{
 	
-	query = "insert into manage_porder values('"+part_name+"',null,"+number_of_request+",'"+part_type+"')";
+	query = "insert into manage_porder(part_name, order_name, number_of_request, type) values('"+part_name+"',null,"+number_of_request+",'"+part_type+"')";
 
 	stmt = conn.createStatement();
 	stmt.executeUpdate(query);

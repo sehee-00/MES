@@ -7,30 +7,29 @@
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <meta charset="utf-8">
 <title>Insert title here</title>
+
 </head>
 <body>
-<input type="text" id="textbox">
-<button >ㅁㅁㅁㅁ</button>
 
-<div id="ordert">
 
-</div>
 <script>
-$("#textbox").on("keydown",function(e){   // 검색 창에 값이 입력됨에 따른 이벤트 처리
-    if(e.keyCode==13){   // 엔터가 입력 됐을 때 
-       input=$("#searchbox").val();
-    
-       $.ajax({
-          type:"GET",
-            url:"./ajax1.jsp",
-            data:{input:input},
-            dataType:"html",
-            success:function(data){
-                $("#ordert").html(data);
-          }
-       });
-    }
-});
+var request = new XMLHttpRequest();
+function search(){
+	   request.open("Post", "http://localhost:8080/MES/temp?p1=aaa", true);
+	   request.onreadystatechange = searchfacilities;
+	   request.send(null);
+	}
+
+	function searchfacilities(element){
+	   if(request.readyState == 4 && request.status == 200){
+	      var object = eval('(' + request.responseText + ')');
+	      var result = object.result;
+	      alert(result[1].value);
+	      console.log(element);
+	   }
+	}
+
+search();
 </script>
 </body>
 </html>

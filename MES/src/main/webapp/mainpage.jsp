@@ -50,6 +50,6 @@ else{
 
 </head>
 <body>
-	<iframe id="pframe" src="" frameborder="0px"></iframe>
+	<iframe id="pframe" src="./main/main.jsp" frameborder="0px"></iframe>
 </body>
 </html>

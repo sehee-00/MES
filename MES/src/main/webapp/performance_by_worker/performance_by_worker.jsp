@@ -48,44 +48,17 @@
     
     
 <title>Insert title here</title>
-<style>
-	.card {
-		border-top: 5px solid #17a2b8;
-		margin: 30px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-	.card-header {
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	
-	.card-body {
-		padding-top: 30px;
-		padding-bottom: 20px;
-	}
-	
-	.active, .btn-info {
-		background-color: #17A2B8;
-		color: white;
-		border-color: #17A2B8;
-	}
-	
-	.float-right {
-		float: right;
-	}
-</style>
+<link rel="stylesheet" href="../jhcss.css">
 
 </head>
 <body>
-	<label style="margin-left: 30px; margin-top: 10px;">Dashboard / 작업자별 실적 현황</label>
+	<label class="title" style="margin-left: 30px; margin-top: 10px;">Dashboard / 작업자별 실적 현황</label>
 
 	<div class="card">
 		<div class="card-body">
 			<div class="form-inline">
 				<label>작업자</label>
-				<select id="select">
+				<select class="form-select search" style="width:10%" id="select">
 					<option value="전체">전체</option>
 					<%
 					while(rs.next()){

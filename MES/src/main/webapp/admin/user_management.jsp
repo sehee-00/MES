@@ -10,7 +10,7 @@
 
 <%
 // 	데이터베이스 연결
-	Class.forName("com.mysql.cj.jdbc.Driver");
+	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = null;
 	Statement stmt = null;
 	Statement stmt2 = null;
@@ -47,6 +47,7 @@ rs=stmt.executeQuery(query);
 <html>
 <head>
 <meta charset="UTF-8">
+
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <link
@@ -61,73 +62,81 @@ rs=stmt.executeQuery(query);
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous">
     </script>
+<link rel="stylesheet" href="../jhcss.css">
 <title>MES</title>
 
-<style>
-	.card {
-		border-top: 5px solid #17a2b8;
-		margin: 30px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-	.card-header {
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	
-	.card-body {
-		padding-top: 30px;
-		padding-bottom: 20px;
-	}
-	
-	.active, .btn-info {
-		background-color: #17A2B8;
-		color: white;
-		border-color: #17A2B8;
-	}
-	
-	thead {
-		background-color: #17A2B8;
-		color: white;
-	}
-	
-	.float-right {
-		float: right;
-	}
-</style>
+
 
 </head>
 <body>
-	<label style="margin-left: 30px; margin-top: 10px;">Admin / 사용자 관리</label>
+	<label class="title" style="margin-left: 30px; margin-top: 10px;">Admin / 사용자 관리</label>
 	
 <!--------------------------------------------- 윗 섹션 ----------------------------------------------->
 
 	<div class="card">
 		<div class="card-body">
 			<div class="form-inline">
-				<label>부품명:</label> <input id="search" type="text" onKeypress="javascript:if(event.keyCode==13) {pressEnter()}">
+				<label>이름:</label> <input class="search form-control" id="search" type="text" onKeypress="javascript:if(event.keyCode==13) {search()}">
 				<script>
-				function pressEnter(){
+				function search(){
 					var text = document.getElementById("search").value;
 					var trs = document.querySelectorAll(".trs");
 					
 					if(text!=""){
+						document.getElementById("pageul").style.display="none";
+						for(var i=0; i<trs.length; i++){
+							var item = trs.item(i);
+							if(item.children[2].innerHTML.search(text) == -1){
+								item.style.display="none";
+							}
+							else{
+								item.style.display="";
+							}
+						}
+					}
+					
+					else{
+						document.getElementById("pageul").style.display="";
+						groupnumber=1;
+
 						for(var i=0; i<trs.length; i++){
 							var item = trs.item(i);
 							item.style.display="none";
 						}
 						
-						document.getElementById(text).style.display="";
-					}
-					
-					else{
+						trs = document.querySelectorAll(".pagegroup1");
 						for(var i=0; i<trs.length; i++){
 							var item = trs.item(i);
 							item.style.display="";
 						}
+						
+						var pages = document.querySelectorAll(".pages");
+						for(var i=0; i<pages.length; i++){
+							var item = pages.item(i);
+							item.classList.remove('active');
+						}
+						document.getElementById("page1").className += ' active';
+						
+						//previous버튼처리
+						if(groupnumber==1){
+							document.getElementById("previous").className += ' disabled';
+							document.getElementById("previous").style.pointerEvents="none";
+						}
+						else{
+							document.getElementById("previous").classList.remove('disabled');
+							document.getElementById("previous").style.pointerEvents="auto";
+						}
+						
+						//next버튼처리
+						if(groupnumber==document.querySelector(".lastpage").children[0].innerHTML*1){
+							document.getElementById("next").className += ' disabled';
+							document.getElementById("next").style.pointerEvents="none";
+						}
+						else{
+							document.getElementById("next").classList.remove('disabled');
+							document.getElementById("next").style.pointerEvents="auto";
+						}
 					}
-					
 				}
 				</script>
 			</div>
@@ -210,7 +219,7 @@ rs=stmt.executeQuery(query);
 							
 							// 테이블 배경색 설정
 							resetbutton();
-							element.style.backgroundColor="#17A2B8";
+							element.style.backgroundColor="rgb(68,80,132)";
 						}
 						
 						//페지네이션
@@ -265,7 +274,7 @@ rs=stmt.executeQuery(query);
 						</script>
 						</tbody>
 					</table>
-					<ul class="pagination justify-content-end">
+					<ul class="pagination justify-content-end" id="pageul">
 						<li class="page-item" id="previous" onclick="previousbutton()"><a class="page-link">Previous</a></li>
 						<%
 						int pagecount = ((rowcount-1)/10)+1;
@@ -292,7 +301,6 @@ rs=stmt.executeQuery(query);
 				<div class="card">
 					<div class="card-header">사용자 등록/수정</div>
 					<div class="card-body">
-					
 					<form>
 						<div class="row">
 							<div class="col-4">
@@ -385,7 +393,6 @@ rs=stmt.executeQuery(query);
 										var item = trs.item(i);
 										item.style.backgroundColor="white";
 									}
-									
 								}
 								</script>
 							</div>

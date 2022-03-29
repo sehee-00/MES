@@ -57,10 +57,14 @@ else{
 	}
 	query = "insert into code_sub values('"+txtmain+"','"+txtsub+"',"+subusing+")";
 
-	stmt = conn.createStatement();
-	stmt.executeUpdate(query);
-
-	response.sendRedirect("common_code.jsp");
+	try{
+		stmt = conn.createStatement();
+		stmt.executeUpdate(query);
+		response.sendRedirect("common_code.jsp");
+	}catch(Exception e){
+		out.println("<script>alert('이미있는 서브코드 입니다.');document.location.href='common_code.jsp';</script>");
+	}
+	
 }
 
 %>

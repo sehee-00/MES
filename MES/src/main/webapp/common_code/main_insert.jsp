@@ -42,10 +42,14 @@ else{
 	
 	query = "insert into code_main values('"+txtmaingroup+"','"+txtmainmain+"',"+mainusing+",'"+maincontents+"')";
 
-	stmt = conn.createStatement();
-	stmt.executeUpdate(query);
-
-	response.sendRedirect("common_code.jsp");
+	try{
+		stmt = conn.createStatement();
+		stmt.executeUpdate(query);
+		response.sendRedirect("common_code.jsp");
+	}catch(Exception e){
+		out.println("<script>alert('이미있는 메인코드 입니다.');document.location.href='common_code.jsp';</script>");
+	}
+	
 }
 
 %>

@@ -8,7 +8,7 @@
 
 <%
 // 	데이터베이스 연결
-	Class.forName("com.mysql.cj.jdbc.Driver");
+	Class.forName("com.mysql.jdbc.Driver");
 	Connection conn = null;
 	Statement stmt = null;
 	Statement stmt2 = null;
@@ -28,6 +28,7 @@
 <html>
 <head>
 <meta charset="utf-8">
+
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <link
@@ -42,72 +43,8 @@
 	integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
 	crossorigin="anonymous">
     </script>
+<link rel="stylesheet" href="../jhcss.css">
 <title>Insert title here</title>
-<style>
-	.card {
-		border-top: 5px solid #17a2b8;
-		margin: 30px;
-		margin-top: 10px;
-		margin-bottom: 10px;
-	}
-	
-	.card-header {
-		padding-top: 20px;
-		padding-bottom: 20px;
-	}
-	
-	.card-body {
-		padding-top: 30px;
-		padding-bottom: 20px;
-	}
-	
-	.active, .btn-info {
-		background-color: #17A2B8;
-		color: white;
-		border-color: #17A2B8;
-	}
-	
-	thead {
-		background-color: #17A2B8;
-		color: white;
-	}
-	
-	.float-right {
-		float: right;
-	}
-	.modal-dialog.modal-fullsize {
-	  width: 100%;
-	  height: 100%;
-	  margin: 0;
-	  padding: 0;
-	}
-	.modal-content.modal-fullsize {
-	  height: auto;
-	  min-height: 100%;
-	  border-radius: 0; 
-	}
-
-	.modal.modal-center {
-	  text-align: center;
-	}
-	
-	@media screen and (min-width: 768px) { 
-	  .modal.modal-center:before {
-	    display: inline-block;
-	    vertical-align: middle;
-	    content: " ";
-	    height: 100%;
-	  }
-	}
-	
-	.modal-dialog.modal-center {
-	  display: inline-block;
-	  text-align: left;
-	  vertical-align: middle; 
-	}
-
-
-</style>
 
 <script>
 
@@ -155,12 +92,12 @@ var selectedmain = "선택";
 </script>
 </head>
 <body>
-<label style="margin-left: 30px; margin-top: 10px;">기준정보 관리/공통코드 관리</label>
+<label class="title" style="margin-left: 30px; margin-top: 10px;">기준정보 관리/공통코드 관리</label>
 <div class="card">
 	<div class="card-body">
 		<div class="form-inline">
 			<label>그룹</label>
-			<select id="groupselect" onchange="groupchange()">
+			<select class="form-select search" id="groupselect" onchange="groupchange()">
 				<option value="전체">전체</option>
 				<%
 				rs=stmt.executeQuery("select * from code_group");
@@ -198,7 +135,7 @@ var selectedmain = "선택";
 				
 			</select>
 			<label>메인코드</label>
-			<select id="mainselect" onchange="mainchange()">
+			<select class="form-select search" id="mainselect" onchange="mainchange()">
 				<option value="선택">선택</option>
 				<%
 				rs=stmt.executeQuery("select * from code_main");
@@ -222,6 +159,7 @@ var selectedmain = "선택";
 							}
 						}
 					}
+					
 					document.getElementById("mainrevise").value = selectedmain;
 					document.getElementById("txtmain").value = selectedmain;
 					document.getElementById("txtsub").value = "";
@@ -236,7 +174,6 @@ var selectedmain = "선택";
 						var item = trs.item(i);
 						item.style.display="";
 					}
-					
 				}
 				</script>
 			</select>
@@ -267,12 +204,10 @@ var selectedmain = "선택";
 					item.style.display="";
 				}
 			}
-			
 			function maincodebutton(){
 				document.getElementById("maindiv").style.display="";
 				document.getElementById("subdiv").style.display="none";
 			}
-			
 			var modalgroup="";
 			var modalmain="";
 			var modalsub="";
@@ -316,7 +251,7 @@ var selectedmain = "선택";
 												item.style.backgroundColor="white";
 											}
 											
-											element.style.backgroundColor="#17A2B8";
+											element.style.backgroundColor="rgb(68,80,132)";
 											modalgroup=element.children[0].innerHTML;
 											
 											trs = document.querySelectorAll(".modalmaintrs");
@@ -369,7 +304,7 @@ var selectedmain = "선택";
 												item.style.backgroundColor="white";
 											}
 											
-											element.style.backgroundColor="#17A2B8";
+											element.style.backgroundColor="rgb(68,80,132)";
 											modalmain=element.children[0].innerHTML.replace(" ","_");
 											
 											
@@ -502,14 +437,13 @@ var selectedmain = "선택";
 								item.style.backgroundColor="white";
 							}
 							
-							element.style.backgroundColor="#17A2B8";
+							element.style.backgroundColor="rgb(68,80,132)";
 						}
 						</script>
 					</tbody>
 				</table>
 			</div>
 		</div>
-					
 	</div>
 
 <!------------------------------------------------------ 오른쪽 섹션 --------------------------------------------->
@@ -560,7 +494,6 @@ var selectedmain = "선택";
 			</div>
 		</div>
 	</div>
-	
 	
 	<div id="maindiv" class="col-6" style="margin-left: 0px; display:none;">
 		<div class="col" style="margin-left: 0px;">

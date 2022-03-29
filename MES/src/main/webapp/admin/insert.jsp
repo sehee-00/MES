@@ -58,12 +58,19 @@ else{
 		stmt.executeUpdate(query);
 		stmt.close();
 	}
+	
 	query = "insert into user values('"+user_id+"','"+user_pw+"','"+user_name+"','"+first_position+"','"+second_position+"','"+third_position+"','"+phone+"','"+email+"','"+note+"','"+state+"','"+use_yn+"')";
 
-	stmt = conn.createStatement();
-	stmt.executeUpdate(query);
+	try{
+		stmt = conn.createStatement();
+		stmt.executeUpdate(query);
+		response.sendRedirect("user_management.jsp");
+	}catch(Exception e){
+		out.println("<script>alert('이미있는 사용자ID 입니다.');document.location.href='user_management.jsp';</script>");
+	}
+	
 
-	response.sendRedirect("user_management.jsp");
+	
 }
 
 %>
