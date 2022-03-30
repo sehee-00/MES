@@ -155,7 +155,7 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 			var searchpartname = document.getElementById("searchpartname").value;
 			var searchorder = document.getElementById("searchorder").value;
 			request.open("Post",
-					"http://localhost:8080/MES/searchmanage_porder?searchpartname="
+					"../searchmanage_porder?searchpartname="
 							+ searchpartname + "&searchorder=" + searchorder,
 					true);
 			request.onreadystatechange = searchmanage_porder;

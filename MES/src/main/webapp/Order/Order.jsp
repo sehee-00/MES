@@ -280,6 +280,7 @@
                         <div class="form-group image">
                            <label for="order_image">도면이미지</label>
                            <input type="file" id="item_img" name="img" value="파일 선택">
+                           <div id="img_div" style="margin-top:10px"></div>
                         </div>
                      </td>
                   </tr>
@@ -289,13 +290,27 @@
                            <input class="btn btn-primary" type="reset" value="초기화" id="orderreset">
                            <input class="btn btn-primary" type="button" value="수주복사" id="copyorder" onclick="order_copy(this.form)">
                            <input class="btn btn-primary" type="button" value="납기" id="period">
-                           <input class="btn btn-primary" type="submit" value="등록" id="orderinsert">
+                           <input class="btn btn-primary" type="button" value="등록" id="orderinsert" onclick="insert_order(this.form)">
                            <input class="btn btn-danger" type="button" value="삭제" id="orderdelete" onclick="delete_order()" > 
                         </div>
                      </td>
                      
                      <script>
                      <!-- 수주관리 삭제버튼에 따른 이벤트 함수 -->
+                     function insert_order(frm){
+							var filecheck = document.getElementById("item_img").value;
+							if(!filecheck){
+								frm.action = 'orderinsert.jsp';
+								frm.method = 'post';
+								frm.submit();
+							}
+							else{									
+								frm.action = '../orderimg'
+								frm.enctype = 'multipart/form-data';
+								frm.submit();
+							}
+					}
+                     
                      function delete_order(){
                         var itemno=document.getElementById('item_no').value;   // id값이 item_no에 담긴 데이터를 orderdelete로 전송
                         location.href='orderdelete.jsp?item_no='+itemno;

@@ -97,7 +97,7 @@ function wtChart() {
 
 
 function fisrtchart(){
-	request.open("Post", "http://localhost:8080/MES/fcchart", true);
+	request.open("Post", "../fcchart", true);
 	request.onreadystatechange = fisrtresult;
 	request.send(null);
 }

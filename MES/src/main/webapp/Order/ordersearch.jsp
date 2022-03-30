@@ -180,7 +180,7 @@ $(document).ready(function(){
 				$("#item_img").val("");
 				var imgname = $(this).children('#imgtext').text();
 				if(imgname != 'null'){
-					document.getElementById("img_div").innerHTML = '<img style="width: 150px;" src="/MES/upload/' + imgname + '">'
+					document.getElementById("img_div").innerHTML = '<img style="width: 150px;" src="../upload/' + imgname + '">'
 				}
 				else{
 					document.getElementById("img_div").innerHTML = "";

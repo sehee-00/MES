@@ -47,15 +47,12 @@ if(part_name.equals("")){
 }
 else{
 	if(submitcheck.equals("1")){
-		query = "delete from part where part_name='" + part_name + "';";
-
-		// Create Statement 
-		stmt = conn.createStatement();
-		// Run Qeury 
-		stmt.executeUpdate(query);
-		stmt.close();
+		query = "update part set part_name='"+part_name+"', part_type='"+part_type+"', core='"+core+"', unit_price="+unit_price+", stock="+stock+", safety_stock="+safety_stock+", standard='"+standard+"', unit='"+unit+"' where part_name='"+part_name+"'";
 	}
-	query = "insert into part values('"+part_name+"','"+part_type+"','"+core+"',"+unit_price+","+stock+","+safety_stock+",'"+standard+"','"+unit+"','')";
+	else{
+		query = "insert into part values('"+part_name+"','"+part_type+"','"+core+"',"+unit_price+","+stock+","+safety_stock+",'"+standard+"','"+unit+"','')";
+	}
+	
 
 	try{
 		stmt = conn.createStatement();

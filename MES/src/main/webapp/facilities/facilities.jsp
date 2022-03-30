@@ -129,7 +129,7 @@ function uladd(lastpage){
 
 function search(){
 	var searchword = document.getElementById("search").value;
-	request.open("Post", "http://localhost:8080/MES/searchfacilities?searchword=" + searchword, true);
+	request.open("Post", "../searchfacilities?searchword=" + searchword, true);
 	request.onreadystatechange = searchfacilities;
 	request.send(null);
 }

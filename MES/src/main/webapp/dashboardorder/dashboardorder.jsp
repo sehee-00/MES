@@ -56,7 +56,7 @@ $(document).ready(function() {
 function orderchange(){
 	var orderidem = document.getElementById("orderid");
 	var selectorderid = orderidem.options[orderidem.selectedIndex].text;
-	request.open("Post", "http://localhost:8080/MES/ordertable?orderid=" + selectorderid, true);
+	request.open("Post", "../ordertable?orderid=" + selectorderid, true);
 	request.onreadystatechange = tableupdate;
 	request.send(null);
 }

@@ -79,7 +79,6 @@ public class orderimg extends HttpServlet {
 		od.setC_name(car);
 		od.setP_name(productname);
 		if(!amount.equals("")) {
-			System.out.println("aa");
 			od.setO_price(Integer.parseInt(amount));
 		}
 		if(!negotiate.equals("")) {
@@ -118,7 +117,7 @@ public class orderimg extends HttpServlet {
 		writer.println("<script>");
 		if(oda.write(od)>0){
 			writer.println("alert('완료');"); 
-			writer.println("location.href='/MES/Order/Order.jsp';");
+			writer.println("history.back();");
 		}
 		else {
 			writer.println("alert('실패');"); 

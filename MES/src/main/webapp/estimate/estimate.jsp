@@ -79,7 +79,7 @@ $(function(){
     	var str = td.eq(5).text();
     	str = str.replaceAll('!@#', '\n');
     	document.getElementById('et_explain').value = str;
-    	request.open("Post", "http://localhost:8080/MES/estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
+    	request.open("Post", "../estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
     	request.onreadystatechange = searchestimate; 
     	request.send(null);
     	
@@ -195,7 +195,7 @@ function searchestimate(){
 function searchet_idevent(dates){
 	var searchword = document.getElementById("searchet_id").value;
 	alert(dates);
-	request.open("Post", "http://localhost:8080/MES/searchtableajax?searchword=" + searchword  +"&mode=" + mode, true);
+	request.open("Post", "../searchtableajax?searchword=" + searchword  +"&mode=" + mode, true);
 	request.onreadystatechange = searchestimatetable;
 	request.send(null);
 }
@@ -293,7 +293,7 @@ function searchestimatetable(){
 	    	var str = td.eq(5).text();
 	    	str = str.replaceAll('!@#', '\n');
 	    	document.getElementById('et_explain').value = str;
-	    	request.open("Post", "http://localhost:8080/MES/estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
+	    	request.open("Post", "../estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
 	    	request.onreadystatechange = searchestimate;
 	    	request.send(null);
 	    });
@@ -346,7 +346,7 @@ function degreeclick(){
 	    	var str = td.eq(5).text();
 	    	str = str.replaceAll('!@#', '\n');
 	    	document.getElementById('et_explain').value = str;
-	    	request.open("Post", "http://localhost:8080/MES/estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
+	    	request.open("Post", "../estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
 	    	request.onreadystatechange = searchestimate;
 	    	request.send(null);
 	    });
@@ -404,7 +404,7 @@ function degreeclickoff(){
 	    	var str = td.eq(5).text();
 	    	str = str.replaceAll('!@#', '\n');
 	    	document.getElementById('et_explain').value = str;
-	    	request.open("Post", "http://localhost:8080/MES/estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
+	    	request.open("Post", "../estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
 	    	request.onreadystatechange = searchestimate;
 	    	request.send(null);
 	    });
@@ -683,7 +683,7 @@ $(document).ready(function() {
 	                $('input[name="dates"]').change(function(){
 	                    dates = $('input[name="dates"]').val();
 	                    var searchword = document.getElementById("searchet_id").value;
-						request.open("Post", "http://localhost:8080/MES/searchtableajax?searchword=" + searchword  +"&mode=" + mode + "&dates=" + dates, true);
+						request.open("Post", "../searchtableajax?searchword=" + searchword  +"&mode=" + mode + "&dates=" + dates, true);
 						request.onreadystatechange = searchestimatetable;
 						request.send(null); 
 	                });
@@ -691,7 +691,7 @@ $(document).ready(function() {
 			$("#searchet_id").on("keydown", function(e){	// 검색 창에 값이 입력됨에 따른 이벤트 처리
 				if(e.keyCode==13){	
 					var searchword = document.getElementById("searchet_id").value;
-					request.open("Post", "http://localhost:8080/MES/searchtableajax?searchword=" + searchword  +"&mode=" + mode + "&dates=" + dates, true);
+					request.open("Post", "../searchtableajax?searchword=" + searchword  +"&mode=" + mode + "&dates=" + dates, true);
 					request.onreadystatechange = searchestimatetable;
 					request.send(null); 
 				}
@@ -737,7 +737,7 @@ $(document).ready(function() {
 				    	var str = td.eq(5).text();
 				    	str = str.replaceAll('!@#', '\n');
 				    	document.getElementById('et_explain').value = str;
-				    	request.open("Post", "http://localhost:8080/MES/estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
+				    	request.open("Post", "../estimatesearchajax?et_id="+ et_id +"&degree=" + degree, true);
 				    	request.onreadystatechange = searchestimate;
 				    	request.send(null);
 				    });

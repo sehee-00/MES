@@ -91,14 +91,14 @@ function orderchange(){
 	start_day = document.getElementById("start_day").value;
 	end_day = document.getElementById("end_day").value;
 	if(start_day != "" && end_day != ""){
-		request.open("Post", "http://localhost:8080/MES/searchoutsourcing?start_day=" + start_day + "&end_day=" + end_day , true);
+		request.open("Post", "../searchoutsourcing?start_day=" + start_day + "&end_day=" + end_day , true);
 		request.onreadystatechange = orderresult;
 		request.send(null);
 	}
 }
 
 function fisrtchart(){
-	request.open("Post", "http://localhost:8080/MES/outsourcing", true);
+	request.open("Post", "../outsourcing", true);
 	request.onreadystatechange = fisrtresult;
 	request.send(null);
 }

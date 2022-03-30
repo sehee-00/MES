@@ -163,7 +163,7 @@ int lastpage = (pm.size() - 1) / 10 + 1;
 		else{
 			check = 0;
 		}
-		request.open("Post", "http://localhost:8080/MES/searchpm?searchtype=" + searchtype + "&searchpmname=" + searchpmname +"&check=" + check, true);
+		request.open("Post", "../searchpm?searchtype=" + searchtype + "&searchpmname=" + searchpmname +"&check=" + check, true);
 		request.onreadystatechange = searchmanage_porder;
 		request.send(null);
 	}

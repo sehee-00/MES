@@ -185,6 +185,7 @@ rs=stmt.executeQuery(query);
 							<td><%=rs.getString("safety_stock")%></td>
 							<td style="display:none"><%=rs.getString("standard")%></td>
 							<td style="display:none"><%=rs.getString("unit")%></td>
+							<td style="display:none"><%= rs.getString("part_img")%></td>
 							<td><button type="button" class="btn btn-secondary">인쇄</button></td>
 						</tr>
 						
@@ -202,8 +203,16 @@ rs=stmt.executeQuery(query);
 							document.getElementById("safety_stock").value=element.children[5].innerHTML;
 							document.getElementById("standard").value=element.children[6].innerHTML;
 							document.getElementById("unit").value=element.children[7].innerHTML;
-							
+							document.getElementById("item_img").value="";
 							document.getElementById("submitcheck").value="1";
+							var imgname = element.children[8].innerHTML;
+							
+							if(imgname != 'null' && imgname != ""){
+								document.getElementById("img_div").innerHTML = '<img style="width: 150px;" src="../mtupload/' + imgname + '">'
+							}
+							else{
+								document.getElementById("img_div").innerHTML = "";
+							}
 							
 							// 테이블 배경색 설정
 							resetbutton();
@@ -348,16 +357,31 @@ rs=stmt.executeQuery(query);
 								<label>부품이미지</label>
 							</div>
 							<div class="col-12">
-								<button type="button">임시버튼</button>
+								<input type="file" id="item_img" name="img" value="파일 선택">
 							</div>
+							<div id="img_div" style="margin-top:10px"></div>
 							<input type="text" style="display:none" value="0" name="submitcheck" id="submitcheck">
 							<div class="col-12">
 								<button class="btn btn-danger float-right" type="button" onclick="deletebutton()">삭제</button>
-								<button class="btn btn-info float-right"
-									style="margin-right: 5px;" type="submit" formaction="insert.jsp" formmethod="post">등록</button>
+								<input class="btn btn-info float-right"
+									style="margin-right: 5px;" type=button value="등록" onclick="insert_part(this.form)">
 								<button class="btn btn-info float-right" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" style="margin-right: 5px;">발주</button>
 								<button class="btn btn-info float-right" type="reset" style="margin-right: 5px;" onclick="resetbutton()">초기화</button>
 								<script>
+								 function insert_part(frm){
+										var filecheck = document.getElementById("item_img").value;
+										if(!filecheck){
+											frm.action = 'insert.jsp';
+											frm.method = 'post';
+											frm.submit();
+										}
+										else{									
+											frm.action = '../partimg';
+											frm.method = 'post';
+											frm.enctype = 'multipart/form-data';
+											frm.submit();
+										}
+								}
 								function deletebutton(){
 									location.href="delete.jsp?p1="+document.getElementById('part_name').value;
 								}
