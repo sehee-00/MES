@@ -206,7 +206,7 @@ $("#settingmenutable").find("input:checkbox").on("click",function(){
     if($(this).parent().parent().hasClass("uppermenu")){
     	let n = $(this).parent().parent().attr("id");
     	if($(this).attr("checked") == "checked"){
-    		$("tr[name='"+ n +"'] #lowermenucheck input").prop("checked", true);
+    		$("tr[name='"+ n +"'] #lower menucheck input").prop("checked", true);
     		$("tr[name='"+ n +"'] #lowermenucheck input").attr("checked","checked");
     		$("tr[name='"+ n +"']").addClass("selecteduserrow");
     	}

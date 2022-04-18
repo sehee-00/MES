@@ -107,11 +107,7 @@ request.setCharacterEncoding("UTF-8");
 		}
 		
 		int startpage = (block-1) * 5 + 1;
-		int endpage = ((lastboardnum-1)/10);
-		
-		if(lastboardnum%10 != 0 || endpage == 0){
-			endpage += 1;
-		}
+		int endpage = ((lastboardnum-1)/10) + 1;
 		
 		int endexpage = endpage;
 		

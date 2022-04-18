@@ -230,7 +230,7 @@
                            </select>
                         </div>
                         <div class="form-group car">
-                           <label for="order_car">기타<span style="color: red;">*</span></label>
+                           <label for="order_car">모델명<span style="color: red;">*</span></label>
                            <input type="text" id="car_name" name="car" class="form-control">
                         </div>
                      </td>
@@ -238,7 +238,7 @@
                   <tr>
                      <td id="cover">
                         <div class="form-group productname">
-                           <label for="order_productname">품명<span style="color: red;">*</span></label>
+                           <label for="order_productname">도번<span style="color: red;">*</span></label>
                            <input type="text" id="prod_name" class="form-control" name="productname">
                         </div>
                         <div class="form-group amount">

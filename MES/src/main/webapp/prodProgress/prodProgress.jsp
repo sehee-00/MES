@@ -600,7 +600,7 @@
 	                    }
 	                    
 	                    $("#partsMclose").click();
-	                    tsetting();
+	                    tsetting(itemno);
 	                }
 	                reader.readAsBinaryString(input.files[0]);
 				}

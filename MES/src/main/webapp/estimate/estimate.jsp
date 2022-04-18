@@ -632,8 +632,9 @@ function insertform(frm){
 
 function deleteform(frm){
 	var et_id = document.getElementById('et_id');
-	var degree = document.getElementById('degree');
+	var degree = document.getElementById('et_degree');
 	var check = 0;
+	alert(degree.value);
 	if(check == 0 && et_id.value == ""){
 		alert("확인");
 		check = 1;
@@ -898,7 +899,7 @@ $(document).ready(function() {
 					<div class="panel-body">
 						<h5 class="rigth-panel-title panel-title" style="display:inline-block">견적서 등록/수정</h5>
 						<div style="display:inline-block; margin-left:580px;">
-							<input class="btn btn-primary" type="button" value="추가" name="addtable" onClick="addrow1();"> 
+							<input class="btn btn-primary" type="button" value="추가" name="addtable" onClick="addrow2();"> 
 							<input class="btn btn-danger" type="button" id="alldelbutton" value="전체삭제" onclick="alldel();">
 						</div>
 						<table id="estimatetable2"
@@ -932,7 +933,7 @@ $(document).ready(function() {
 					<div class="panel-body">
 						<h5 class="rigth-panel-title panel-title" style="display:inline-block">견적서 등록/수정</h5>
 						<div style="display:inline-block; margin-left:580px;">
-							<input class="btn btn-primary" type="button" value="추가" name="addtable" onClick="addrow1();"> 
+							<input class="btn btn-primary" type="button" value="추가" name="addtable" onClick="addrow3();"> 
 							<input class="btn btn-danger" type="button" id="alldelbutton" value="전체삭제" onclick="alldel();">
 						</div>
 						<table id="estimatetable3"

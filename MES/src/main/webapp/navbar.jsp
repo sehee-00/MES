@@ -161,6 +161,12 @@
                         <a class="sidemenuselect" id="productionprog">생산 진행 관리</a>
                         </div>
                         </li>
+                        
+                         <li name="수주 공정 관리">
+                        <div class="accordion-inner">
+                        <a class="sidemenuselect" id="order_process">진척 현황</a>
+                        </div>
+                        </li>
 
                         <li name="진척 현황">
                         <div class="accordion-inner">
@@ -589,6 +595,10 @@
     			
     		case "progress":
     			window.open("statusProgress/statusProgress.jsp");
+    			break;
+    			
+    		case "order_process":
+    			$("#pframe").attr('src','order_process/order_process.jsp');
     			break;
     	}
     });
