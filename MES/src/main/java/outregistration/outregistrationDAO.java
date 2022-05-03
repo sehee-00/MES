@@ -315,7 +315,7 @@ public class outregistrationDAO {
 			connect();
 			PreparedStatement pstmt=con.prepareStatement(SQL);
 			result = pstmt.executeUpdate();
-			
+			System.out.println(result);
 			pstmt.close();
 		}catch(Exception e) {
 			e.printStackTrace();

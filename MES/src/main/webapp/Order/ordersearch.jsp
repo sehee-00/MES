@@ -5,6 +5,7 @@
 <%@ page import="order.*" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.text.DecimalFormat" %>
 <%
 	request.setCharacterEncoding("UTF-8");
 	int LastListNum=-1;
@@ -73,6 +74,8 @@
 		}
 		%>
 		<%
+		DecimalFormat formatter=new DecimalFormat("###,###");
+		
 		if(list.isEmpty() == false){
 			// 검색 테이블 세팅
 			for(int i=0; i<list.size(); i++){
@@ -86,8 +89,8 @@
 			
 			<td id="orderstatus" style='display:none'><%=list.get(i).getO_status()%></td>
 			<td id="partstatus" style='display:none'><%=list.get(i).getP_status()%></td>
-			<td id="orderprice" style='display:none'><%=list.get(i).getO_price()%></td>
-			<td id="negoprice" style='display:none'><%=list.get(i).getN_price()%></td>
+			<td id="orderprice" style='display:none'><%=formatter.format(list.get(i).getO_price())%></td>
+			<td id="negoprice" style='display:none'><%=formatter.format(list.get(i).getN_price())%></td>
 			<td id="deldate" style='display:none'><%=list.get(i).getDel_date()%></td>
 			<td id="procenddate" style='display:none'><%=list.get(i).getP_e_date()%></td>
 			<td id="duedate" style='display:none'><%=list.get(i).getDue_date()%></td>

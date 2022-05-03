@@ -4,6 +4,7 @@
     pageEncoding="UTF-8"%>
 <%@ page import="login.LoginDAO"%>
 
+
 <%
 String id = request.getParameter("id");
 String pw = request.getParameter("pw");

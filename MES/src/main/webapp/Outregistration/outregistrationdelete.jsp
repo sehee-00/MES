@@ -21,7 +21,7 @@
 		if(result != 0){%> 
 		alert('삭제하였습니다!'); location.href="outregistration.jsp";
 		<%}else { %>
-        alert('실패하였습니다!'); history.back();
+        history.back();
         <%}
 	}
 %>

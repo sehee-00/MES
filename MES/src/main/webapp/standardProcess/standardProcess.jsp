@@ -746,7 +746,8 @@
     	    		data:{"upper":up, "padding":pd},
     	    		dataType:"html",
     	    		success:function(data){
-    	    			$("#"+up).after(data);
+    	    			let node = document.getElementById(up);
+    	    			$(node).after(data);
     	    		},
     	    		error:function(){
     	    			alert("error");
@@ -760,7 +761,8 @@
     	    		data:{"upper":up, "padding":pd},
     	    		dataType:"html",
     	    		success:function(data){
-    	    			$("#"+up).after(data);
+    	    			let node = document.getElementById(up);
+    	    			$(node).after(data);
     	    		},
     	    		error:function(){
     	    			alert("error");

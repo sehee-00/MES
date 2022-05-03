@@ -145,10 +145,12 @@ function tsetting(){
 			<select id="inputsearch" name="searchyear" onchange="yclick()">
 				<%
 					ArrayList<String> u=dao.getfdate();
-					for(int i=0; i<u.size(); i++){
-				%>
+					if(u != null){
+						for(int i=0; i<u.size(); i++){
+					%>
 				<option value="<%= u.get(i) %>"><%= u.get(i) %></option>
 				<%
+						}
 					}
 				%>
 			</select>

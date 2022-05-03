@@ -13,8 +13,14 @@
 	String using_all_day = request.getParameter("nusing_all_day");
 	String facilities_start = request.getParameter("nfacilities_start");
 	String facilities_end = request.getParameter("nfacilities_end");
+	String facilities_date = request.getParameter("nfacilities_date");
+	String facilities_priority = request.getParameter("nfacilities_priority");
+	String[] num = request.getParameterValues("num");
+	String[] content = request.getParameterValues("content");
 
-	dbc.insertfacilities(facilities_name, facilities_status, pay, using, using_all_day, facilities_start, facilities_end);
+	
+	dbc.insertfacilities(facilities_name, facilities_status, pay, using, using_all_day, facilities_start, facilities_end, facilities_date, facilities_priority);
+	dbc.insertcheck(facilities_name, content, num);
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('성공');");

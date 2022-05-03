@@ -41,6 +41,17 @@
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
         
+        <!-- select2 -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        
+        <style>
+		.select2-container .select2-selection--single{
+			height:33px;
+			position:relative;
+		}
+
+		</style>
    </head>
    
    <body id="orderp">
@@ -163,9 +174,12 @@
                            <select id="order_et_id" name="quotation" class="form-control">
                               <%
                                  ArrayList<String> et_list=orderDAO.getEtid();
+                        		 
                                  for(int i=0; i<et_list.size(); i++){
+                                	String company=orderDAO.getcompany(et_list.get(i));
+                                	int price = orderDAO.getorderprice(et_list.get(i));
                               %>
-                              <option value="<%= et_list.get(i) %>"><%= et_list.get(i) %></option>
+                              <option value="<%= et_list.get(i) %>"><%= et_list.get(i) %>[<%= company %>,<%= price %>]</option>
                               <%
                                  }
                               %>
@@ -183,6 +197,7 @@
                            <label for="order_company">업체명<span style="color: red;">*</span></label>
                            <!-- 업체명 콤보박스 세팅 -->
                            <select id="order_com_id" name="company" class="form-control">
+                           <option value=""></option>
                            <%
                               ArrayList<String> com_list=orderDAO.getComid();
                               for(int i=0; i<com_list.size(); i++){
@@ -205,10 +220,12 @@
                            <label for="order_classification">수주구분<span style="color: red;">*</span></label>
                            <!-- 수주구분 콤보박스 세팅 -->
                            <select id="order_status" name="classification" class="form-control">
+                           	<option value=""></option>
                               <%
                               ArrayList<String> orderS_list=orderDAO.getOrderstatus();
                               for(int i=0; i<orderS_list.size(); i++){
                               %>
+                              
                                  <option value= "<%= orderS_list.get(i) %>"><%= orderS_list.get(i) %></option>
                               <%
                                     }
@@ -219,6 +236,7 @@
                            <label for="order_parts">부품구분<span style="color: red;">*</span></label>
                            <!-- 부품구분 콤보박스 세팅 -->
                            <select id="part_status" name="parts" class="form-control">
+                           <option value=""></option>
                               <%
                               ArrayList<String> partS_list=orderDAO.getPartstatus();
                               for(int i=0; i<partS_list.size(); i++){
@@ -243,11 +261,11 @@
                         </div>
                         <div class="form-group amount">
                            <label for="order_amount">수주금액(원)</label>
-                           <input type="number" id="order_price" class="form-control" name="amount">
+                           <input type="text" id="order_price" class="form-control" name="amount">
                         </div>
                         <div class="form-group negotiate">
                            <label for="order_negotiate">네고금액(원)</label>
-                           <input type="number" id="nego_price" class="form-control" name="negotiate">
+                           <input type="text" id="nego_price" class="form-control" name="negotiate">
                         </div>
                      </td>
                   </tr>
@@ -290,7 +308,7 @@
                            <input class="btn btn-primary" type="reset" value="초기화" id="orderreset">
                            <input class="btn btn-primary" type="button" value="수주복사" id="copyorder" onclick="order_copy(this.form)">
                            <input class="btn btn-primary" type="button" value="납기" id="period">
-                           <input class="btn btn-primary" type="button" value="등록" id="orderinsert" onclick="insert_order(this.form)">
+                           <input class="btn btn-primary" type="button" value="등록" id="orderinsert" onclick="insert_order(this)">
                            <input class="btn btn-danger" type="button" value="삭제" id="orderdelete" onclick="delete_order()" > 
                         </div>
                      </td>
@@ -298,16 +316,21 @@
                      <script>
                      <!-- 수주관리 삭제버튼에 따른 이벤트 함수 -->
                      function insert_order(frm){
+                    	 let op=$("#order_price").val();
+                    	 $("#order_price").val(uncomma(op));
+                    	 let np=$("#nego_price").val();
+                    	 $("#nego_price").val(uncomma(np));
+                    	 
 							var filecheck = document.getElementById("item_img").value;
 							if(!filecheck){
-								frm.action = 'orderinsert.jsp';
-								frm.method = 'post';
-								frm.submit();
+								frm.form.action = 'orderinsert.jsp';
+								frm.form.method = 'post';
+								frm.form.submit();
 							}
 							else{									
-								frm.action = '../orderimg'
-								frm.enctype = 'multipart/form-data';
-								frm.submit();
+								frm.form.action = '../orderimg'
+								frm.form.enctype = 'multipart/form-data';
+								frm.form.submit();
 							}
 					}
                      
@@ -353,22 +376,21 @@
 </body>
 </html>
 <script>
-<!-- 견적서에 따른 업체명, 수주금액 로딩 함수 -->
-$("#order_et_id").on("change",function(e){
-   et_id=$("#order_et_id").val();
-      
-   $.ajax({
-      type:"GET",
-        url:"./orderselectbox.jsp",
-        data:{et_id:et_id},
-        dataType:"html",
-        success:function(data){
-         var d=JSON.parse(data);
-         $("#order_com_id").val(d.company);
-         $("#order_price").val(d.price);
-      }
-   });
+
+<!-- select02 -->
+$(document).ready(function() {
+    $('select[name="quotation"]').select2();
+    $('select[name="quotation"]').val(null).select2();
+    $('select[name="company"]').select2();
+    $('select[name="company"]').val(null).select2();
+    $('select[name="classification"]').select2();
+    $('select[name="classification"]').val(null).select2();
+    $('select[name="parts"]').select2();
+    $('select[name="parts"]').val(null).select2();
 });
+
+
+
 <!-- 기타 세팅(날짜 입력 세팅) -->
 $(document).on("keyup", "input[name='orderday']", function(e) {
    $(this).val( $(this).val().replace(/[^0-9-]/gi,"") );
@@ -380,6 +402,16 @@ $(document).on("keyup", "input[name='expectedday']", function(e) {
    
    $(this).val(date_mask($(this).val()));
 });
+$(document).on("keyup", "input[name='amount']", function(e) {
+	   $(this).val( $(this).val().replace(/[^0-9-]/gi,"") );
+	   
+	   $(this).val(comma($(this).val()));
+	});
+$(document).on("keyup", "input[name='negotiate']", function(e) {
+	   $(this).val( $(this).val().replace(/[^0-9-]/gi,"") );
+	   
+	   $(this).val(comma($(this).val()));
+	});
 function date_mask(objValue) {
     var v = objValue.replace("--", "-");
        if (v.match(/^\d{4}$/) !== null) {
@@ -390,4 +422,12 @@ function date_mask(objValue) {
     
        return v;
    }
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
 </script>

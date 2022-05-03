@@ -379,7 +379,7 @@ public class orderDAO {
 	// 업체명 콤보박스 데이터 세팅
 	public ArrayList<String> getComid() {
 		ArrayList<String> list = new ArrayList<String>();
-		String SQL="SELECT distinct com_name FROM mes.company";
+		String SQL="SELECT distinct com_name FROM mes.company WHERE client_outsourcing = \'고객사\'";
 		try {
 			connect();
 			PreparedStatement pstmt = con.prepareStatement(SQL);

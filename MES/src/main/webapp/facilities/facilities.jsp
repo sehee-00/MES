@@ -42,6 +42,9 @@ int lastpage = (fc.size()-1)/10 + 1;
 var request = new XMLHttpRequest();
 var hlastpage = <%=lastpage%>;
 var paging = 1;
+var deletearr = new Array();
+deletearr.push("aa");
+deletearr.push("bb");
 $(function(){
     $("#facilitiestabletbody tr").click(function(){
     	var tr = $(this);
@@ -53,6 +56,8 @@ $(function(){
         $("#using_all_day").val(td.eq(5).text());
         $("#facilities_start").val(td.eq(6).text());
         $("#facilities_end").val(td.eq(7).text());      
+        $("#facilities_date").val(td.eq(8).text());
+        var facilities_name = td.eq(0).text();
         
         if(td.eq(5).text() == "Y"){
         	document.getElementById("facilities_time").style.display = 'none';
@@ -60,6 +65,9 @@ $(function(){
         else{
     		document.getElementById("facilities_time").style.display = 'flex';
     	}
+        request.open("Post", "../facilitiescheck?facilities_name=" + facilities_name, true);
+    	request.onreadystatechange = getcontent;
+    	request.send(null);
     });
 });
 
@@ -177,6 +185,8 @@ function searchfacilities(){
 	        $("#using_all_day").val(td.eq(5).text());
 	        $("#facilities_start").val(td.eq(6).text());
 	        $("#facilities_end").val(td.eq(7).text());      
+	        $("#facilities_date").val(td.eq(8).text());
+	        var facilities_name = td.eq(0).text();
 	        
 	        if(td.eq(5).text() == "Y"){
 	        	document.getElementById("facilities_time").style.display = 'none';
@@ -184,8 +194,34 @@ function searchfacilities(){
 	        else{
 	    		document.getElementById("facilities_time").style.display = 'flex';
 	    	}
+	        request.open("Post", "../facilitiescheck?facilities_name=" + facilities_name, true);
+	    	request.onreadystatechange = getcontent;
+	    	request.send(null);
 	    });
 	});
+}
+
+function getcontent(){
+	var table = document.getElementById("facilitieschecktbody");
+	if(request.readyState == 4 && request.status == 200){
+		table.innerHTML = "";
+		var object = eval('(' + request.responseText + ')');
+		var result = object.result;
+		for(var i=0; i<result.length; i++){
+			var row = table.insertRow(table.rows.length);
+			var cell1 = row.insertCell(0);
+			var cell2 = row.insertCell(1);
+			var cell3 = row.insertCell(2);
+
+			cell1.innerHTML = '<input type="button" value="삭제" onclick="deleterow(this)">';
+			cell2.innerHTML = '<input type="text" style="width:95%" name="content" value = "' + result[i][1].value + '">';
+			cell3.innerHTML = '<input type="text" value="' + result[i][0].value + '" name="num">';
+			
+			cell1.style.textAlign = 'center';
+			cell2.style.textAlign = 'center';
+			cell3.style.display = 'none';			
+		}
+	}
 }
 
 function resetevent(){
@@ -200,6 +236,7 @@ function insertform(frm){
 	var using_all_day = document.getElementById("using_all_day");
 	var facilities_start = document.getElementById("facilities_start");
 	var facilities_end = document.getElementById("facilities_end");
+	var facilities_date = document.getElementById("facilities_date");
 	
 	var check = 0
 	if (check == 0 && facilities_name.value == ""){
@@ -236,6 +273,11 @@ function insertform(frm){
 			check = 1;
 		}
 	}
+	if(facilities_date.value == ""){
+		alert("확인");
+		check = 1;
+	}
+	
 	if(check == 0){
 		frm.action = './insertfacilities.jsp';
 		frm.submit();
@@ -245,7 +287,7 @@ function insertform(frm){
 
 function deletefrom(frm){
 	var facilities_name = document.getElementById("facilities_name");
-	var check = 0
+	var check = 0 
 	if(facilities_name == ""){
 		alert("확인");
 		check = 1;
@@ -255,6 +297,28 @@ function deletefrom(frm){
 		frm.submit();
 	}
 }
+
+function addcheck(){
+	var table = document.getElementById("facilitieschecktbody");
+	var row = table.insertRow(table.rows.lenght);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	var cell3 = row.insertCell(2);
+
+	cell1.innerHTML = '<input type="button" value="삭제" onclick="deleterow(this)">';
+	cell2.innerHTML = '<input type="text" style="width:95%" name="content">';
+	cell3.innerHTML = '<input type="text" value="0" name="num">';
+	cell1.style.textAlign = 'center';
+	cell2.style.textAlign = 'center';
+	cell3.style.display = 'none';
+	
+}
+
+function deleterow(obj){
+	var row = obj.parentElement.parentElement;
+	row.remove();
+}
+
 </script>
 </head>
 <body>
@@ -293,6 +357,10 @@ function deletefrom(frm){
 							<td style="display:none"><%=fc.get(i).getUsing_all_day()%></td>
 							<td style="display:none"><%=fc.get(i).getFacilities_start()%></td>
 							<td style="display:none"><%=fc.get(i).getFacilities_end() %></td>
+							<td style="display:none"><%=fc.get(i).getFacilities_date() %></td>
+							<td style="display:none"><%=fc.get(i).getFacilities_priority() %></td>
+							<td style="display:none"><%=fc.get(i).getFacilities_img() %></td>
+							
 						</tr>
 						<%
 						}
@@ -319,6 +387,7 @@ function deletefrom(frm){
 				<table style="border: 0; width: 98%; margin-left: 10px;">
 					<tr>
 						<td>
+						
 							<div style="display: flex">
 								<div style="flex: 1; margin-right: 30px;">
 									<label for="boardnuminput">설비명<span style="color: red;">*</span></label>
@@ -380,7 +449,50 @@ function deletefrom(frm){
 							</div>
 						</td>
 					</tr>
+					<tr>
+						<td>
+							<div class="form-group " id="facilities_time" style="margin-top: 1px; display:flex;">
+								<div style="flex: 1">
+									<label for="boardtitleinput">설비 구매 날짜 <span
+										style="color: red;">*</span></label> 
+										<input type="date" id="facilities_date" name="nfacilities_date" class="form-control">
+								</div>
+								<div style="flex: 1; margin-left: 30px;">
+									<label>우선순위 </label> 
+									<input type="number" id="facilities_priority" name="nfacilities_priority" class="form-control">
+								</div> 
+							</div>
+						</td>
+					</tr>
+					<tr>
+                     <td>
+                        <div class="form-group image">
+                           <label for="facilities_image">도면이미지</label>
+                           <input type="file" id="item_img" name="img" value="파일 선택">
+                        </div>
+                     </td>
+                  </tr>
+                  <tr>
+                  	<div id="img_div" style="margin-top:10px"></div>
+                  </tr>
+                  <tr>
+                  	<td>
+                  		<label for="facilities_image">설비일상점검 항목</label>
+                  		<input type="button" value="항목추가" onclick="addcheck()">
+                  	</td>
+                  </tr>
+				  <tr>
+				  	<table class="table table-bordered table-hover" id="facilitieschecktable">
+					<thead class="tablehead">
+						<th style="width: 10%;"></th>
+						<th style="width: 90%;">내용</th>
+					</thead>
+					<tbody id="facilitieschecktbody">
+						<td style="display:none"></td>
+					</tbody>
 				</table>
+				  </tr>
+			</table>
 			</div>
 			<div class="buttongruops">
 				<input class="btn btn-primary" type="reset" value="초기화"

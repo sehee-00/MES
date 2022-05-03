@@ -505,7 +505,7 @@ public class dbcon {
 		Vector<facilitiesdb> v = new Vector<facilitiesdb>();
 		try {
 			dbconnect();
-			String sql = "select facilities_name, facilities_status, pay, mes.facilities.using, using_all_day, facilities_start, facilities_end from facilities";
+			String sql = "select facilities_name, facilities_status, pay, mes.facilities.using, using_all_day, facilities_start, facilities_end, facilities_date, facilities_priority, facilities_img from facilities";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -517,6 +517,9 @@ public class dbcon {
 				fc.setUsing_all_day(rs.getString("using_all_day"));
 				fc.setFacilities_start(rs.getString("facilities_start"));
 				fc.setFacilities_end(rs.getString("facilities_end"));
+				fc.setFacilities_date(rs.getString("facilities_date").substring(0, 10));
+				fc.setFacilities_priority(rs.getString("facilities_priority"));
+				fc.setFacilities_img(rs.getString("facilities_img"));
 				v.add(fc);
 			}
 			rs.close();
@@ -547,12 +550,12 @@ public class dbcon {
 		return v;
 	}
 
-	public void insertfacilities(String fn, String fs, String pay, String using, String uad, String fst, String fe) {
+	public void insertfacilities(String fn, String fs, String pay, String using, String uad, String fst, String fe, String fd, String fp) {
 		try {
 			dbconnect();
 			String check = "select facilities_name from facilities where facilities_name = ?";
-			String updatesql = "update facilities set facilities_status = ?, pay = ?, mes.facilities.using = ?, using_all_day = ?, facilities_start = ?, facilities_end = ? where facilities_name = ?";
-			String insertsql = "insert into facilities values(?, ?, ?, ?, ?, ?, ?)";
+			String updatesql = "update facilities set facilities_status = ?, pay = ?, mes.facilities.using = ?, using_all_day = ?, facilities_start = ?, facilities_end = ?, facilities_date = ?, facilities_priority = ? where facilities_name = ?";
+			String insertsql = "insert into facilities values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			String insertft = "insert into facility_time(facility_name, status, f_time) values (?, ?, sysdate())";
 			PreparedStatement pstmt = con.prepareStatement(check);
 			PreparedStatement pstmt2 = con.prepareStatement(updatesql);
@@ -567,7 +570,9 @@ public class dbcon {
 				pstmt2.setString(4, uad);
 				pstmt2.setString(5, fst);
 				pstmt2.setString(6, fe);
-				pstmt2.setString(7, fn);
+				pstmt2.setString(7, fd);
+				pstmt2.setString(8, fp);
+				pstmt2.setString(9, fn);
 				pstmt2.executeUpdate();
 			}
 			else {
@@ -578,6 +583,10 @@ public class dbcon {
 				pstmt3.setString(5, uad);
 				pstmt3.setString(6, fst);
 				pstmt3.setString(7, fe);
+				pstmt3.setString(8, null);
+				pstmt3.setString(9, fd);
+				pstmt3.setString(10, fp);
+				pstmt3.setString(11, null);
 				pstmt3.executeUpdate();
 			}
 			pstmt4.setString(1, fn);
@@ -613,7 +622,7 @@ public class dbcon {
 		Vector<facilitiesdb> v = new Vector<facilitiesdb>();
 		try {
 			dbconnect();
-			String sql = "select facilities_name, facilities_status, pay, mes.facilities.using, using_all_day, facilities_start, facilities_end from facilities where facilities_name like ?";
+			String sql = "select facilities_name, facilities_status, pay, mes.facilities.using, using_all_day, facilities_start, facilities_end, facilities_date, facilities_priority, facilities_img from facilities where facilities_name like ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, "%" + search + "%");
 			ResultSet rs = pstmt.executeQuery();
@@ -626,6 +635,9 @@ public class dbcon {
 				fc.setUsing_all_day(rs.getString("using_all_day"));
 				fc.setFacilities_start(rs.getString("facilities_start"));
 				fc.setFacilities_end(rs.getString("facilities_end"));
+				fc.setFacilities_date(rs.getString("facilities_date").substring(0, 10));
+				fc.setFacilities_priority(rs.getString("facilities_priority"));
+				fc.setFacilities_img(rs.getString("facilities_img"));
 				v.add(fc);
 			}
 			rs.close();
@@ -636,6 +648,61 @@ public class dbcon {
 			e.printStackTrace();
 		}
 		return v;
+	}
+	
+	public void insertcheck(String facilities_name, String[] content, String[] no) {
+		try {
+			dbconnect();
+			String updatesql = "update facilitiescheck set content = ? where num = ?";
+			String insertsql = "insert into facilitiescheck(facilities_name, content) value (?, ?)";
+			String deletesql = "delete from facilitiescheck where num = ?";
+			
+			PreparedStatement pstmt = con.prepareStatement(updatesql);
+			for(int i=0; i<content.length; i++) {
+				if(Integer.parseInt(no[i]) > 0) {
+					pstmt.setString(1, content[i]);
+					pstmt.setString(2, no[i]);
+					pstmt.executeUpdate();
+				}
+			}
+			pstmt = con.prepareStatement(insertsql);
+			for(int i=0; i<content.length; i++) {
+				if(no[i].equals("0") && !content[i].equals("")) {
+					pstmt.setString(1, facilities_name);
+					pstmt.setString(2, content[i]);
+					pstmt.executeUpdate();
+				}
+			}		
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public Vector<facilitiescheckdb> getcontent(String facilities_name){
+		Vector<facilitiescheckdb> v = new Vector<facilitiescheckdb>();
+		try {
+			dbconnect();
+			String sql = "select num, content from facilitiescheck where facilities_name = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, facilities_name);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				facilitiescheckdb fc = new facilitiescheckdb();
+				fc.setNo(rs.getString("num"));
+				fc.setContent(rs.getString("content"));
+				v.add(fc);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;	
 	}
 	//---------------------------place_order-------------------
 	public Vector<manage_porderdb> manage_porderdbtable(){

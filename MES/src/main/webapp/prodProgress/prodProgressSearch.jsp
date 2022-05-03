@@ -132,7 +132,7 @@ List<OrderPartDetailDTO> orderpartdetaillist = dao.getOrderPartDetail(itemno);
 	     %>
 	                <input type="button" value="기타" class="btn btn-default" id="toolbtn" onclick = "toolsClick(this)" style="<%=dpn %>"/>
 	                <input type="button" value="작공" class="btn btn-default" onclick="exceldownload(this)"/>
-	                <input type="button" value="인쇄" class="btn btn-default" onclick="printWindowOpen()"/>
+	                <input type="button" value="인쇄" class="btn btn-default" onclick="printWindowOpen(this)"/>
 	     <%
 	     	}else{
 	     		String dpn = "";

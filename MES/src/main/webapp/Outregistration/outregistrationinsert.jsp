@@ -1,3 +1,4 @@
+<%@page import="org.apache.commons.collections4.bag.SynchronizedSortedBag"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="outregistration.outregistrationDAO" %>
@@ -23,9 +24,6 @@
 	String [] arr_end_date=request.getParameterValues("outend_date");
 	String [] arr_faulty=request.getParameterValues("faulty");
 	
-	for(int j=0; j<arr_faulty.length; j++){
-		System.out.println(arr_faulty[j]);
-	}
 	
 	for(int i=0; i<arr_order.length; i++){
 %>
@@ -77,10 +75,11 @@
 		outregistrationDAO.clearFaulty();
 		
 	// 불량 입력 및 업데이트
+	if(arr_faulty!=null){
 		for(int i=0; i<arr_faulty.length; i++){
 			outregistrationDAO.settingFaulty(Integer.parseInt(arr_faulty[i]));
 		}
-
+	}
 		 
 		 if(true){	
 %>

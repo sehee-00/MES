@@ -8,6 +8,28 @@ public class facilitiesdb {
 	String using_all_day;
 	String facilities_start;
 	String facilities_end;
+	String facilities_date;
+	String facilities_priority;
+	String facilities_img;
+	
+	public String getFacilities_date() {
+		return facilities_date;
+	}
+	public void setFacilities_date(String facilities_date) {
+		this.facilities_date = facilities_date;
+	}
+	public String getFacilities_priority() {
+		return facilities_priority;
+	}
+	public void setFacilities_priority(String facilities_priority) {
+		this.facilities_priority = facilities_priority;
+	}
+	public String getFacilities_img() {
+		return facilities_img;
+	}
+	public void setFacilities_img(String facilities_img) {
+		this.facilities_img = facilities_img;
+	}
 	public String getFacilities_name() {
 		return facilities_name;
 	}

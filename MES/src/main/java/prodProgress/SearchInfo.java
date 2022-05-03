@@ -110,6 +110,14 @@ public class SearchInfo extends HttpServlet {
             }
          }
          break;
+         
+      case "barcode":
+          partsname = request.getParameter("part");
+          result = new JSONObject();
+          
+          int num = dao.getBarcode(partsname);
+          result.put("res", num);
+          break;
       }
       if(result != null) {
     	  writer.print(result);

@@ -260,7 +260,7 @@ public class ProdProgressDAO {
 		
 		public ArrayList<String> getCarName() { // 제품명 콤보박스 데이터 세팅
 			ArrayList<String> list = new ArrayList<String>();
-			String SQL = "SELECT materials_name FROM mes.materials";
+			String SQL = "SELECT car_name FROM mes.order";
 			try {
 				con = db.getCon();
 				PreparedStatement pstmt = con.prepareStatement(SQL);
@@ -750,6 +750,28 @@ public class ProdProgressDAO {
 				}
 			}
 			
+			return res;
+		}
+		
+		public int getBarcode(String partname) {	//바코드 구해오는 함수
+			int res=-1;
+			try {
+				String sql="SELECT b_num FROM part WHERE part_name = ?";
+				con=db.getCon();
+				pstmt=con.prepareStatement(sql);
+				pstmt.setString(1, partname);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					res=rs.getInt("b_num");
+				}
+				rs.close();
+				pstmt.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				db.close();
+			}
+			//System.out.println(partname);
 			return res;
 		}
 }

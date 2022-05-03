@@ -189,11 +189,13 @@
                                             <select id="car_name" class="form-control">
                                                 <%
 												List<String> CarName_list = dao.getCarName();
-												for(int i=0; i<CarName_list.size(); i++){
+                                            	if(CarName_list != null){
+													for(int i=0; i<CarName_list.size(); i++){
 												%>
 													<option value= "<%= CarName_list.get(i) %>"><%= CarName_list.get(i) %></option>
 												<%
-														}
+													}
+                                            	}
 												%>
                                             </select>
                                         </div>
@@ -774,8 +776,25 @@
 	        		}
 	        	});
 	        	
-	        	function printWindowOpen(){
-	        		window.open("./prodProgressPrint.jsp", "print", "width=500, height=400");
+	        	function printWindowOpen(t){
+	        		let part = t.parentNode.id;
+	        		$.ajax({
+        				type:"POST",
+        				url:"./SearchInfo",
+        				data:{"mode": "barcode", "part":part},
+        				dataType:"JSON",
+        				success:function(data){
+        					if(data["res"] == -1){
+        						alert("실패하였습니다.");
+        					}else{
+        						window.open("./barcode/barcode.jsp?code=01&uniqueId="+data["res"], "print", "width=500, height=400");
+        					}
+        				},
+        				error:function(){
+        					alert("error");
+        				}
+        			})
+	        		
 	        	}
 
      </script>

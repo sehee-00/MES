@@ -3,6 +3,28 @@
 	<name>MES</name>
 	<comment></comment>
 	<projects>
+		<project>poi-examples-5.2.1</project>
+		<project>poi-ooxml-lite-5.2.1</project>
+		<project>poi-ooxml-full-5.2.1</project>
+		<project>log4j-core-2.9.1</project>
+		<project>json-simple-1.1.1</project>
+		<project>curvesapi-1.07</project>
+		<project>commons-collections4-4.4</project>
+		<project>poi-5.2.1</project>
+		<project>commons-codec-1.15</project>
+		<project>SparseBitSet-1.2</project>
+		<project>commons-logging-1.2</project>
+		<project>commons-math3-3.6.1</project>
+		<project>poi-ooxml-5.2.1</project>
+		<project>slf4j-api-1.7.36</project>
+		<project>xmlbeans-5.0.3</project>
+		<project>log4j-api-2.17.1</project>
+		<project>poi-scratchpad-5.2.1</project>
+		<project>poi-excelant-5.2.1</project>
+		<project>mysql-connector-java-8.0.27</project>
+		<project>commons-compress-1.21</project>
+		<project>poi-javadoc-5.2.1</project>
+		<project>commons-io-2.11.0</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

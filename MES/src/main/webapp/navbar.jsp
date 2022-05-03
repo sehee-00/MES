@@ -8,6 +8,12 @@
 <%@ page import = "java.util.Set" %>
 <%@ page import = "java.util.Iterator" %>
 <%@ page import = "org.json.simple.JSONObject" %>
+
+<%@ page import="dbconn.DBconn"%>
+<%@ page import="java.sql.Connection"%>
+<%@ page import="java.sql.Statement"%>
+<%@ page import="java.sql.ResultSet"%>
+<%@ page import="java.sql.SQLException"%>
 <jsp:useBean id="alarmDAO" class="login.alarmDAO"/>
 <!DOCTYPE html>
 <html>
@@ -417,6 +423,17 @@
                     </div>
                 </div>
                 </li>
+                
+                <!-- pop 화면 권한설정 -->
+                <li name="POP">
+                    <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="sidemenuselect" id="pop">
+                        POP
+                        </a>
+                    </div>
+                	</div>
+                </li>
 
             </ul>
         </aside>
@@ -442,6 +459,27 @@
 			}
     	}
     	%>
+    	
+    	// pop 화면 권한설정
+    	<%
+		DBconn db = new DBconn();
+		Connection con = db.getCon();
+		String sql = "SELECT * FROM user_auth";
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery(sql);
+		
+		int idx = 0, status = 0;
+		
+		while(rs.next()){
+			idx = rs.getInt("idx");
+			status = rs.getInt("status");
+		}
+
+    	if(status == 3){
+    	%>
+    	
+    	$("li[name='POP']").show();
+    	<%}%>
     	
     });
     
@@ -599,6 +637,10 @@
     			
     		case "order_process":
     			$("#pframe").attr('src','order_process/order_process.jsp');
+    			break;
+    			
+    		case "pop":
+    			window.location.href='./POP/DASHBOARD.jsp';
     			break;
     	}
     });
