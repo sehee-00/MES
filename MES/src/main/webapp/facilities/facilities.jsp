@@ -59,6 +59,14 @@ $(function(){
         $("#facilities_date").val(td.eq(8).text());
         var facilities_name = td.eq(0).text();
         
+        var imgname = td.eq(10).text();
+		if(imgname != 'null'){
+			document.getElementById("img_div").innerHTML = '<img style="width: 150px;" src="../facilitiesupload/' + imgname + '">'
+		}
+		else{
+			document.getElementById("img_div").innerHTML = "";
+		}
+        
         if(td.eq(5).text() == "Y"){
         	document.getElementById("facilities_time").style.display = 'none';
         }
@@ -188,6 +196,13 @@ function searchfacilities(){
 	        $("#facilities_date").val(td.eq(8).text());
 	        var facilities_name = td.eq(0).text();
 	        
+	        var imgname = td.eq(10).text();
+			if(imgname != 'null'){
+				document.getElementById("img_div").innerHTML = '<img style="width: 150px;" src="../facilitiesupload/' + imgname + '">'
+			}
+			else{
+				document.getElementById("img_div").innerHTML = "";
+			}
 	        if(td.eq(5).text() == "Y"){
 	        	document.getElementById("facilities_time").style.display = 'none';
 	        }
@@ -213,7 +228,7 @@ function getcontent(){
 			var cell2 = row.insertCell(1);
 			var cell3 = row.insertCell(2);
 
-			cell1.innerHTML = '<input type="button" value="삭제" onclick="deleterow(this)">';
+			cell1.innerHTML = '<input type="button" id="' + result[i][0].value + '" value="삭제" onclick="deleterow(this)">';
 			cell2.innerHTML = '<input type="text" style="width:95%" name="content" value = "' + result[i][1].value + '">';
 			cell3.innerHTML = '<input type="text" value="' + result[i][0].value + '" name="num">';
 			
@@ -268,7 +283,7 @@ function insertform(frm){
 			alert("확인");
 			check = 1;
 		}
-		if (check == 0 && facilities_end.value == ""){
+		if (check == 0 && facilities_end.value == ""){ 
 			alert("확인");
 			check = 1;
 		}
@@ -277,15 +292,22 @@ function insertform(frm){
 		alert("확인");
 		check = 1;
 	}
-	
-	if(check == 0){
+	var filecheck = document.getElementById("item_img").value;
+	if(check == 0 && !filecheck){
 		frm.action = './insertfacilities.jsp';
 		frm.submit();
 	}
 	
+	if(check == 0 && filecheck){
+		frm.action = '../facilitiesimg'
+		frm.enctype = 'multipart/form-data';
+		frm.method = 'post';
+		frm.submit();
+	}	
+	
 }
 
-function deletefrom(frm){
+function deleteform(frm){
 	var facilities_name = document.getElementById("facilities_name");
 	var check = 0 
 	if(facilities_name == ""){
@@ -305,7 +327,7 @@ function addcheck(){
 	var cell2 = row.insertCell(1);
 	var cell3 = row.insertCell(2);
 
-	cell1.innerHTML = '<input type="button" value="삭제" onclick="deleterow(this)">';
+	cell1.innerHTML = '<input type="button" id="0" value="삭제" onclick="deleterow(this)">';
 	cell2.innerHTML = '<input type="text" style="width:95%" name="content">';
 	cell3.innerHTML = '<input type="text" value="0" name="num">';
 	cell1.style.textAlign = 'center';
@@ -316,6 +338,10 @@ function addcheck(){
 
 function deleterow(obj){
 	var row = obj.parentElement.parentElement;
+	var table = document.getElementById("deletetable");
+	var row1 = table.insertRow(table.rows.lenght);
+	var cell = row1.insertCell(0);
+	cell.innerHTML = '<input type="text" value="' + obj.id + '" name="deletenum">';
 	row.remove();
 }
 
@@ -468,16 +494,18 @@ function deleterow(obj){
                      <td>
                         <div class="form-group image">
                            <label for="facilities_image">도면이미지</label>
-                           <input type="file" id="item_img" name="img" value="파일 선택">
+                           <input type="file" id="item_img" name="img" value="파일 선택" accept="image/gif, image/jpeg, image/png" />
                         </div>
                      </td>
                   </tr>
                   <tr>
-                  	<div id="img_div" style="margin-top:10px"></div>
+                  	<td>
+                  		<div id="img_div" style="margin-top:10px"></div>
+                  	</td>
                   </tr>
                   <tr>
                   	<td>
-                  		<label for="facilities_image">설비일상점검 항목</label>
+                  		<label for="facilities_image" style="margin-top:10px;">설비일상점검 항목</label>
                   		<input type="button" value="항목추가" onclick="addcheck()">
                   	</td>
                   </tr>
@@ -488,10 +516,17 @@ function deleterow(obj){
 						<th style="width: 90%;">내용</th>
 					</thead>
 					<tbody id="facilitieschecktbody">
-						<td style="display:none"></td>
+						<td style="display:none">
+						</td>
 					</tbody>
 				</table>
 				  </tr>
+			</table>
+			<table id="deletetable">
+				<tr>
+					<td>
+					</td>
+				</tr>
 			</table>
 			</div>
 			<div class="buttongruops">

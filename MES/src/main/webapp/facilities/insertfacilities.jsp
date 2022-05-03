@@ -17,10 +17,10 @@
 	String facilities_priority = request.getParameter("nfacilities_priority");
 	String[] num = request.getParameterValues("num");
 	String[] content = request.getParameterValues("content");
-
+	String[] deletenum = request.getParameterValues("deletenum");
 	
 	dbc.insertfacilities(facilities_name, facilities_status, pay, using, using_all_day, facilities_start, facilities_end, facilities_date, facilities_priority);
-	dbc.insertcheck(facilities_name, content, num);
+	dbc.insertcheck(facilities_name, content, num, deletenum);
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('성공');");

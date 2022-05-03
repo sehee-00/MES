@@ -787,7 +787,7 @@
         					if(data["res"] == -1){
         						alert("실패하였습니다.");
         					}else{
-        						window.open("./barcode/barcode.jsp?code=01&uniqueId="+data["res"], "print", "width=500, height=400");
+        						window.open("./barcode/barcode.jsp?code=03&uniqueId="+data["res"], "print", "width=500, height=400");
         					}
         				},
         				error:function(){

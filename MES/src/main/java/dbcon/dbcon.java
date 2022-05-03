@@ -555,7 +555,7 @@ public class dbcon {
 			dbconnect();
 			String check = "select facilities_name from facilities where facilities_name = ?";
 			String updatesql = "update facilities set facilities_status = ?, pay = ?, mes.facilities.using = ?, using_all_day = ?, facilities_start = ?, facilities_end = ?, facilities_date = ?, facilities_priority = ? where facilities_name = ?";
-			String insertsql = "insert into facilities values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String insertsql = "insert into facilities(facilities_name, facilities_status, pay, mes.facilities.using, using_all_day, facilities_start, facilities_end, barcode, facilities_date, facilities_priority, facilities_img) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			String insertft = "insert into facility_time(facility_name, status, f_time) values (?, ?, sysdate())";
 			PreparedStatement pstmt = con.prepareStatement(check);
 			PreparedStatement pstmt2 = con.prepareStatement(updatesql);
@@ -587,6 +587,61 @@ public class dbcon {
 				pstmt3.setString(9, fd);
 				pstmt3.setString(10, fp);
 				pstmt3.setString(11, null);
+				pstmt3.executeUpdate();
+			}
+			pstmt4.setString(1, fn);
+			pstmt4.setString(2, fs);
+			pstmt4.executeUpdate();
+			
+			rs.close();
+			pstmt.close();
+			pstmt2.close();
+			pstmt3.close();
+			pstmt4.close();
+			con.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertfacilitiesfile(String fn, String fs, String pay, String using, String uad, String fst, String fe, String fd, String fp, String filename) {
+		try {
+			dbconnect();
+			String check = "select facilities_name from facilities where facilities_name = ?";
+			String updatesql = "update facilities set facilities_status = ?, pay = ?, mes.facilities.using = ?, using_all_day = ?, facilities_start = ?, facilities_end = ?, facilities_date = ?, facilities_priority = ?, facilities_img = ? where facilities_name = ?";
+			String insertsql = "insert into facilities(facilities_name, facilities_status, pay, mes.facilities.using, using_all_day, facilities_start, facilities_end, barcode, facilities_date, facilities_priority, facilities_img) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String insertft = "insert into facility_time(facility_name, status, f_time) values (?, ?, sysdate())";
+			PreparedStatement pstmt = con.prepareStatement(check);
+			PreparedStatement pstmt2 = con.prepareStatement(updatesql);
+			PreparedStatement pstmt3 = con.prepareStatement(insertsql);
+			PreparedStatement pstmt4 = con.prepareStatement(insertft);
+			pstmt.setString(1, fn);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				pstmt2.setString(1, fs);
+				pstmt2.setString(2, pay);
+				pstmt2.setString(3, using);
+				pstmt2.setString(4, uad);
+				pstmt2.setString(5, fst);
+				pstmt2.setString(6, fe);
+				pstmt2.setString(7, fd);
+				pstmt2.setString(8, fp);
+				pstmt2.setString(9, filename);
+				pstmt2.setString(10, fn);
+				pstmt2.executeUpdate();
+			}
+			else {
+				pstmt3.setString(1, fn);
+				pstmt3.setString(2, fs);
+				pstmt3.setString(3, pay);
+				pstmt3.setString(4, using);
+				pstmt3.setString(5, uad);
+				pstmt3.setString(6, fst);
+				pstmt3.setString(7, fe);
+				pstmt3.setString(8, null);
+				pstmt3.setString(9, fd);
+				pstmt3.setString(10, fp);
+				pstmt3.setString(11, filename);
 				pstmt3.executeUpdate();
 			}
 			pstmt4.setString(1, fn);
@@ -650,7 +705,7 @@ public class dbcon {
 		return v;
 	}
 	
-	public void insertcheck(String facilities_name, String[] content, String[] no) {
+	public void insertcheck(String facilities_name, String[] content, String[] no, String[] deletenum) {
 		try {
 			dbconnect();
 			String updatesql = "update facilitiescheck set content = ? where num = ?";
@@ -673,6 +728,11 @@ public class dbcon {
 					pstmt.executeUpdate();
 				}
 			}		
+			pstmt = con.prepareStatement(deletesql);
+			for(int i=1; i<deletenum.length; i++) {
+				pstmt.setString(1, deletenum[i]);
+				pstmt.executeUpdate();
+			}
 			pstmt.close();
 			con.close();
 		}
