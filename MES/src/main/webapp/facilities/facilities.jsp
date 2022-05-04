@@ -42,9 +42,6 @@ int lastpage = (fc.size()-1)/10 + 1;
 var request = new XMLHttpRequest();
 var hlastpage = <%=lastpage%>;
 var paging = 1;
-var deletearr = new Array();
-deletearr.push("aa");
-deletearr.push("bb");
 $(function(){
     $("#facilitiestabletbody tr").click(function(){
     	var tr = $(this);
@@ -228,8 +225,8 @@ function getcontent(){
 			var cell2 = row.insertCell(1);
 			var cell3 = row.insertCell(2);
 
-			cell1.innerHTML = '<input type="button" id="' + result[i][0].value + '" value="삭제" onclick="deleterow(this)">';
-			cell2.innerHTML = '<input type="text" style="width:95%" name="content" value = "' + result[i][1].value + '">';
+			cell1.innerHTML = '<input type="button" class="form-control" id="' + result[i][0].value + '" value="삭제" onclick="deleterow(this)">';
+			cell2.innerHTML = '<input type="text" class="form-control" name="content" value = "' + result[i][1].value + '">';
 			cell3.innerHTML = '<input type="text" value="' + result[i][0].value + '" name="num">';
 			
 			cell1.style.textAlign = 'center';
@@ -327,8 +324,8 @@ function addcheck(){
 	var cell2 = row.insertCell(1);
 	var cell3 = row.insertCell(2);
 
-	cell1.innerHTML = '<input type="button" id="0" value="삭제" onclick="deleterow(this)">';
-	cell2.innerHTML = '<input type="text" style="width:95%" name="content">';
+	cell1.innerHTML = '<input type="button" class="form-control" id="0" value="삭제" onclick="deleterow(this)">';
+	cell2.innerHTML = '<input type="text" class="form-control" name="content">';
 	cell3.innerHTML = '<input type="text" value="0" name="num">';
 	cell1.style.textAlign = 'center';
 	cell2.style.textAlign = 'center';

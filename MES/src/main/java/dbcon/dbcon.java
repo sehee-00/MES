@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
-
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -1634,5 +1633,74 @@ public class dbcon {
 			e.printStackTrace();
 		}
 		return v;
+	}
+	//-------------------------------facilitiesph---------------------------
+	public Vector<String> getcode_sub(){
+		Vector<String> v = new Vector<String>();
+		try {
+			dbconnect();
+			String sql = "select sub_code from code_sub where main_code = '소재구분'";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String sub_code = rs.getString("sub_code");
+				v.add(sub_code);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public Vector<facilitiesphdb> getph(String facilities_name){
+		Vector<facilitiesphdb> v = new Vector<facilitiesphdb>();
+		try {
+			dbconnect();
+			String sql = "select code, phdate, personal_history from facilitiesph where facilitiesname = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, facilities_name);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				facilitiesphdb fph = new facilitiesphdb();
+				fph.setCode(rs.getString("code"));
+				fph.setDate(rs.getString("phdate"));
+				fph.setPh(rs.getString("personal_history"));
+				v.add(fph);				
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	public void insertfacilitiesph(String facilities_name, String[] code, String[] date, String[] ph) {
+		try {
+			dbconnect();
+			String deletesql = "delete from facilitiesph where facilitiesname = ?";
+			String insertsql = "insert into facilitiesph(facilitiesname, code, phdate, personal_history) values(?, ?, ?, ?)";
+			PreparedStatement pstmt = con.prepareStatement(deletesql);
+			pstmt.setString(1, facilities_name);
+			pstmt.executeUpdate();
+			pstmt = con.prepareStatement(insertsql);
+			for(int i=0; i<ph.length; i++) {
+				pstmt.setString(1, facilities_name);
+				pstmt.setString(2, code[i]);
+				pstmt.setString(3, date[i]);
+				pstmt.setString(4, ph[i]);
+				pstmt.executeUpdate();
+			}
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 }
