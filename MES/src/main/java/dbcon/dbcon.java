@@ -707,6 +707,7 @@ public class dbcon {
 	public void insertcheck(String facilities_name, String[] content, String[] no, String[] deletenum) {
 		try {
 			dbconnect();
+
 			String updatesql = "update facilitiescheck set content = ? where num = ?";
 			String insertsql = "insert into facilitiescheck(facilities_name, content) value (?, ?)";
 			String deletesql = "delete from facilitiescheck where num = ?";
@@ -728,7 +729,7 @@ public class dbcon {
 				}
 			}		
 			pstmt = con.prepareStatement(deletesql);
-			for(int i=1; i<deletenum.length; i++) {
+			for(int i=0; i<deletenum.length; i++) {
 				pstmt.setString(1, deletenum[i]);
 				pstmt.executeUpdate();
 			}
@@ -1702,5 +1703,26 @@ public class dbcon {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+	//---------------------------facilitiescheck-----------------------------
+	public Vector<String> getfacilities_name(){
+		Vector<String> v = new Vector<String>();
+		try {
+			dbconnect();
+			String sql = "select facilities_name from facilities";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String fn = rs.getString("facilities_name");
+				v.add(fn);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
 	}
 }

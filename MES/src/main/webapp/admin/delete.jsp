@@ -36,6 +36,8 @@
 		stmt = conn.createStatement();
 		// Run Qeury 
 		stmt.executeUpdate(query);
+		query = "delete from user_menu where user_id='"+adminid+"'";
+		stmt.executeUpdate(query);
 		
 		response.sendRedirect("user_management.jsp");
 	}

@@ -19,6 +19,7 @@ String jdbcDriver = "jdbc:mysql://192.168.0.115:3306/mes?" + "useUnicode=true&ch
 String dbUser = "Usera";
 String dbPass = "1234";
 conn = DriverManager.getConnection(jdbcDriver, dbUser, dbPass);
+stmt = conn.createStatement();
 %>
 
 
@@ -50,26 +51,20 @@ if(user_id.equals("")){
 }
 else{
 	if(submitcheck.equals("1")){
-		query = "delete from user where user_id='" + user_id + "';";
-
-		// Create Statement 
-		stmt = conn.createStatement();
-		// Run Qeury 
-		stmt.executeUpdate(query);
-		stmt.close();
+		
+		query = "update user set user_pw='"+user_pw+"', user_name='"+user_name+"',first_position='"+first_position+"',second_position='"+second_position+"',third_position='"+third_position+"',phone='"+phone+"',email='"+email+"',note='"+note+"',state='"+state+"',use_yn='"+use_yn+"' where user_id='"+user_id+"'";
+	}
+	else{
+		query = "insert into user (user_id,user_pw,user_name,first_position,second_position,third_position,phone,email,note,state,use_yn,barcode,service) values('"+user_id+"','"+user_pw+"','"+user_name+"','"+first_position+"','"+second_position+"','"+third_position+"','"+phone+"','"+email+"','"+note+"','"+state+"','"+use_yn+"','',null)";
 	}
 	
-	query = "insert into user values('"+user_id+"','"+user_pw+"','"+user_name+"','"+first_position+"','"+second_position+"','"+third_position+"','"+phone+"','"+email+"','"+note+"','"+state+"','"+use_yn+"')";
-
 	try{
-		stmt = conn.createStatement();
 		stmt.executeUpdate(query);
 		response.sendRedirect("user_management.jsp");
 	}catch(Exception e){
 		out.println("<script>alert('이미있는 사용자ID 입니다.');document.location.href='user_management.jsp';</script>");
+		System.out.println(e);
 	}
-	
-
 	
 }
 

@@ -519,7 +519,7 @@ function deleterow(obj){
 				</table>
 				  </tr>
 			</table>
-			<table id="deletetable">
+			<table id="deletetable" style="display:none;">
 				<tr>
 					<td>
 					</td>

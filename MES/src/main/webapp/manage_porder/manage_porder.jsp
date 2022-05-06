@@ -283,8 +283,8 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 	<div class="title">발주입고 관리/발주 관리</div>
 	<div class="panel panel-default border searchbox">
 		<div class="panel-body">
-			부품명:<input type="text" id="searchpartname" name="nsearchpartname"
-				class="form-control searchtitle" onkeyup="search()"> 수주명:<input
+			부품명:&nbsp;&nbsp;&nbsp;<input type="text" id="searchpartname" name="nsearchpartname"
+				class="form-control searchtitle" onkeyup="search()"> 수주명:&nbsp;&nbsp;&nbsp;<input
 				type="text" id="searchorder" name="nsearchorder"
 				class="form-control searchtitle" onkeyup="search()">
 		</div>

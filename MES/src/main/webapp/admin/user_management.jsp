@@ -219,7 +219,7 @@ rs=stmt.executeQuery(query);
 							
 							// 테이블 배경색 설정
 							resetbutton();
-							element.style.backgroundColor="rgb(68,80,132)";
+							element.style.backgroundColor="lightgray";
 						}
 						
 						//페지네이션
