@@ -1725,4 +1725,103 @@ public class dbcon {
 		}
 		return v;
 	}
+	public Vector<String> getcontentdate(String facilities_name){
+		Vector<String> v = new Vector<String>();
+		try {
+			dbconnect();
+			String sql = "select content from facilitiescheck where facilities_name = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, facilities_name);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String content = rs.getString("content");
+				v.add(content);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	
+	public Vector<facilitiescheckdatedb> getcheck(String facilities_name, String date1, String date2){
+		Vector<facilitiescheckdatedb> v = new Vector<facilitiescheckdatedb>();
+		try {
+			dbconnect();
+			String sql = "select checkcontent, checkuser, checkdate, checkstatus, num from facilitiescheckdate where checkfacilities = ? and checkdate between ? and ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, facilities_name);
+			pstmt.setString(2, date1);
+			pstmt.setString(3, date2);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				facilitiescheckdatedb fcd = new facilitiescheckdatedb();
+				fcd.setContent(rs.getString("checkcontent"));
+				fcd.setUser(rs.getString("checkuser"));
+				fcd.setDate(rs.getString("checkdate"));
+				fcd.setStatus(rs.getInt("checkstatus"));
+				fcd.setNum(rs.getString("num"));
+				v.add(fcd);
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+			
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
+	public void deletefcheck(String[] deletenum) {
+		try {
+			dbconnect();
+			String sql = "delete from facilitiescheckdate where num = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			for(int i=0; i<deletenum.length; i++) {
+				pstmt.setString(1, deletenum[i]);
+				pstmt.executeUpdate();
+			}
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void insertfcheck(String facilities_name, String userid, String[] ctdate, String[] status, String date1, String date2) {
+		try {
+			dbconnect();
+			String delsql = "delete from facilitiescheckdate where checkdate = ?";
+			String insertsql = "insert into facilitiescheckdate(checkfacilities, checkcontent, checkuser, checkdate, checkstatus) values(?, ?, ?, ?, ?)";
+			PreparedStatement pstmt = con.prepareStatement(delsql);
+			pstmt.setString(1, date1);
+			pstmt.executeUpdate();
+			if(date2.length() > 9) {
+				pstmt.setString(1, date2);
+				pstmt.executeUpdate();
+			}
+			pstmt = con.prepareStatement(insertsql);
+			for(int i=0; i<ctdate.length; i++) {
+				String content = ctdate[i].substring(0, ctdate[i].length()-10);
+				String date = ctdate[i].substring(ctdate[i].length()-10, ctdate[i].length());
+				pstmt.setString(1, facilities_name);
+				pstmt.setString(2, content);
+				pstmt.setString(3, userid);
+				pstmt.setString(4, date);
+				pstmt.setString(5, status[i]);
+				pstmt.executeUpdate();
+			}
+			
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

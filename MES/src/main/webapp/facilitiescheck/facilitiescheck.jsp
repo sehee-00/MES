@@ -16,6 +16,7 @@ Vector<facilitiesdb> fc = dbc.facilitiestable();
 Vector<String> facilities_status = dbc.selectfacilities_status();
 int lastpage = (fc.size()-1)/10 + 1;
 Vector<String> code = dbc.getcode_sub();
+String userid = (String)session.getAttribute("id"); 
 %>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -47,7 +48,8 @@ var hlastpage = <%=lastpage%>;
 var paging = 1;
 var now = new Date();
 var year = now.getFullYear();
-var month = now.getMonth();
+var month = now.getMonth() + 1;
+var day = now.getDate();
 
 
 function dateoption(){
@@ -74,36 +76,260 @@ function dateoption(){
 		}
 	}
 }
+var tbs = "";
+var lastday = "";
+var tableresult = "";
+var contentresult = "";
+var dateid = "";
+var vyear = "";
+var vmonth = "";
 
+var wmonth = month;
+var wday1 = day;
+var wday2 = "";
+var date1 = "";
+var date2 = ""
+if(month < 10){
+	wmonth = "0" + month;
+}
+if(day < 10){
+	wday1 = "0" + day;
+}
+if(day != 1){
+	wday2 = day - 1;
+	if(wday2 < 10){
+		wday2 = "0" + (day-1);
+
+	}
+}
+date1 = year + "-" + wmonth + "-" + wday1;
+date2 = year + "-" + wmonth + "-" + wday2;
 function uptable(){
+	var wb = document.getElementById("writebutton");
+	var cb = document.getElementById("commitbutton");
+	wb.style.display = '';
+	cb.style.display = 'none';
 	var facilities_name = document.getElementById("facilities_name").value;
-	alert(facilities_name);
-	var vyear = document.getElementById("year").value;
-	var vmonth = document.getElementById("month").value;
-	var lastday = new Date(vyear, vmonth, 0).getDate();
+	vyear = document.getElementById("year").value;
+	vmonth = document.getElementById("month").value;
+	lastday = new Date(vyear, vmonth, 0).getDate();
+	if(vmonth < 10){
+		dateid = vyear + '-0' + vmonth;
+	}
+	else{
+		dateid = vyear + '-' + vmonth;
+	}
 	var tablehead = document.getElementById("checkthead");
 	var checktbody = document.getElementById("checktbody");
-	var ths = '<th style="width:100px;">날짜</th>';
-	var tbs = '<tr><td>담당자</td>';
+	var ths = '<th style="width:200px;">날짜</th>';
 	for(var i=1; i<=lastday; i++){
-		ths += '<th>' + vmonth + '/' + i + '</th>';
-		tbs += '<td></td>';
+		if(i < 10){
+			var thdateid = dateid + '-0' + i;
+			ths += '<th id="' + thdateid + '" style="text-align:center">' + vmonth + '/' + i + '</th>';
+			console.log(thdateid);
+		}
+		else{
+			var thdateid = dateid + '-' + i;
+			ths += '<th id="' + thdateid + '" style="text-align:center">' + vmonth + '/' + i + '</th>';
+		}
 	}
+	
+		
 	tbs += '</tr>';
 	tablehead.innerHTML = ths;
 	checktbody.innerHTML = tbs;
-	request.open("Post", "../facilitiesph?facilities_name=" + facilities_name + "&year=" + vyear + "&month=" + vmonth ", true);
-	request.onreadystatechange = getph;
+	if(year == vyear && month == vmonth){
+		if(day < 10){
+			if(month < 10){
+				var todayth = document.getElementById(year + '-0' + month + '-0' + day);
+				todayth.style.color = 'blue';
+			}
+			else{
+				var todayth = document.getElementById(year + '-' + month + '-0' + day);
+				todayth.style.color = 'blue';
+			}
+		}
+		else{
+			if(month < 10){
+				var todayth = document.getElementById(year + '-0' + month + '-0' + day);
+				todayth.style.color = 'blue';
+			}
+			else{
+				var todayth = document.getElementById(year + '-' + month + '-0' + day);
+				todayth.style.color = 'blue';
+			}
+			
+		}
+		
+	}
+	request.open("Post", "../facilitieschecktable?facilities_name=" + facilities_name + "&year=" + vyear + "&month=" + vmonth + "&lastday=" + lastday, true);
+	request.onreadystatechange = gettable;
 	request.send(null);
 }
+
+function gettable(){
+	if(request.readyState == 4 && request.status == 200){
+		var object = eval('(' + request.responseText + ')');
+		contentresult = object.contentresult;
+		tableresult = object.tableresult;
+		tbs = '<tr><td>담당자</td>';
+		for(var i=1; i<=lastday; i++){
+			if(i < 10){
+				var userid = 'user' + dateid + '-0' + i;
+				tbs += '<td id="' + userid +'" style="text-align:center"></td>';
+				
+			}
+			else{
+				var userid = 'user' + dateid + '-' + i;
+				tbs += '<td id="' + userid +'" style="text-align:center"></td>';
+			}
+		}
+		for(var i=0; i<contentresult.length; i++){
+			tbs += '<tr><td>' + contentresult[i].value + '</td>';
+			
+			for(var j=1; j<=lastday; j++){
+				if(j < 10){
+					var contentid = contentresult[i].value + dateid + '-0' + j;
+				}
+				else{
+					var contentid = contentresult[i].value + dateid + '-' + j;	
+				}
+				tbs += '<td id="' + contentid + '" style="text-align:center"></td>';
+				
+			}	
+			tbs += '</tr>';
+		}
+		checktbody.innerHTML = tbs;
+		var table = document.getElementById("writedaytable");
+		var table2 = document.getElementById("writedayvaluetable");
+		var table3 = document.getElementById("deletetable");
+		table.innerHTML = '';
+		table2.innerHTML = '';
+		table3.innerHTML = '';
+		for(var i=0; i<tableresult.length; i++){
+			var contenttable = document.getElementById(tableresult[i][0].value + tableresult[i][2].value);
+			var usertable = document.getElementById('user' + tableresult[i][2].value);	
+			if(tableresult[i][2].value == date2 || tableresult[i][2].value == date2){
+				var row = table.insertRow(table.rows.lenght);
+				var row2 = table2.insertRow(table2.rows.lenght);
+				var cell1 = row.insertCell(0);
+				var cell2 = row2.insertCell(0);
+				cell1.innerHTML = '<input type="text" name="selectup" value="' + tableresult[i][0].value + tableresult[i][2].value +'">';
+				cell2.innerHTML = '<input type="text" id="u' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][3].value + '">';
+			}
+			if(tableresult[i][3].value == 1){
+				contenttable.innerHTML = '<label style="font-size:20pt">&#9675</label><input type="text" id="t' + tableresult[i][0].value + tableresult[i][2].value +'" value="1"  style="display:none">'+
+				'<br><input type="button" value="삭제" id="b' + tableresult[i][0].value + tableresult[i][2].value + '" name="dbutton" onclick="deletecheck(this)" style="display:none;">'+
+				'<input type="text" id="d' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][4].value + '">';
+			}
+			if(tableresult[i][3].value == 2){
+				contenttable.innerHTML = '<label style="font-size:15pt">&#9651</label><input type="text" id="t' + tableresult[i][0].value + tableresult[i][2].value +'" value="2"  style="display:none">'+
+				'<br><input type="button" value="삭제" id="b' + tableresult[i][0].value + tableresult[i][2].value + '" name="dbutton" onclick="deletecheck(this)" style="display:none;">'+
+				'<input type="text" id="d' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][4].value + '">';
+			}
+			if(tableresult[i][3].value == 3){
+				contenttable.innerHTML = '<label style="font-size:15pt">&#9747</label><input type="text" id="t' + tableresult[i][0].value + tableresult[i][2].value +'" value="3"  style="display:none">'+
+				'<br><input type="button" value="삭제" id="b' + tableresult[i][0].value + tableresult[i][2].value + '" name="dbutton" onclick="deletecheck(this)" style="display:none;">'+
+				'<input type="text" id="d' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][4].value + '">';
+			}
+			usertable.innerHTML = tableresult[i][1].value;
+			
+		}
+	}
+}
+
+function writeevent(){
+	var delbutton = document.getElementsByName("dbutton");
+	for(var i=0; i<delbutton.length; i++){
+		delbutton[i].style.display = '';
+	}
+	var wb = document.getElementById("writebutton");
+	var cb = document.getElementById("commitbutton");
+	wb.style.display = 'none';
+	cb.style.display = '';
+	if(year==vyear && month == vmonth){
+		var usercheck = document.getElementById('user' + date1);
+		for(var i=0; i<contentresult.length; i++){
+			if(day == 1){
+				usercheck.innerHTML = <%=userid %>
+				var contenttd = document.getElementById(contentresult[i].value + date1);
+				contenttd.innerHTML = '<select id="s' + contentresult[i].value + date1 +'" name="insertselect" class="form-control" style="font-size:20px; text-align:center">' +
+				'<option value="1">&#9675</option><option value="2">&#9651</option><option value="3">&#9747</option></select>' + 
+				'<input type="button" value="삭제" id="b' + contentresult[i].value + date1 + '" name="dbutton" onclick="deletecheck2(this)" style="width:30%">'
+			}
+			else{
+				var usercheck2 = document.getElementById('user' + date2);
+				usercheck.innerHTML = <%=userid %>
+				usercheck2.innerHTML = <%=userid %>
+				var contenttd = document.getElementById(contentresult[i].value + date1);
+				contenttd.innerHTML = '<select id="s' + contentresult[i].value + date1 +'" name="insertselect" class="form-control" style="font-size:20px; text-align:center">' +
+				'<option value="1">&#9675</option><option value="2">&#9651</option><option value="3">&#9747</option></select>' + 
+				'<input type="button" value="삭제" id="b' + contentresult[i].value + date1 + '" name="dbutton" onclick="deletecheck2(this)" style="width:30%">';
+				var contenttd2 = document.getElementById(contentresult[i].value + date2);
+				contenttd2.innerHTML = '<select id="s' + contentresult[i].value + date2 +'" name="insertselect" class="form-control" style="font-size:20px; text-align:center">' +
+				'<option value="1">&#9675</option><option value="2">&#9651</option><option value="3">&#9747</option></select>' + 
+				'<input type="button" value="삭제" id="b' + contentresult[i].value + date2 + '" name="dbutton" onclick="deletecheck2(this)" style="width:30%">';
+				
+			}
+		}
+	}
+	var selectup = document.getElementsByName("selectup");
+	for(var i=0; i<selectup.length; i++){
+		document.getElementById("s" + selectup[i].value).value = document.getElementById("u" + selectup[i].value).value;
+	}
+}
+
+function deletecheck(obj){
+	var tdid = obj.parentElement.id;
+	var dtext = document.getElementById("d" + tdid);
+	document.getElementById(tdid).innerHTML = '';
+	var table = document.getElementById("deletetable");
+	var row = table.insertRow(table.rows.lenght);
+	var cell1 = row.insertCell(0);
+	cell1.innerHTML = '<input type="text" name="deletenum" value="' + dtext.value +'">';
+}
+
+function deletecheck2(obj){
+	var tdid = obj.parentElement.id;
+	document.getElementById(tdid).innerHTML = '';
+	
+	
+}
+
+function commitevent(frm){
+	var table = document.getElementById("inserttable");
+	var datetabee = document.getElementById("datetable");
+	var insertselect = document.getElementsByName("insertselect");
+	for(var i=0; i<insertselect.length; i++){
+		var row = table.insertRow(table.rows.length);
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1);	
+		var tdid = insertselect[i].parentElement.id;
+		var value = insertselect[i].value;
+		cell1.innerHTML = '<input type="text" name="ctdate" value="' + tdid + '">'
+		cell2.innerHTML = '<input type="text" name="status" value="' + value + '">'
+		
+	}
+	var row = datetable.insertRow(datetable.rows.length);
+	var cell1 = row.insertCell(0);
+	var cell2 = row.insertCell(1);
+	cell1.innerHTML = '<input type="text" name="date1" value="' + date1 +'">';
+	cell2.innerHTML = '<input type="text" name="date2" value="' + date2 +'">';
+	frm.action = './insertfacilitiescheck.jsp';
+	frm.submit();
+	
+}
+
+
 </script>
 </head>
 <body>
 	<div class="title">설비 관리 / 설비일상점검</div>
+	<form>
 	<div class="panel panel-default border searchbox">
 		<div class="panel-body">
 			설비명&nbsp;&nbsp;&nbsp;
-			<select id="facilities_name" name="nfacilities_name" class="form-control searchtitle">
+			<select id="facilities_name" name="nfacilities_name" class="form-control searchtitle" style="width:15%">
 			<%for(int i=0; i<fn.size(); i++){
 				%>
 				<option><%=fn.get(i) %></option>
@@ -125,12 +351,13 @@ function uptable(){
 			<div class="panel-heading" style="height: 60px;">
 				<div style="height: 40px;">
 					<h5 class="panel-title" style="float: left; margin-top: 10px;">설비일상점검 항목</h5>
-					&nbsp;&nbsp;&nbsp;<input class="btn btn-primary" type="button" value="작성" style="margin-top:2px;"> 
+					&nbsp;&nbsp;&nbsp;<input class="btn btn-primary" id="writebutton" type="button" value="작성" style="margin-top:2px;" onclick="writeevent(this)"> 
+					<input class="btn btn-primary" type="button" id="commitbutton" value="저장" style="margin-top:2px; display:none" onclick="commitevent(this.form)">
 				</div>
 			</div>
 			<div class="panel-body">
 				<div style="overflow-x:scroll;">
-				<table class="table table-bordered table-hover" id="checktable" style="width:5000px; max-width:none;">
+				<table class="table table-bordered table-hover" id="checktable" style="width:5000px; max-width:none; table-layout:fixed;">
 					<thead class="tablehead" id ="checkthead">
 						
 					</thead>
@@ -145,5 +372,31 @@ function uptable(){
 			</div>
 		</div>
 	</div>
+	<table>
+		<tbody id="deletetable">
+		
+		</tbody>
+	</table>
+	<table>
+		<tbody id="writedaytable">
+			
+		</tbody>
+	</table>
+	<table>
+		<tbody id="writedayvaluetable">
+		
+		</tbody>
+	</table>
+	<table>
+		<tbody id="inserttable">
+		
+		</tbody>
+	</table>
+	<table>
+		<tbody id="datetable">
+		
+		</tbody>
+	</table>
+	</form>
 </body>
 </html>
