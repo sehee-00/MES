@@ -16,7 +16,7 @@ Vector<facilitiesdb> fc = dbc.facilitiestable();
 Vector<String> facilities_status = dbc.selectfacilities_status();
 int lastpage = (fc.size()-1)/10 + 1;
 Vector<String> code = dbc.getcode_sub();
-String userid = (String)session.getAttribute("id"); 
+
 %>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -44,12 +44,66 @@ String userid = (String)session.getAttribute("id");
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
 var request = new XMLHttpRequest();
-var hlastpage = <%=lastpage%>;
+var hlastpage = "";
 var paging = 1;
 var now = new Date();
 var year = now.getFullYear();
 var month = now.getMonth() + 1;
 var day = now.getDate();
+
+function pagenation(page){
+	var pagetable = document.getElementsByName("page" + page);
+
+	for(var i=1; i<=hlastpage; i++){
+		var nopagetable = document.getElementsByName("page" + i);
+		for(var j=0; j<nopagetable.length; j++){
+			nopagetable[j].style.display = "none";
+		}
+	}
+	for(var i=0; i<pagetable.length; i++){
+		pagetable[i].style.display = "";	
+	}
+	paging = page;
+	for(var i=1; i<=hlastpage; i++){
+		document.getElementById('a' + i).style.color = 'rgb(51,122,183)';
+		document.getElementById('a' + i).style.background = 'white';	
+		document.getElementById('aprevious').style.color = 'rgb(51,122,183)';
+		document.getElementById('anext').style.color = 'rgb(51,122,183)';
+	}
+	document.getElementById('a' + page).style.background = 'rgb(51,122,183)';
+	document.getElementById('a' + page).style.color = 'white';
+	if(page == 1){
+		document.getElementById('aprevious').style.color = 'gray';
+	}
+	if(page == hlastpage){
+		document.getElementById('anext').style.color = 'gray';
+	}
+}
+
+function previous(){
+	if(paging > 1){
+		paging -= 1;
+		pagenation(paging);
+	}
+}
+
+function next(){
+	if(paging < hlastpage){
+		paging += 1;
+		pagenation(paging);
+	}
+}
+
+function uladd(lastpage){
+	var ul_list = $('#pageul');
+	ul_list.empty();
+	ul_list.append('<li class="page-item pages" id="previous"' + i +'" onclick="previous()"><a id="aprevious" class="page-link" style="color:rgb(51,122,183);">Previous</a></li>')
+	for(var i=1; i<=lastpage; i++){
+		ul_list.append('<li class="page-item pages" id="page"' + i +'" onclick="pagenation(' + i + ')"><a id="a' + i + '" class="page-link" style="color:rgb(51,122,183);">' + i + '</a></li>')	
+	}
+	ul_list.append('<li class="page-item pages" id="next"' + i +'" onclick="next()"><a id="anext" class="page-link" style="color:rgb(51,122,183);">Next</a></li>')
+}
+
 
 
 function dateoption(){
@@ -171,6 +225,7 @@ function gettable(){
 	if(request.readyState == 4 && request.status == 200){
 		var object = eval('(' + request.responseText + ')');
 		contentresult = object.contentresult;
+		hlastpage = parseInt((contentresult.length-1)/10)+1
 		tableresult = object.tableresult;
 		tbs = '<tr><td>담당자</td>';
 		for(var i=1; i<=lastday; i++){
@@ -185,8 +240,8 @@ function gettable(){
 			}
 		}
 		for(var i=0; i<contentresult.length; i++){
-			tbs += '<tr><td>' + contentresult[i].value + '</td>';
-			
+			var resultpage = parseInt(i/10) + 1;
+			tbs += '<tr name="page' + resultpage + '"><td>' + contentresult[i].value + '</td>';
 			for(var j=1; j<=lastday; j++){
 				if(j < 10){
 					var contentid = contentresult[i].value + dateid + '-0' + j;
@@ -199,6 +254,8 @@ function gettable(){
 			}	
 			tbs += '</tr>';
 		}
+		uladd(hlastpage);
+		
 		checktbody.innerHTML = tbs;
 		var table = document.getElementById("writedaytable");
 		var table2 = document.getElementById("writedayvaluetable");
@@ -220,21 +277,23 @@ function gettable(){
 			if(tableresult[i][3].value == 1){
 				contenttable.innerHTML = '<label style="font-size:20pt">&#9675</label><input type="text" id="t' + tableresult[i][0].value + tableresult[i][2].value +'" value="1"  style="display:none">'+
 				'<br><input type="button" value="삭제" id="b' + tableresult[i][0].value + tableresult[i][2].value + '" name="dbutton" onclick="deletecheck(this)" style="display:none;">'+
-				'<input type="text" id="d' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][4].value + '">';
+				'<input type="text" id="d' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][4].value + '" style="display:none;">';
 			}
 			if(tableresult[i][3].value == 2){
 				contenttable.innerHTML = '<label style="font-size:15pt">&#9651</label><input type="text" id="t' + tableresult[i][0].value + tableresult[i][2].value +'" value="2"  style="display:none">'+
 				'<br><input type="button" value="삭제" id="b' + tableresult[i][0].value + tableresult[i][2].value + '" name="dbutton" onclick="deletecheck(this)" style="display:none;">'+
-				'<input type="text" id="d' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][4].value + '">';
+				'<input type="text" id="d' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][4].value + '" style="display:none;">';
 			}
 			if(tableresult[i][3].value == 3){
 				contenttable.innerHTML = '<label style="font-size:15pt">&#9747</label><input type="text" id="t' + tableresult[i][0].value + tableresult[i][2].value +'" value="3"  style="display:none">'+
 				'<br><input type="button" value="삭제" id="b' + tableresult[i][0].value + tableresult[i][2].value + '" name="dbutton" onclick="deletecheck(this)" style="display:none;">'+
-				'<input type="text" id="d' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][4].value + '">';
+				'<input type="text" id="d' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][4].value + '" style="display:none;">';
 			}
 			usertable.innerHTML = tableresult[i][1].value;
 			
 		}
+		pagenation(1);
+		paging = 1;
 	}
 }
 
@@ -251,7 +310,7 @@ function writeevent(){
 		var usercheck = document.getElementById('user' + date1);
 		for(var i=0; i<contentresult.length; i++){
 			if(day == 1){
-				usercheck.innerHTML = <%=userid %>
+				usercheck.innerHTML = 'admin';
 				var contenttd = document.getElementById(contentresult[i].value + date1);
 				contenttd.innerHTML = '<select id="s' + contentresult[i].value + date1 +'" name="insertselect" class="form-control" style="font-size:20px; text-align:center">' +
 				'<option value="1">&#9675</option><option value="2">&#9651</option><option value="3">&#9747</option></select>' + 
@@ -259,8 +318,8 @@ function writeevent(){
 			}
 			else{
 				var usercheck2 = document.getElementById('user' + date2);
-				usercheck.innerHTML = <%=userid %>
-				usercheck2.innerHTML = <%=userid %>
+				usercheck.innerHTML = 'admin';
+				usercheck2.innerHTML = 'admin';
 				var contenttd = document.getElementById(contentresult[i].value + date1);
 				contenttd.innerHTML = '<select id="s' + contentresult[i].value + date1 +'" name="insertselect" class="form-control" style="font-size:20px; text-align:center">' +
 				'<option value="1">&#9675</option><option value="2">&#9651</option><option value="3">&#9747</option></select>' + 
@@ -321,6 +380,8 @@ function commitevent(frm){
 }
 
 
+
+
 </script>
 </head>
 <body>
@@ -339,7 +400,7 @@ function commitevent(frm){
 			</select>
 			&nbsp;&nbsp;&nbsp; 날짜:
 			<select id="year" name="nyear" class="form-control searchtitle" style="width:5%;"></select>
-			<select id="month" name="nmonth" class="form-control searchtitle" style="width:3%;"></select>
+			<select id="month" name="nmonth" class="form-control searchtitle" style="width:4%;"></select>
 			<script>
 			dateoption();
 			</script>
@@ -364,26 +425,31 @@ function commitevent(frm){
 					<tbody id="checktbody">
 						
 					</tbody>
-				</table>	
+				</table>
+				
 				</div>
+				<ul class="pagination justify-content-end" id="pageul">
+
+				</ul>	
 				<script>
 				uptable();
+
 				</script>	
 			</div>
 		</div>
 	</div>
 	<table>
-		<tbody id="deletetable">
+		<tbody id="deletetable" style="display:none">
 		
 		</tbody>
 	</table>
 	<table>
-		<tbody id="writedaytable">
+		<tbody id="writedaytable" style="display:none">
 			
 		</tbody>
 	</table>
 	<table>
-		<tbody id="writedayvaluetable">
+		<tbody id="writedayvaluetable" style="display:none">
 		
 		</tbody>
 	</table>

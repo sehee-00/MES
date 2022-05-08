@@ -659,6 +659,12 @@ $(document).ready(function() {
     $('select[id="et_com_name"]').val("").select2();
 });
 
+function exceldownload(frm){
+	frm.action = '../estimateExcel?mode=excelinfo';
+	frm.submit();
+	
+}
+
 
 </script>
 
@@ -955,7 +961,7 @@ $(document).ready(function() {
 				<div class="buttongruops">
 					<input class="btn btn-primary" type="reset" value="초기화"
 						id="boardreset" /> <input class="btn btn-primary" type="submit"
-						value="견적서 출력" id="boardreset" onclick="if(bool()){btest();}"/>
+						value="견적서 출력" id="boardreset" onclick="exceldownload(this.form)"/>
 					<input class="btn btn-primary" type="button" value="등록" onclick="insertform(this.form)"> 
 					<input class="btn btn-danger" type="button" value="삭제" onclick="deleteform(this.form)">
 				</div>

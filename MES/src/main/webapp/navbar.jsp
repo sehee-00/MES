@@ -395,6 +395,38 @@
 
                     </div>
                 </li>
+                 <li name="설비 관리">
+                    <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseNine">
+                        설비 관리
+                        </a>
+                    </div>
+
+                    <ul>
+                    <div id="collapseNine" class="accordion-body collapse">
+
+                        <li name="공통코드 관리">
+                        <div class="accordion-inner">
+                        <a class="sidemenuselect" id="facilitiesph">설비이력관리</a>
+                        </div>
+                        </li>
+
+                        <li name="업체 관리">
+                        <div class="accordion-inner">
+                        <a class="sidemenuselect" id="facilitiescheck">설비일상점검</a>
+                        </div>
+                        </li>
+
+                    
+
+                       
+                    </div>
+                    </ul>
+
+                    </div>
+                </li>
+                
 
                 <li name="Admin">
                     <div class="accordion-group">
@@ -423,6 +455,8 @@
                     </div>
                 </div>
                 </li>
+                
+                
                 
                 <!-- pop 화면 권한설정 -->
                 <li name="POP">
@@ -637,6 +671,14 @@
     			
     		case "order_process":
     			$("#pframe").attr('src','order_process/order_process.jsp');
+    			break;
+    			
+    		case "facilitiesph":
+    			$("#pframe").attr('src','facilitiesph/facilitiesph.jsp');
+    			break;
+    		
+    		case "facilitiescheck":
+    			$("#pframe").attr('src','facilitiescheck/facilitiescheck.jsp');
     			break;
     			
     		case "pop":
