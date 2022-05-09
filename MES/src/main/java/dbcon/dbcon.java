@@ -52,7 +52,7 @@ public class dbcon {
 				es.setDegree(rs.getInt("degree"));
 				es.setEt_com_name(rs.getString("et_com_id"));
 				es.setEt_price(rs.getInt("et_price"));
-				es.setEt_date(rs.getString("et_date"));
+				es.setEt_date(rs.getString("et_date").substring(0, 10));
 				String et_explain = rs.getString("et_explain");
 				et_explain = et_explain.replace("\r\n", "!@#");
 				es.setEt_explain(et_explain);
@@ -86,7 +86,7 @@ public class dbcon {
 					es.setDegree(rs.getInt("degree"));
 					es.setEt_com_name(rs.getString("et_com_id"));
 					es.setEt_price(rs.getInt("et_price"));
-					es.setEt_date(rs.getString("et_date"));
+					es.setEt_date(rs.getString("et_date").substring(0, 10));
 					String et_explain = rs.getString("et_explain");
 					et_explain = et_explain.replace("\r\n", "!@#");
 					es.setEt_explain(et_explain);
@@ -106,7 +106,7 @@ public class dbcon {
 					es.setDegree(rs.getInt("degree"));
 					es.setEt_com_name(rs.getString("et_com_id"));
 					es.setEt_price(rs.getInt("et_price"));
-					es.setEt_date(rs.getString("et_date"));
+					es.setEt_date(rs.getString("et_date").substring(0, 10));
 					String et_explain = rs.getString("et_explain");
 					et_explain = et_explain.replace("\r\n", "!@#");
 					es.setEt_explain(et_explain);
@@ -139,7 +139,7 @@ public class dbcon {
 					es.setDegree(rs.getInt("max(degree)"));
 					es.setEt_com_name(rs.getString("et_com_id"));
 					es.setEt_price(rs.getInt("et_price"));
-					es.setEt_date(rs.getString("et_date"));
+					es.setEt_date(rs.getString("et_date").substring(0, 10));
 					String et_explain = rs.getString("et_explain");
 					et_explain = et_explain.replace("\r\n", "!@#");
 					es.setEt_explain(et_explain);
@@ -159,7 +159,7 @@ public class dbcon {
 					es.setDegree(rs.getInt("max(degree)"));
 					es.setEt_com_name(rs.getString("et_com_id"));
 					es.setEt_price(rs.getInt("et_price"));
-					es.setEt_date(rs.getString("et_date"));
+					es.setEt_date(rs.getString("et_date").substring(0, 10));
 					String et_explain = rs.getString("et_explain");
 					et_explain = et_explain.replace("\r\n", "!@#");
 					es.setEt_explain(et_explain);
@@ -467,7 +467,7 @@ public class dbcon {
 				es.setDegree(rs.getInt("max(degree)"));
 				es.setEt_com_name(rs.getString("et_com_id"));
 				es.setEt_price(rs.getInt("et_price"));
-				es.setEt_date(rs.getString("et_date"));
+				es.setEt_date(rs.getString("et_date").substring(0, 10));
 				String et_explain = rs.getString("et_explain");
 				et_explain = et_explain.replace("\r\n", "!@#");
 				es.setEt_explain(et_explain);
@@ -499,6 +499,30 @@ public class dbcon {
 			e.printStackTrace();
 		}
 		return v;
+	}
+	
+	public Vector<String> getunitprice(Vector<material_etdb> me) {
+		Vector<String> v= new Vector<String>();
+		try {
+			dbconnect();
+			String sql = "select unit_price from materials where materials_name = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			ResultSet rs = null;
+			for(int i=0; i<me.size(); i++) {
+				pstmt.setString(1, me.get(i).getMaterials_no());
+				rs = pstmt.executeQuery();
+				if(rs.next()) {
+					v.add(rs.getString("unit_price"));
+				}
+			}			
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;	
 	}
 
 	// -----------------------facilities-----------------------------------

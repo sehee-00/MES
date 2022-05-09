@@ -731,6 +731,7 @@
 	        	function exceldownload(t){
 	        		let itemno = $("#itemnosel").val();
 	        		let part = t.parentNode.getAttribute("id");
+	 
 	        		
 	        		location.href = "./Excel?mode=excelinfo&itemno=" + itemno + "&partname=" + part;
 	        		

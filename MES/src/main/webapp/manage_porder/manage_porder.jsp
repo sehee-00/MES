@@ -277,6 +277,15 @@ int lastpage = (mp.size() - 1) / 10 + 1;
         $('select[id="ordercom"]').select2();
         $('select[id="ordercom"]').val("").select2();
     });
+	
+	function exceldownload(){
+		var rows = document.getElementById("ordertbody").getElementsByTagName("tr");
+		alert(checkarr.length);
+		for(var i=0; i<checkarr.length; i++){
+			var td = document.getElementById('row' + checkarr[i]).children;
+			console.log(td.eq(0).children);
+		}
+	}
 </script>
 </head>
 <body>
@@ -391,7 +400,7 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 				</div>
 			<div class="buttongruops">
 				<input class="btn btn-primary" type="button" value="발주서 출력"
-					id="boardreset" /> <input class="btn btn-primary" id="insert" type="button"
+					id="boardreset" onclick="exceldownload()" /> <input class="btn btn-primary" id="insert" type="button"
 					value="저장" onclick="insertform(this.form)">
 					<input class="btn btn-danger" type="button"
 					value="삭제" onclick="deleteform(this.form)">

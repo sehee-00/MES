@@ -20,6 +20,7 @@ public class Excel extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		JSONObject result = null;
+		System.out.println("aa");
       
 		String mode = request.getParameter("mode");
 		String ordername = null;

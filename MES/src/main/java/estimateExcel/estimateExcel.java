@@ -5,6 +5,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import estimateExcel.estimateexcelwrite;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -14,41 +16,31 @@ import java.util.List;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONObject;
 
-@WebServlet("/estimateExecl/Excel")
+
+@WebServlet("/estimateExcel/estimateExcel")
 public class estimateExcel extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		JSONObject result = null;
-      
+		String id = null;
+		String degree = null;
+		String com = null;
 		String mode = request.getParameter("mode");
-		String ordername = null;
-		String partsname = null;
 		
+	
 		switch(mode) {
 	      
 	      case "excelinfo":
+	    	  id = request.getParameter("id");
+	    	  degree = request.getParameter("degree");
+	    	  com = request.getParameter("com");
 			  result = new JSONObject();
 			  String excelformpath = request.getSession().getServletContext().getRealPath("excelforms");
-			  ordername = request.getParameter("itemno");
-			  partsname = request.getParameter("partname");
-			  String et_com_name = (String) request.getParameter("net_com_name");
-			  String et_price = (String) request.getParameter("net_price");
-			  String et_explain = (String) request.getParameter("net_explain");
-			  String et_id = (String) request.getParameter("net_id");
-			  String et_degree = request.getParameter("net_degree");
-			  String[] materialarray = request.getParameterValues("nmaterial_name");
-			  String[] material_no = request.getParameterValues("nmaterial_no");
-			  String[] standard_proc = request.getParameterValues("nstandard_proc");
-			  String[] proc_startdaystr = request.getParameterValues("nproc_startday");
-			  String[] proc_enddaystr = request.getParameterValues("nproc_endday");
-			  String[] md = request.getParameterValues("nmd");
-			  String[] cost = request.getParameterValues("ncost");
-			  String[] other_et_id = request.getParameterValues("nother_et_id");
-			  String[] other_cost = request.getParameterValues("nother_cost");
+
 			  
 			  estimateexcelwrite excel = new estimateexcelwrite();
-			  XSSFWorkbook wb = excel.writeExcel(excelformpath, ordername, partsname);
+			  XSSFWorkbook wb = excel.writeExcel(excelformpath, id , degree, com);
 			  
 			//파일 저장
 				
@@ -58,12 +50,12 @@ public class estimateExcel extends HttpServlet {
 
 				String to = transFormat.format(from);
 
-				String localfile = "work_schedule_" + partsname + "_" + to +".xlsx";
+				String localfile = "work_schedule111_" + id + "_" + to +".xlsx";
 				
 				response.setContentType("application/vnd.ms-excel");
 				response.setHeader("Content-Disposition", "attachment;filename=" + localfile);
 				
-				try{
+				try{	
 					wb.write(response.getOutputStream());
 					wb.close();
 				}catch(Exception e) {
@@ -73,6 +65,7 @@ public class estimateExcel extends HttpServlet {
 	    	  break;
 	      }
 	}
+		
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

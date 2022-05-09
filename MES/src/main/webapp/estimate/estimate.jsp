@@ -35,6 +35,7 @@ dbcon dbc = new dbcon();
 <link rel="stylesheet" href="estimatecss.css?ver03">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.15.5/xlsx.full.min.js"></script>
 <style>
 .select2-container .select2-selection--single{
 	height:33px;
@@ -659,9 +660,27 @@ $(document).ready(function() {
     $('select[id="et_com_name"]').val("").select2();
 });
 
-function exceldownload(frm){
-	frm.action = '../estimateExcel?mode=excelinfo';
-	frm.submit();
+function exceldownload(){
+	var et_id = document.getElementById("et_id").value;
+	var degree = document.getElementById("et_degree").value;
+	var com = document.getElementById("et_com_name").value;
+	var check = 0;
+	if(et_id == ""){
+		check = 1;
+		alert("견적서를 확인하세요");
+	}
+	if(degree == ""){
+		check = 1;
+		alert("견적서를 확인하세요");
+	}
+	if(com == ""){
+		check = 1;
+		alert("견적서를 확인하세요");
+	}
+	if(check == 0){
+		location.href = "../estimateExcel/estimateExcel?mode=excelinfo&id=" + et_id + "&degree=" + degree +"&com=" + com;	
+	}
+	
 	
 }
 
@@ -960,8 +979,8 @@ function exceldownload(frm){
 				</div>
 				<div class="buttongruops">
 					<input class="btn btn-primary" type="reset" value="초기화"
-						id="boardreset" /> <input class="btn btn-primary" type="submit"
-						value="견적서 출력" id="boardreset" onclick="exceldownload(this.form)"/>
+						id="boardreset" /> 
+					<input class="btn btn-primary" type="button" value="견적서 출력" id="boardreset" onclick="exceldownload()"/>
 					<input class="btn btn-primary" type="button" value="등록" onclick="insertform(this.form)"> 
 					<input class="btn btn-danger" type="button" value="삭제" onclick="deleteform(this.form)">
 				</div>

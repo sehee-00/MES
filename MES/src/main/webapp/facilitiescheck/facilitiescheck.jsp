@@ -209,11 +209,11 @@ function uptable(){
 		}
 		else{
 			if(month < 10){
-				var todayth = document.getElementById(year + '-0' + month + '-0' + day);
+				var todayth = document.getElementById(year + '-0' + month + '-' + day);
 				todayth.style.color = 'blue';
 			}
 			else{
-				var todayth = document.getElementById(year + '-' + month + '-0' + day);
+				var todayth = document.getElementById(year + '-' + month + '-' + day);
 				todayth.style.color = 'blue';
 			}
 			
@@ -355,7 +355,6 @@ function deletecheck(obj){
 function deletecheck2(obj){
 	var tdid = obj.parentElement.id;
 	document.getElementById(tdid).innerHTML = '';
-	
 	
 }
 
