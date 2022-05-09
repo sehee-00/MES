@@ -17,6 +17,7 @@
 	String[] deletenum = request.getParameterValues("deletenum");
 	
 	dbc.insertfcheck(facilities_name, userid, contentdate, status, date1, date2);
+	dbc.deletecheck(deletenum);
 	PrintWriter script = response.getWriter();
 	script.println("<script>");
 	script.println("alert('성공');");

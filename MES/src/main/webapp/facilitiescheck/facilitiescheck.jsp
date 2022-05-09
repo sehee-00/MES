@@ -17,6 +17,10 @@ Vector<String> facilities_status = dbc.selectfacilities_status();
 int lastpage = (fc.size()-1)/10 + 1;
 Vector<String> code = dbc.getcode_sub();
 
+//
+String temp = (String)session.getAttribute("id");
+System.out.println(temp);
+
 %>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -310,7 +314,7 @@ function writeevent(){
 		var usercheck = document.getElementById('user' + date1);
 		for(var i=0; i<contentresult.length; i++){
 			if(day == 1){
-				usercheck.innerHTML = 'admin';
+				usercheck.innerHTML = '<%=temp%>';
 				var contenttd = document.getElementById(contentresult[i].value + date1);
 				contenttd.innerHTML = '<select id="s' + contentresult[i].value + date1 +'" name="insertselect" class="form-control" style="font-size:20px; text-align:center">' +
 				'<option value="1">&#9675</option><option value="2">&#9651</option><option value="3">&#9747</option></select>' + 
@@ -318,8 +322,8 @@ function writeevent(){
 			}
 			else{
 				var usercheck2 = document.getElementById('user' + date2);
-				usercheck.innerHTML = 'admin';
-				usercheck2.innerHTML = 'admin';
+				usercheck.innerHTML = '<%=temp%>';
+				usercheck2.innerHTML = '<%=temp%>';
 				var contenttd = document.getElementById(contentresult[i].value + date1);
 				contenttd.innerHTML = '<select id="s' + contentresult[i].value + date1 +'" name="insertselect" class="form-control" style="font-size:20px; text-align:center">' +
 				'<option value="1">&#9675</option><option value="2">&#9651</option><option value="3">&#9747</option></select>' + 

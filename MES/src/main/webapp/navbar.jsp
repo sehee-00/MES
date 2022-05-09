@@ -682,7 +682,7 @@
     			break;
     			
     		case "pop":
-    			window.location.href='./POP/DASHBOARD.jsp';
+    			window.open('./POP/DASHBOARD.jsp');
     			break;
     	}
     });
