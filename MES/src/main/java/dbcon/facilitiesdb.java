@@ -11,6 +11,15 @@ public class facilitiesdb {
 	String facilities_date;
 	String facilities_priority;
 	String facilities_img;
+	String b_num;
+	
+	public String getb_num() { 
+		return b_num;
+	}
+	
+	public void setb_num(String b_num) { 
+		this.b_num = b_num;
+	}
 	
 	public String getFacilities_date() {
 		return facilities_date;

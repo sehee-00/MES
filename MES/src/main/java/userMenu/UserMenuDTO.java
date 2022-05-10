@@ -11,7 +11,15 @@ public class UserMenuDTO {
 	private String dashboard;
 	private String info_manage;
 	private String admin;
+	private String facilitiesmenu;
 	
+	
+	public String getFacilitiesmenu() {
+		return facilitiesmenu;
+	}
+	public void setFacilitiesmenu(String facilitiesmenu) {
+		this.facilitiesmenu = facilitiesmenu;
+	}
 	public String getUser_id() {
 		return user_id;
 	}

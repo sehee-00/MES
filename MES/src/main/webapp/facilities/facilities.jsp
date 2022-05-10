@@ -166,7 +166,8 @@ function searchfacilities(){
 				}
 				else if(j == 2){
 					var cell = row.insertCell(j);
-					cell.innerHTML = '<input type="button" class="btn" value="인쇄" style="background: gray; color: white;">'
+					cell.innerHTML = '<input type="button" class="btn" value="인쇄" onclick="location.href=\'/MES/barcode/barcode.jsp?code=14&uniqueId=' + result[i][10].value + '\'" style="background: gray; color: white;">'
+					
 				}
 				else{
 					var cell = row.insertCell(j);
@@ -373,7 +374,7 @@ function deleterow(obj){
 						<tr name="page<%=pageid%>">
 							<td><%=fc.get(i).getFacilities_name()%></td>
 							<td><%=fc.get(i).getUsing()%></td>
-							<td><input type="button" class="btn" value="인쇄"
+							<td><input type="button" class="btn" value="인쇄" onclick="location.href='/MES/barcode/barcode.jsp?code=14&uniqueId=<%=fc.get(i).getb_num()%>'"
 								style="background: gray; color: white;"></td>
 							<td style="display:none"><%=fc.get(i).getFacilities_status()%></td>
 							<td style="display:none"><%=fc.get(i).getPay()%></td>

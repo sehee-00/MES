@@ -195,7 +195,7 @@ rs=stmt.executeQuery(query);
 							<td style="display:none"><%=rs.getString("note")%></td>
 							<td style="display:none"><%=rs.getString("state")%></td>
 							<td style="display:none"><%=rs.getString("use_yn")%></td>
-							<td><button type="button" class="btn btn-secondary">인쇄</button></td>
+							<td><button type="button" class="btn btn-secondary" onclick="location.href='/MES/barcode/barcode.jsp?code=71&uniqueId=<%=rs.getString("b_num")%>'">인쇄</button></td>
 						</tr>
 						<%
 						}

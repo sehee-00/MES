@@ -170,7 +170,7 @@
                         
                          <li name="수주 공정 관리">
                         <div class="accordion-inner">
-                        <a class="sidemenuselect" id="order_process">진척 현황</a>
+                        <a class="sidemenuselect" id="order_process">수주 공정 관리</a>
                         </div>
                         </li>
 
@@ -255,6 +255,12 @@
                         <li name="자재 현황 조회">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="materialcur">자재 현황 조회</a>
+                        </div>
+                        </li>
+                        
+                        <li name="수주별 소요량">
+                        <div class="accordion-inner">
+                        <a class="sidemenuselect" id="order_requirement">수주별 소요량</a>
                         </div>
                         </li>
                     </div>
@@ -406,13 +412,13 @@
                     <ul>
                     <div id="collapseNine" class="accordion-body collapse">
 
-                        <li name="공통코드 관리">
+                        <li name="설비이력관리">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="facilitiesph">설비이력관리</a>
                         </div>
                         </li>
 
-                        <li name="업체 관리">
+                        <li name="설비일상점검">
                         <div class="accordion-inner">
                         <a class="sidemenuselect" id="facilitiescheck">설비일상점검</a>
                         </div>
@@ -680,6 +686,12 @@
     		case "facilitiescheck":
     			$("#pframe").attr('src','facilitiescheck/facilitiescheck.jsp');
     			break;
+    			
+    		case "order_requirement":
+    			$("#pframe").attr('src','order_requirement/order_requirement.jsp');
+    			break;
+    			
+ 
     			
     		case "pop":
     			window.open('./POP/DASHBOARD.jsp');

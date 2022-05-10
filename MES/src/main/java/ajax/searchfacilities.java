@@ -44,7 +44,8 @@ public class searchfacilities extends HttpServlet {
 			result.append("{\"value\": \"" + v.get(i).getFacilities_end() + "\"},");
 			result.append("{\"value\": \"" + v.get(i).getFacilities_date() + "\"},");
 			result.append("{\"value\": \"" + v.get(i).getFacilities_priority() + "\"},");
-			result.append("{\"value\": \"" + v.get(i).getFacilities_img() + "\"}],");
+			result.append("{\"value\": \"" + v.get(i).getFacilities_img() + "\"},");
+			result.append("{\"value\": \"" + v.get(i).getb_num() + "\"}],");
 		}
 		result.append("]");
 		return result.toString();

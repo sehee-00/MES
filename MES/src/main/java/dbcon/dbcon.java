@@ -530,7 +530,7 @@ public class dbcon {
 		Vector<facilitiesdb> v = new Vector<facilitiesdb>();
 		try {
 			dbconnect();
-			String sql = "select facilities_name, facilities_status, pay, mes.facilities.using, using_all_day, facilities_start, facilities_end, facilities_date, facilities_priority, facilities_img from facilities";
+			String sql = "select facilities_name, facilities_status, pay, mes.facilities.using, using_all_day, facilities_start, facilities_end, facilities_date, facilities_priority, facilities_img, b_num from facilities";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -539,6 +539,7 @@ public class dbcon {
 				fc.setFacilities_status(rs.getString("facilities_status"));
 				fc.setPay(rs.getString("pay"));
 				fc.setUsing(rs.getString(4));
+				fc.setb_num(rs.getString("b_num"));
 				fc.setUsing_all_day(rs.getString("using_all_day"));
 				fc.setFacilities_start(rs.getString("facilities_start"));
 				fc.setFacilities_end(rs.getString("facilities_end"));
@@ -702,7 +703,7 @@ public class dbcon {
 		Vector<facilitiesdb> v = new Vector<facilitiesdb>();
 		try {
 			dbconnect();
-			String sql = "select facilities_name, facilities_status, pay, mes.facilities.using, using_all_day, facilities_start, facilities_end, facilities_date, facilities_priority, facilities_img from facilities where facilities_name like ?";
+			String sql = "select facilities_name, facilities_status, pay, mes.facilities.using, using_all_day, facilities_start, facilities_end, facilities_date, facilities_priority, facilities_img, b_num from facilities where facilities_name like ?";
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, "%" + search + "%");
 			ResultSet rs = pstmt.executeQuery();
@@ -718,6 +719,7 @@ public class dbcon {
 				fc.setFacilities_date(rs.getString("facilities_date").substring(0, 10));
 				fc.setFacilities_priority(rs.getString("facilities_priority"));
 				fc.setFacilities_img(rs.getString("facilities_img"));
+				fc.setb_num(rs.getString("b_num"));
 				v.add(fc);
 			}
 			rs.close();

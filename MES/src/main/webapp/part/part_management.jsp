@@ -186,7 +186,7 @@ rs=stmt.executeQuery(query);
 							<td style="display:none"><%=rs.getString("standard")%></td>
 							<td style="display:none"><%=rs.getString("unit")%></td>
 							<td style="display:none"><%= rs.getString("part_img")%></td>
-							<td><button type="button" class="btn btn-secondary">인쇄</button></td>
+							<td><button type="button" class="btn btn-secondary" onclick="location.href='/MES/barcode/barcode.jsp?code=23&uniqueId=<%=rs.getString("b_num")%>'">인쇄</button></td>
 						</tr>
 						
 						<%

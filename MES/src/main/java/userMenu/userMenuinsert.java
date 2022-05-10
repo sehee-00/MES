@@ -34,7 +34,7 @@ public class userMenuinsert extends HttpServlet {
 		dto.setDashboard(request.getParameter("dashboard"));
 		dto.setInfo_manage(request.getParameter("info_manage"));
 		dto.setAdmin(request.getParameter("admin"));
-		
+		dto.setFacilitiesmenu(request.getParameter("facilities"));;
 		int result = dao.updateUserMenu(dto);
 		JSONObject resobj = new JSONObject();
 		resobj.put("result", result);

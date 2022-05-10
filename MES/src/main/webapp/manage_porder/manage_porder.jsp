@@ -68,13 +68,13 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 			var cell3 = row.insertCell(2);
 			var cell4 = row.insertCell(3);
 			var cell5 = row.insertCell(4);
-			cell1.innerHTML = '<input type="text" name="npart_name" value="'
+			cell1.innerHTML = '<input type="text" id="p' + myid + '" name="npart_name" value="'
 					+ part_name
 					+ '" class="form-control" readonly style="width:80%; margin-top:10px;">';
-			cell2.innerHTML = '<input type="text" name="nnor" value="'
+			cell2.innerHTML = '<input type="text" id="n' + myid +'"name="nnor" value="'
 					+ nor
 					+ '" class="form-control" readonly style="width:80%; margin-top:10px;">';
-			cell3.innerHTML = '<input type="text" name="nprice" class="form-control" style="width:80%; margin-top:10px;">';
+			cell3.innerHTML = '<input type="text" id="c' + myid + '" name="nprice" class="form-control" style="width:80%; margin-top:10px;">';
 			cell4.innerHTML = '<input type="text" name="ntype" value="'+ type +'" class="form-control" style="display:none;">';
 			cell5.innerHTML = '<input type="text" name="nm_no" value="'+ m_no +'" class="form-control" style="display:none;">';
 			trcolor.style.background = 'rgb(68,80,132)';
@@ -281,10 +281,20 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 	function exceldownload(){
 		var rows = document.getElementById("ordertbody").getElementsByTagName("tr");
 		alert(checkarr.length);
+		var cnt = 0;
+		var pst = '';
 		for(var i=0; i<checkarr.length; i++){
-			var td = document.getElementById('row' + checkarr[i]).children;
-			console.log(td.eq(0).children);
+			var pid = document.getElementById("ptr" + checkarr[i]).value;
+			var nid = document.getElementById("ntr" + checkarr[i]).value;
+			var cid = document.getElementById("ctr" + checkarr[i]).value;
+			pst += '&part' + cnt + '=' + pid + '&nor' + cnt + '=' + nid + '&cost' + cnt + '=' + cid;
+			cnt ++;
 		}
+		var url = "../mpExcel/mpExcel?mode=excelinfo&cnt=" +cnt + pst;
+		alert(url);
+		console.log(url);
+		location.href = url;	
+
 	}
 </script>
 </head>

@@ -120,7 +120,7 @@ public class estimateexcelwrite {
 				xssfCell.setCellValue(oc.get(i).getOther_et_id());
 				
 				xssfRow = sheet.getRow(rowno);
-				xssfCell = xssfRow.getCell((short)8);
+				xssfCell = xssfRow.getCell((short)10);
 				xssfCell.setCellValue(oc.get(i).getCost());
 				totaltotalprice3 += Integer.parseInt(oc.get(i).getCost());
 				rowno++;
@@ -164,9 +164,7 @@ public class estimateexcelwrite {
 			xssfRow = sheet.getRow(42);
 			xssfCell = xssfRow.getCell((short)10);
 			xssfCell.setCellValue(totaltotalprice7);
-			System.out.println(totaltotalprice5);
-			System.out.println(totaltotalprice6);
-			System.out.println(totaltotalprice7);
+			
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

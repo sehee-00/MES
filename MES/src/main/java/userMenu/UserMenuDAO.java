@@ -130,13 +130,13 @@ public class UserMenuDAO {
 		String[] sales = {"견적서 관리","수주 관리"};
 		hash.put("영업 관리", sales);
 		
-		String[] prod = {"생산 진행 관리","진척 현황"};
+		String[] prod = {"생산 진행 관리","진척 현황", "수주 공정 관리"};
 		hash.put("생산 관리", prod);
 		
 		String[] work = {"전체작업일보","나의작업일보","외주작업일보","불량 관리","게시판"};
 		hash.put("작업 관리", work);
 		
-		String[] material_prod = {"부품 관리","자재 관리","자재 현황 조회"};
+		String[] material_prod = {"부품 관리","자재 관리","자재 현황 조회", "수주별 소요량"};
 		hash.put("자재 제품 관리", material_prod);
 		
 		String[] order_warehousing = {"발주 관리","외주 관리","입출고 관리"};
@@ -148,6 +148,9 @@ public class UserMenuDAO {
 		String[] info_manage = {"공통코드 관리","업체 관리","표준공정 관리","설비 관리"};
 		hash.put("기준정보 관리", info_manage);
 		
+		String[] facilitiesmenu = {"설비이력관리", "설비일상점검"};
+		hash.put("설비 관리", facilitiesmenu);
+				
 		String[] admin = {"사용자 관리","사용자 메뉴 관리"};
 		hash.put("Admin", admin);
 		
@@ -194,9 +197,14 @@ public class UserMenuDAO {
 					String[] menus = rs.getString("info_manage").split(",");
 					hash.put("기준정보 관리", menus);
 				}
+				
 				if(rs.getString("admin") != null) {
 					String[] menus = rs.getString("admin").split(",");
 					hash.put("Admin", menus);
+				}
+				if(rs.getString("facilitiesmenu") != null) {
+			        String[] menus = rs.getString("facilitiesmenu").split(",");
+			        hash.put("설비 관리", menus);
 				}
 			}
 			
@@ -216,7 +224,7 @@ public class UserMenuDAO {
 		int res = 0;
 		
 		try {
-			String sql = "UPDATE user_menu SET sales=?, prod=?, work=?, material_prod=?, order_warehousing=?, dashboard=?, info_manage=?, admin=? WHERE user_id=?";
+			String sql = "UPDATE user_menu SET sales=?, prod=?, work=?, material_prod=?, order_warehousing=?, dashboard=?, info_manage=?, admin=?, facilitiesmenu = ? WHERE user_id=?";
 			
 			con = db.getCon();
 			pstmt = con.prepareStatement(sql);
@@ -269,7 +277,13 @@ public class UserMenuDAO {
 				pstmt.setString(8, dto.getAdmin());
 			}
 			
-			pstmt.setString(9, dto.getUser_id());
+			if(dto.getFacilitiesmenu() == null) {
+		        pstmt.setNull(9, Types.VARCHAR);
+			}else {
+		        pstmt.setString(9, dto.getFacilitiesmenu());
+			}
+			
+			pstmt.setString(10, dto.getUser_id());
 			
 			res = pstmt.executeUpdate();
 			

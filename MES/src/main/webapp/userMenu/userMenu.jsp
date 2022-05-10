@@ -240,7 +240,7 @@ $("#insertUsermenu").on("click",function(){
 		url:"./userMenuinsert",
 		data:{"userid":user, "sales":menus["영업 관리"], "prod":menus["생산 관리"],
 			"work":menus["작업 관리"], "material_prod":menus["자재 제품 관리"], "order_warehousing":menus["발주입고 관리"], 
-			"dashboard":menus["Dashboard"], "info_manage":menus["기준정보 관리"], "admin":menus["Admin"]},
+			"dashboard":menus["Dashboard"], "info_manage":menus["기준정보 관리"], "admin":menus["Admin"], "facilities":menus["설비 관리"]},
 		dataType:"JSON",
 		success:function(data){
 			if(data.result == 1){

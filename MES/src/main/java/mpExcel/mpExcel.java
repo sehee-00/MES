@@ -1,46 +1,53 @@
-package estimateExcel;
+package mpExcel;
 
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import estimateExcel.estimateexcelwrite;
-
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.Vector;
 
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.json.simple.JSONObject;
 
+import mpExcel.mpExcelwrite;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet("/estimateExcel/estimateExcel")
-public class estimateExcel extends HttpServlet {
-
+/**
+ * Servlet implementation class mpExcel
+ */
+@WebServlet("/mpExcel/mpExcel")
+public class mpExcel extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		JSONObject result = null;
-		String id = null;
-		String degree = null;
-		String com = null;
 		String mode = request.getParameter("mode");
-		
+	
 	
 		switch(mode) {
 	      
 	      case "excelinfo":
-	    	  id = request.getParameter("id");
-	    	  degree = request.getParameter("degree");
-	    	  com = request.getParameter("com");
+	    	  String cnt = request.getParameter("cnt");
+	    	  Vector<String> pv = new Vector<String>();
+	    	  Vector<String> nv = new Vector<String>();
+	    	  Vector<String> cv = new Vector<String>();
+	    	  for(int i=0; i<Integer.parseInt(cnt); i++) {
+	    		  String part = request.getParameter("part" + Integer.toString(i));
+	    		  String nor = request.getParameter("nor" + Integer.toString(i));
+	    		  String cost = request.getParameter("cost" + Integer.toString(i));
+	    		  pv.add(part);
+	    		  nv.add(nor);
+	    		  cv.add(cost);
+	    	  }
+	    	  
 			  result = new JSONObject();
 			  String excelformpath = request.getSession().getServletContext().getRealPath("excelforms");
 
 			  
-			  estimateexcelwrite excel = new estimateexcelwrite();
-			  XSSFWorkbook wb = excel.writeExcel(excelformpath, id , degree, com);
+			  mpExcelwrite excel = new mpExcelwrite();
+			  XSSFWorkbook wb = excel.writeExcel(excelformpath, pv, nv, cv);
 			  
 			//파일 저장
 				
@@ -50,7 +57,7 @@ public class estimateExcel extends HttpServlet {
 
 				String to = transFormat.format(from);
 
-				String localfile = "estimate_" + id + "_" + degree + "_" +  to +".xlsx";
+				String localfile = "order_" + to +".xlsx";
 				
 				response.setContentType("application/vnd.ms-excel");
 				response.setHeader("Content-Disposition", "attachment;filename=" + localfile);
