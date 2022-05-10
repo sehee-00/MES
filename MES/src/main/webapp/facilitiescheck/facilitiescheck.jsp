@@ -19,7 +19,6 @@ Vector<String> code = dbc.getcode_sub();
 
 //
 String temp = (String)session.getAttribute("id");
-System.out.println(temp);
 
 %>
 

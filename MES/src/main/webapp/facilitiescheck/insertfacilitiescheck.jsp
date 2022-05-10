@@ -7,7 +7,7 @@
 	dbcon dbc = new dbcon();
 	
 	String facilities_name = request.getParameter("nfacilities_name");
-	String userid = "admin";
+	String userid = (String)session.getAttribute("id");
 	String date1= request.getParameter("date1");
 	String date2 = request.getParameter("date2");
 	System.out.println(date1);

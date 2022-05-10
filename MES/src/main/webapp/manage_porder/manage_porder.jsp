@@ -291,8 +291,7 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 			cnt ++;
 		}
 		var url = "../mpExcel/mpExcel?mode=excelinfo&cnt=" +cnt + pst;
-		alert(url);
-		console.log(url);
+
 		location.href = url;	
 
 	}
