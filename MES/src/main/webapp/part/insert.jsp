@@ -39,8 +39,13 @@ String unit_price = request.getParameter("unit_price");
 String stock = request.getParameter("stock");
 String safety_stock = request.getParameter("safety_stock");
 String standard = request.getParameter("standard");
+if(standard==null || standard.equals("") || standard.equals("null")){
+	standard="";
+}
 String unit = request.getParameter("unit");
-
+if(unit==null || unit.equals("") || unit.equals("null")){
+	unit="";
+}
 
 if(part_name.equals("")){
 	response.sendRedirect("part_management.jsp");
@@ -50,7 +55,7 @@ else{
 		query = "update part set part_name='"+part_name+"', part_type='"+part_type+"', core='"+core+"', unit_price="+unit_price+", stock="+stock+", safety_stock="+safety_stock+", standard='"+standard+"', unit='"+unit+"' where part_name='"+part_name+"'";
 	}
 	else{
-		query = "insert into part values('"+part_name+"','"+part_type+"','"+core+"',"+unit_price+","+stock+","+safety_stock+",'"+standard+"','"+unit+"','')";
+		query = "insert into part(part_name,part_type,core,unit_price,stock,safety_stock,standard, unit) values('"+part_name+"','"+part_type+"','"+core+"',"+unit_price+","+stock+","+safety_stock+",'"+standard+"','"+unit+"')";
 	}
 	
 

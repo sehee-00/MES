@@ -389,7 +389,7 @@ rs=stmt.executeQuery(query);
 					<th>수주명<span class="text-danger">*</span></th>
 					<th>부품명</th>
 					<th>공정<span class="text-danger">*</span></th>
-					<th>설비<span class="text-danger">*</span></th>
+					<th>설비</th>
 					<th>시작시간</th>
 					<th>종료시간</th>
 					<th>불량</th>

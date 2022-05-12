@@ -283,4 +283,21 @@ $(document).on("keyup", "#price", function(e) {
      str = String(str);
      return str.replace(/[^\d]+/g, '');
  }
+ 
+ //불량체크
+ $("#worklogtable #faultycheck").change(function(){
+	 let checked = $(this).is(":checked");
+	 let ordername = $("#worklogtable #ordername").val();
+	/*
+	 $.ajax({
+			type:"GET",
+			url:"./MyWorkSearch",
+			data:{"ordername":ordername, "checked":checked, "mode":"mywork"},
+			dataType:"json",
+			success:function(data){
+	            console.log(data.result);
+	        }
+		});
+	*/
+ })
 </script>

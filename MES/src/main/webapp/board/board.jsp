@@ -261,33 +261,29 @@ $('#deleteboard').on("click",function(){
 	let bnn = $("#boardidinput").val();
 	let bw = $("#boardwriter").val();
 	
-	if(bw == "<%=session.getAttribute("id")%>"){
-		if(bnn != 0){
-			$.ajax({
-				type:"GET",
-				url:"./boarddelete.jsp",
-				data:{bn:bnn},
-				dataType:"html",
-				success:function(data){
-					var d = JSON.parse(data);
-					if(d.result == 1){
-						alert("삭제하였습니다");
-						tsetting();
-						$('form').each(function(){
-							this.reset();
-						});
-					}
-					else{
-						alert("실패하였습니다");
-					}
-				},
-				error:function(){
-					alert("error");
+	if(bnn != 0){
+		$.ajax({
+			type:"GET",
+			url:"./boarddelete.jsp",
+			data:{bn:bnn},
+			dataType:"html",
+			success:function(data){
+				var d = JSON.parse(data);
+				if(d.result == 1){
+					alert("삭제하였습니다");
+					tsetting();
+					$('form').each(function(){
+						this.reset();
+					});
 				}
-			});
-		}
-	}else{
-		alert("해당 게시물의 삭제 권한이 없습니다");
+				else{
+					alert("실패하였습니다");
+				}
+			},
+			error:function(){
+				alert("error");
+			}
+		});
 	}
 });
 </script>

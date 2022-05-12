@@ -253,41 +253,41 @@ function insertform(frm){
 	
 	var check = 0
 	if (check == 0 && facilities_name.value == ""){
-		alert("확인");
+		alert("필수값을 입려가세요.");
 		check = 1;
 	}
 	
 	if (check == 0 && facilities_status.value == ""){
-		alert("확인");
+		alert("필수값을 입려가세요.");
 		check = 1;
 	}
 	
 	if (check == 0 && pay.value == ""){
-		alert("확인");
+		alert("필수값을 입려가세요.");
 		check = 1;
 	}
 	
 	if (check == 0 && using.value == ""){
-		alert("확인");
+		alert("필수값을 입려가세요.");
 		check = 1;
 	}
 	
 	if (check == 0 && using_all_day.value == ""){
-		alert("확인");
+		alert("필수값을 입려가세요.");
 		check = 1;
 	}
 	if (using_all_day.value == 'N'){
 		if (check == 0 && facilities_start.value == ""){
-			alert("확인");
+			alert("필수값을 입려가세요.");
 			check = 1;
 		}
 		if (check == 0 && facilities_end.value == ""){ 
-			alert("확인");
+			alert("필수값을 입려가세요.");
 			check = 1;
 		}
 	}
 	if(facilities_date.value == ""){
-		alert("확인");
+		alert("필수값을 입려가세요.");
 		check = 1;
 	}
 	var filecheck = document.getElementById("item_img").value;
@@ -309,7 +309,7 @@ function deleteform(frm){
 	var facilities_name = document.getElementById("facilities_name");
 	var check = 0 
 	if(facilities_name == ""){
-		alert("확인");
+		alert("필수값을 입려가세요.");
 		check = 1;
 	}
 	if(check == 0){

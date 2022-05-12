@@ -555,72 +555,72 @@ function insertform(frm){
 	
 	var check = 0;
 	if (check == 0 && et_com_name.value== ""){	
-		alert("확인");
+		alert("필수값을 입력하세요.");
 		check = 1;
 	}
 	if (check == 0 && et_price.value == ""){
-		alert("확인");
+		alert("필수값을 입력하세요.");
 		check = 1;
 	}
 	for(var i=0; i<material_no.length; i++){
 		if(check == 0 && material_no[i].value == ""){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 			break;
 		}	
 	}
 	for(var i=0; i<material_name.length; i++){
 		if(check == 0 && material_name[i].value == ""){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 			break;
 		}
 	}
 	for(var i=0; i<standard_proc.length; i++){
 		if(check == 0 && standard_proc[i].value == ""){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 			break;
 		}
 	}
 	for(var i=0; i<proc_startday.length; i++){
 		if(check == 0 && proc_startday[i].value == ""){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 			break;
 		}
 	}
 	for(var i=0; i<proc_endday.length; i++){
 		if(check == 0 && proc_endday[i].value == ""){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 			break;
 		}
 	}
 	for(var i=0; i<md.length; i++){
 		if(check == 0 && md[i].value == ""){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 			break;
 		}
 	}
 	for(var i=0; i<cost.length; i++){
 		if(check == 0 && cost[i].value == ""){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 			break;
 		}
 	}
 	for(var i=0; i<other_et_id.length; i++){
 		if(check == 0 && other_et_id[i].value == ""){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 			break;
 		}
 	}
 	for(var i=0; i<other_cost.length; i++){
 		if(check == 0 && other_cost[i].value == ""){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 			break;
 		}
@@ -637,11 +637,11 @@ function deleteform(frm){
 	var check = 0;
 	alert(degree.value);
 	if(check == 0 && et_id.value == ""){
-		alert("확인");
+		alert("필수값을 입력하세요.");
 		check = 1;
 	}
 	if(check == 0 && degree.value == ""){
-		alert("확인");
+		alert("필수값을 입력하세요.");
 		check = 1;
 	}
 	if(check == 0){

@@ -10,8 +10,6 @@
 	String userid = (String)session.getAttribute("id");
 	String date1= request.getParameter("date1");
 	String date2 = request.getParameter("date2");
-	System.out.println(date1);
-	System.out.println(date2);
 	String[] contentdate = request.getParameterValues("ctdate");
 	String[] status = request.getParameterValues("status");
 	String[] deletenum = request.getParameterValues("deletenum");

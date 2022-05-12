@@ -220,38 +220,38 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 		var check = 0;
 		
 		if (check == 0 && odercom.value == ""){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 		}
 		if(check == 0 && partname.length == 0){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 		}
 		if(check == 0 && nor.length == 0){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 		}
 		if(check == 0 && price.length == 0){
-			alert("확인");
+			alert("필수값을 입력하세요.");
 			check = 1;
 		}
 		for(var i=0; i<partname.length; i++){
 			if(check == 0 && partname[i].value == ""){
-				alert("확인");
+				alert("필수값을 입력하세요.");
 				check = 1;
 				break;
 			}	
 		}
 		for(var i=0; i<nor.length; i++){
 			if(check == 0 && nor[i].value == ""){
-				alert("확인");
+				alert("필수값을 입력하세요.");
 				check = 1;
 				break;
 			}	
 		}
 		for(var i=0; i<price.length; i++){
 			if(check == 0 && price[i].value == ""){
-				alert("확인");
+				alert("필수값을 입력하세요.");
 				check = 1;
 				break;
 			}	
@@ -265,7 +265,7 @@ int lastpage = (mp.size() - 1) / 10 + 1;
 		var m_no = document.getElementsByName('nm_no');
 		var check = 0;
 		if(m_no.length == 0){
-			alert('확인')
+			alert('필수값을 입력하세요.')
 			check = 1;
 		}
 		if(check == 0){
@@ -279,8 +279,6 @@ int lastpage = (mp.size() - 1) / 10 + 1;
     });
 	
 	function exceldownload(){
-		var rows = document.getElementById("ordertbody").getElementsByTagName("tr");
-		alert(checkarr.length);
 		var cnt = 0;
 		var pst = '';
 		for(var i=0; i<checkarr.length; i++){

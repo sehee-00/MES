@@ -183,7 +183,6 @@ function uptable(){
 		if(i < 10){
 			var thdateid = dateid + '-0' + i;
 			ths += '<th id="' + thdateid + '" style="text-align:center">' + vmonth + '/' + i + '</th>';
-			console.log(thdateid);
 		}
 		else{
 			var thdateid = dateid + '-' + i;
@@ -274,8 +273,8 @@ function gettable(){
 				var row2 = table2.insertRow(table2.rows.lenght);
 				var cell1 = row.insertCell(0);
 				var cell2 = row2.insertCell(0);
-				cell1.innerHTML = '<input type="text" name="selectup" value="' + tableresult[i][0].value + tableresult[i][2].value +'">';
-				cell2.innerHTML = '<input type="text" id="u' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][3].value + '">';
+				cell1.innerHTML = '<input type="text" name="selectup" value="' + tableresult[i][0].value + tableresult[i][2].value +'" style="display:none">';
+				cell2.innerHTML = '<input type="text" id="u' + tableresult[i][0].value + tableresult[i][2].value + '" value="' + tableresult[i][3].value + '" style="display:none">';
 			}
 			if(tableresult[i][3].value == 1){
 				contenttable.innerHTML = '<label style="font-size:20pt">&#9675</label><input type="text" id="t' + tableresult[i][0].value + tableresult[i][2].value +'" value="1"  style="display:none">'+
@@ -367,15 +366,15 @@ function commitevent(frm){
 		var cell2 = row.insertCell(1);	
 		var tdid = insertselect[i].parentElement.id;
 		var value = insertselect[i].value;
-		cell1.innerHTML = '<input type="text" name="ctdate" value="' + tdid + '">'
-		cell2.innerHTML = '<input type="text" name="status" value="' + value + '">'
+		cell1.innerHTML = '<input type="text" name="ctdate" value="' + tdid + '" style="display:none">'
+		cell2.innerHTML = '<input type="text" name="status" value="' + value + '" style="display:none">'
 		
 	}
 	var row = datetable.insertRow(datetable.rows.length);
 	var cell1 = row.insertCell(0);
 	var cell2 = row.insertCell(1);
-	cell1.innerHTML = '<input type="text" name="date1" value="' + date1 +'">';
-	cell2.innerHTML = '<input type="text" name="date2" value="' + date2 +'">';
+	cell1.innerHTML = '<input type="text" name="date1" value="' + date1 +'" style="display:none">';
+	cell2.innerHTML = '<input type="text" name="date2" value="' + date2 +'" style="display:none">';
 	frm.action = './insertfacilitiescheck.jsp';
 	frm.submit();
 	
@@ -393,6 +392,7 @@ function commitevent(frm){
 		<div class="panel-body">
 			설비명&nbsp;&nbsp;&nbsp;
 			<select id="facilities_name" name="nfacilities_name" class="form-control searchtitle" style="width:15%">
+			<option value="" selected disabled hidden><option>
 			<%for(int i=0; i<fn.size(); i++){
 				%>
 				<option><%=fn.get(i) %></option>

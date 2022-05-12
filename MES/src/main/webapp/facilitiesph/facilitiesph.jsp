@@ -267,7 +267,7 @@ function deleteform(frm){
 	var facilities_name = document.getElementById("facilities_name");
 	var check = 0 
 	if(facilities_name == ""){
-		alert("확인");
+		alert("필수값을 입력하세요.");
 		check = 1;
 	}
 	if(check == 0){
