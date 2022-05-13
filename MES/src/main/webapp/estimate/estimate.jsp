@@ -67,6 +67,19 @@ int lastpage = (v.size()-1)/10 + 1;
 %>
 var hlastpage = <%=degreelastpage%>;
 
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
+$(document).on("keyup", "input[name='net_price']", function(e) {
+	   $(this).val( $(this).val().replace(/[^0-9-]/gi,"") );
+	   
+	   $(this).val(comma($(this).val()));
+	});
 $(function(){
     $("#estitabletbody tr").click(function(){
     	var tr = $(this);
@@ -626,6 +639,8 @@ function insertform(frm){
 		}
 	}
 	if(check == 0){
+		document.getElementById("et_price").value = uncomma(et_price.value);
+		
 		frm.action='./estimateinsert.jsp';
 		frm.submit();
 	}
@@ -872,7 +887,7 @@ function exceldownload(){
 								<td>
 									<div class="form-group boardtitle">
 										<label for="boardtitleinput">금액(원) <span
-											style="color: red;">*</span></label> <input type="number" id="et_price"
+											style="color: red;">*</span></label> <input type="text" id="et_price"
 											name="net_price" class="form-control">
 									</div>
 									<div class="form-group writeday">

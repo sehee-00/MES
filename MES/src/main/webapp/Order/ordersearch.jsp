@@ -172,10 +172,10 @@ $(document).ready(function(){
 				$(".tablecontent").css("background","white");
 				$(this).css("background","lightgray");
 				$("#item_no").val($(this).children('#itemno').text());		//클릭한 열의 금형번호를 가져옴
-				$("#order_com_id").val($(this).children('#ordercomid').text());
+				$("select[name='company']").val($(this).children('#ordercomid').text()).select2();
 				$("#order_date").val($(this).children('#orderdate').text());
-				$("#order_status").val($(this).children('#orderstatus').text());
-				$("#part_status").val($(this).children('#partstatus').text());
+				$("select[name='classification']").val($(this).children('#orderstatus').text()).select2();
+				$("select[name='parts']").val($(this).children('#partstatus').text()).select2();
 				$("#car_name").val($(this).children('#carname').text());
 				$("#prod_name").val($(this).children('#prodname').text());
 				$("#order_price").val($(this).children('#orderprice').text());
@@ -220,7 +220,7 @@ $(document).ready(function(){
 					$("#order_note").val(null);
 				}
 				
-				$("#order_et_id").val($(this).children('#orderetid').text());
+				$("select[name='quotation']").val($(this).children('#orderetid').text()).select2();
 				
 			});
 			

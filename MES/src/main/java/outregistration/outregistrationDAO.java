@@ -324,4 +324,28 @@ public class outregistrationDAO {
 		}
 		return result;
 	}
+	// 수주 선택에 따른 부품명 세팅
+		public String getparts(String ordername) {	
+			String SQL = "SELECT distinct part FROM mes.parts_by_order WHERE order=\'"+ordername+"\'";
+
+			String partsname=null;
+			
+			try {
+				connect();
+				PreparedStatement pstmt=con.prepareStatement(SQL);
+				rs=pstmt.executeQuery();
+				if(rs.next()) {
+					partsname=rs.getString(1);
+				}else {
+					partsname="";
+				}
+				rs.close();
+				pstmt.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}finally {
+				disconnect();
+			} 
+			return partsname;
+		}
 }

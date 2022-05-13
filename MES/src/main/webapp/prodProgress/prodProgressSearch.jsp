@@ -4,6 +4,7 @@
 <%@ page import="prodProgress.OrderPartsDTO" %>
 <%@ page import="prodProgress.OrderPartDetailDTO" %>
 <%@ page import="org.json.simple.JSONObject" %>
+<%@ page import="java.text.DecimalFormat" %>
 <jsp:useBean id="dao" class="prodProgress.ProdProgressDAO"/>
 <% request.setCharacterEncoding("UTF-8");
 String itemno = request.getParameter("itemno"); %>
@@ -66,8 +67,11 @@ List<OrderPartDetailDTO> orderpartdetaillist = dao.getOrderPartDetail(itemno);
 							}
 						}
 					}
+					DecimalFormat formatter = new DecimalFormat("###,###");
+					String comma_pr=formatter.format(pr);
+					
 					%>
-			           <td><%=pr %></td>
+			           <td><%=comma_pr %></td>
 			       <%
 				}
        %>
@@ -120,7 +124,7 @@ List<OrderPartDetailDTO> orderpartdetaillist = dao.getOrderPartDetail(itemno);
 	        <td style="<%=dto.getStatus_color() %>; color:white;" >
 	            <div>
 	                부품명 : <%=dto.getPart() %><br>
-	                <span style="padding-right:40px;">WT : <%=dto.getTotal_work_time() %></span><span>제조원가 : <%=dto.getPrice() %></span>
+	                <span style="padding-right:40px;">WT : <%=dto.getTotal_work_time() %></span><span>제조원가 : <%=dto.getPrice_comma() %></span>
 	            </div>
 	            <div style="margin-top: 10px; text-align: center;" id="<%=dto.getPart()%>" name="<%= dto.getType() %>">
 	     <%

@@ -178,7 +178,7 @@ function uptable(){
 	}
 	var tablehead = document.getElementById("checkthead");
 	var checktbody = document.getElementById("checktbody");
-	var ths = '<th style="width:200px;">날짜</th>';
+	var ths = '<th style="width:200px;">담당자/날짜</th>';
 	for(var i=1; i<=lastday; i++){
 		if(i < 10){
 			var thdateid = dateid + '-0' + i;

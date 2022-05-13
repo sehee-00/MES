@@ -1869,6 +1869,29 @@ public class dbcon {
 			e.printStackTrace();
 		}
 	}
+	
+	public Vector<String> getpart(String ordername){
+		Vector<String> v = new Vector<String>();
+		try {
+			dbconnect();
+			String sql = "select distinct part from parts_by_order where parts_by_order.order = ?";
+			PreparedStatement pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, ordername);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				String part = rs.getString("part");
+				v.add(part);
+				
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return v;
+	}
 //(pop)--------------------------------------------------------------
 	/**
 	* @fileName  : dbconn.java

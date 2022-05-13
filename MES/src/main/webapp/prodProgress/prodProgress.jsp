@@ -788,7 +788,8 @@
         					if(data["res"] == -1){
         						alert("실패하였습니다.");
         					}else{
-        						window.open("../barcode/barcode.jsp?code=03&uniqueId="+data["res"], "print", "width=500, height=400");
+        						// 부품 바코드는 03 에서 23 으로 변경이 됨.
+        						window.open("../barcode/barcode.jsp?code=23&uniqueId="+data["res"], "print", "width=500, height=400");
         					}
         				},
         				error:function(){

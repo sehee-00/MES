@@ -58,6 +58,7 @@
     	  List<statusProgressDTO> list=dao.getList();
     	  int index=0;
     	  int parent=0;
+    	  if(list!=null){
     	  for(int i=0; i<list.size(); i++){
     		  index++;
     		  parent=index;
@@ -131,6 +132,23 @@
 				%>
 	    	  <%
 	    	  }
+    	  }else{
+    		  %>
+    		  {
+					id: null,
+					label: null,
+					user: null,
+					exp: null,
+					start: null,
+					end_date: null,
+					others: null,
+					duration: null,
+					type:'task',
+					//collapsed: true,
+					style:{,
+					},
+				},
+    	  <%}
 	    	%>    	   
       ];
  

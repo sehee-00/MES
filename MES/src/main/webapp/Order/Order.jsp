@@ -163,7 +163,7 @@
          <!-- 수주 등록/수정 입력 패널 -->
          <div class="panel-body">
             <!-- 등록 버튼 클릭 시 orderinsert로 데이터 전송 -->
-            <form action="orderinsert.jsp" method="post">   
+            <form action="orderinsert.jsp" method="post" id="orderform">   
                <table style="border: 0; width: 98%">
                   <!-- 수주 등록/수정 테이블 세팅 -->
                   <tr>
@@ -175,13 +175,15 @@
                               <%
                                  ArrayList<String> et_list=orderDAO.getEtid();
                         		 
+                        		 if(et_list!=null){
                                  for(int i=0; i<et_list.size(); i++){
                                 	String company=orderDAO.getcompany(et_list.get(i));
                                 	int price = orderDAO.getorderprice(et_list.get(i));
                               %>
                               <option value="<%= et_list.get(i) %>"><%= et_list.get(i) %>[<%= company %>,<%= price %>]</option>
                               <%
-                                 }
+                                 	}
+                        		 }
                               %>
                            </select>
                         </div>
@@ -305,7 +307,7 @@
                   <tr>
                      <td>
                         <div class="buttongruops">
-                           <input class="btn btn-primary" type="reset" value="초기화" id="orderreset">
+                           <input class="btn btn-primary" type="button" value="초기화" id="orderreset" onclick="resetform()">
                            <input class="btn btn-primary" type="button" value="수주복사" id="copyorder" onclick="order_copy(this.form)">
                            <input class="btn btn-primary" type="button" value="납기" id="period">
                            <input class="btn btn-primary" type="button" value="등록" id="orderinsert" onclick="insert_order(this)">
@@ -334,6 +336,16 @@
 							}
 					}
                      
+                     function resetform(){
+                         $("#orderform").each(function(){
+                        	 this.reset();
+                         });
+                         $("#order_com_id").val(null).select2();
+                         $("#order_status").val(null).select2();
+                         $("#part_status").val(null).select2();
+                         $("#order_et_id").val(null).select2();
+                      }
+                     
                      function delete_order(){
                         var itemno=document.getElementById('item_no').value;   // id값이 item_no에 담긴 데이터를 orderdelete로 전송
                         location.href='orderdelete.jsp?item_no='+itemno;
@@ -341,12 +353,21 @@
                      
                      <!-- 수주복사 버튼에 따른 이벤트 함수 -->
                      function order_copy(frm){
+                    	 let op=$("#order_price").val();
+                    	 $("#order_price").val(uncomma(op));
+                    	 let np=$("#nego_price").val();
+                    	 $("#nego_price").val(uncomma(np));
+                    	 
                         frm.action = './ordercopy.jsp';
                         frm.submit();   
                      }
                      
                      <!-- 납기 버튼에 따른 이벤트 함수 -->
                      $(document).on("click","#period",function(){
+                    	 let op=$("#order_price").val();
+                    	 $("#order_price").val(uncomma(op));
+                    	 let np=$("#nego_price").val();
+                    	 $("#nego_price").val(uncomma(np));
                         $("#due_date").val(dateFormat(new Date()));
                         $("form").submit();
                      });

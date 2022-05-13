@@ -1,5 +1,6 @@
 package prodProgress;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,13 @@ public class OrderPartDetailDTO {
 	}
 	public int getPrice() {
 		return price;
+	}
+	public String getPrice_comma() {
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		
+		
+		String com_price=formatter.format(price);
+		return com_price;
 	}
 	public void setPrice(int price) {
 		this.price = price;

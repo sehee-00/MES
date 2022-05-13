@@ -372,7 +372,7 @@ public class orderDAO {
 			e.printStackTrace();
 		}finally {
 			disconnect();
-		}
+		} 
 		return company;
 	}
 	

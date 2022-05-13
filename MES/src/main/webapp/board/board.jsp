@@ -155,32 +155,35 @@ $("#boardinsert").on("click",function(){
 	let tt = $("input[name='title']").val();
 	let ct = $("#boardcontentsinput").val();
 
+	/*
 	if(bw == "<%=session.getAttribute("id") %>" || bw.length == 0){
-		$.ajax({
-			type:"POST",
-			url:"./boardinsert.jsp",
-			data:{boardid:bd, num:bn, day:rd, title:tt, content:ct},
-			dataType:"html",
-			success:function(data){
-				var d = JSON.parse(data);
-				if(d.result == 1){
-					alert('등록되었습니다!');
-					tsetting();
-					$('form').each(function(){
-						this.reset();
-					});
-				}
-				else{
-					alert('실패하였습니다!');
-				}
-			},
-			error:function(){
-				alert('error');
-			}
-		});
+		
 	}else{
-		alert("해당 게시판에 수정 권한이 없습니다");
+		//alert("해당 게시판에 수정 권한이 없습니다");
 	}
+	*/
+	$.ajax({
+		type:"POST",
+		url:"./boardinsert.jsp",
+		data:{boardid:bd, num:bn, day:rd, title:tt, content:ct},
+		dataType:"html",
+		success:function(data){
+			var d = JSON.parse(data);
+			if(d.result == 1){
+				alert('등록되었습니다!');
+				tsetting();
+				$('form').each(function(){
+					this.reset();
+				});
+			}
+			else{
+				alert('실패하였습니다! 게시판 번호 혹은 필수 기입사항을 확인하여 주세요');
+			}
+		},
+		error:function(){
+			alert('error');
+		}
+	});
 })
 
 <!-- 검색 -->
@@ -277,7 +280,7 @@ $('#deleteboard').on("click",function(){
 					});
 				}
 				else{
-					alert("실패하였습니다");
+					alert("실패하였습니다.");
 				}
 			},
 			error:function(){

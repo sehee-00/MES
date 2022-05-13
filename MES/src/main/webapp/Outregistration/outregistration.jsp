@@ -33,6 +33,7 @@ integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="ano
 <script>
 	var index=0;
 	var chk_num=0;
+	var request = new XMLHttpRequest();
 </script>
 <%
 	ArrayList<String> order_list=outregistrationDAO.getordercombo();
@@ -131,7 +132,8 @@ integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="ano
 		
 		var rowItem="<tr class=filter_row id='row"+ index +"'>";
 			rowItem+="<td id='insertdata' style='width:20%;'>";
-			rowItem+="<select id='orders_name' name='orders_name' class='form-control'>";
+			rowItem+="<select id='orders_name' name='orders_name' class='form-control' onchange='chgorder(this)'>";
+			rowItem+="<option value=''></option>";
 			<%
 				if(order_list!=null){
 					for(int i=0; i<order_list.size(); i++){
@@ -208,6 +210,8 @@ integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="ano
 			chk_num+=1;
 			index+=1;
 		$('#addData').before(rowItem);
+		
+		
 	}
 	function delInsert(obj){
 		var number = obj.parentNode.parentNode.children[10].children[0].value;
@@ -218,4 +222,58 @@ integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="ano
 		
 		location.href='outregistrationdelete.jsp?outsourcing_no='+number;
 	}
+</script>
+<script>
+
+
+<!-- 수주에 따른 부품명 로딩 함수 -->
+function chgorder(t){
+	var ordername=$(t).val();
+	$.ajax({
+		type:"POST",
+        url:"../outregistrationselect",
+        data:{ordername:ordername},
+        dataType:"html",
+        success:function(data){
+			var result = JSON.parse(data);
+			var options = result["result"].split(",");
+			
+			var option = "";
+			$(t).parent().parent().children("#insertdata").children("#prod_name").html(null);
+			for(var i=0; i<options.length-1; i++){
+				option += '<option>' + options[i] + '</option>';
+			}
+
+			$(t).parent().parent().children("#insertdata").children("#prod_name").append(option);
+		}
+	});
+	/*
+	request.open("Post", "../outregistrationselect?ordername="+ordername, true);
+	request.onreadystatechange = changeparts; 
+	request.send(null);
+	*/
+}
+
+function changeparts(){
+	if(request.readyState == 4 && request.status == 200){
+		var object = eval('(' + request.responseText + ')');
+		var result = object.result;
+		var option = "";
+		$("#prod_name").html("");
+		for(var i=0; i<result.length; i++){
+			option += '<option>' + result[i].value + '</option>';
+		}
+		console.log(option);
+		$("#prod_name").append(option);
+	}
+}
+function comma(str) {
+    str = String(str);
+    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+}
+function uncomma(str) {
+    str = String(str);
+    return str.replace(/[^\d]+/g, '');
+}
+
 </script>

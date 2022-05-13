@@ -215,7 +215,7 @@ rs=stmt.executeQuery(query);
 							}
 							
 							// 테이블 배경색 설정
-							resetbutton();
+							initialtablecolor();
 							element.style.backgroundColor="lightgray";
 						}
 						
@@ -386,13 +386,20 @@ rs=stmt.executeQuery(query);
 									location.href="delete.jsp?p1="+document.getElementById('part_name').value;
 								}
 								
-								//테이블 배경색 초기화
 								function resetbutton(){
+									initialtablecolor();
+									document.getElementById("img_div").innerHTML = "";
+								}
+								
+								//테이블 배경색 초기화
+								function initialtablecolor(){
 									var trs = document.querySelectorAll(".trs");
 									for(var i=0; i<trs.length; i++){
 										var item = trs.item(i);
 										item.style.backgroundColor="white";
 									}
+									
+									
 								}
 								</script>
 								

@@ -199,7 +199,8 @@
         	$('#inputsubmit').on("click",function(){
         		let mi = $("#materialidinput").val();
         		let mn = $('input[name="name"]').val();
-        		let mpr = $('input[name="price"]').val();
+        		let mpr1 = $('input[name="price"]').val();
+        		let mpr = uncomma(mpr1);
         		let mts = $('#tmrselect').val();
         		let mps = $('#mpselect').val();
         		let ma = $('input[name="amo"]').val();
@@ -322,9 +323,23 @@
                 reader.readAsBinaryString(input.files[0]);
             }
         	
+        	$(document).on("keyup", "input[name='price']", function(e) {
+        		   $(this).val( $(this).val().replace(/[^0-9-]/gi,"") );
+        		   
+        		   $(this).val(comma($(this).val()));
+        		});
+        	
         	function sleep(ms) {
         		  const wakeUpTime = Date.now() + ms;
         		  while (Date.now() < wakeUpTime) {}
+        	}
+        	function comma(str) {
+        	    str = String(str);
+        	    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
+        	}
+        	function uncomma(str) {
+        	    str = String(str);
+        	    return str.replace(/[^\d]+/g, '');
         	}
         </script>
     </body>

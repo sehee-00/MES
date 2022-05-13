@@ -88,7 +88,7 @@ request.setCharacterEncoding("UTF-8");
 				
 				$('#materialidinput').val($(this).attr("id"));
 				$('#materialname').val($(this).children("#mname").text());
-				$('#materialprice').val($(this).children("#mprice").text());
+				$('#materialprice').val(comma($(this).children("#mprice").text()));
 				$('#tmrselect').val($(this).children("#mtype").text()).select2();
 				$('#mpselect').val($(this).children("#mproc").text()).select2();
 				$('#materialamo').val($(this).children("#mstock").text());

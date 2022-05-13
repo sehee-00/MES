@@ -35,7 +35,7 @@
 			dto.setOutsourcing_no(outregistrationDAO.getNext());
 		}
 
-		String currentuser = (String)session.getAttribute("id");
+		String currentuser = (String)session.getAttribute("id"); 
 %>
 		<jsp:setProperty name="dto" property="order_name" value="<%=arr_order[i]%>"/>
 		<jsp:setProperty name="dto" property="prod_name" value="<%=arr_prod[i]%>"/>
