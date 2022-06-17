@@ -20,7 +20,6 @@ public class Excel extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		JSONObject result = null;
-		System.out.println("aa");
       
 		String mode = request.getParameter("mode");
 		String ordername = null;
@@ -28,7 +27,7 @@ public class Excel extends HttpServlet {
 		
 		switch(mode) {
 	      
-	      case "excelinfo":
+	      case "excelinfo": // 엑셀을 만든 것을 받아와 사용자가 다운 받을 수 있도록 헤더에 포함
 			  result = new JSONObject();
 			  String excelformpath = request.getSession().getServletContext().getRealPath("excelforms");
 			  ordername = request.getParameter("itemno");
@@ -37,7 +36,7 @@ public class Excel extends HttpServlet {
 			  ProdProgressExcel excel = new ProdProgressExcel();
 			  XSSFWorkbook wb = excel.writeExcel(excelformpath, ordername, partsname);
 			  
-			//파일 저장
+				//파일 저장
 				
 				Date from = new Date();
 
