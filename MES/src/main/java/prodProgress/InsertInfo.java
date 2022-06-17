@@ -75,7 +75,7 @@ public class InsertInfo extends HttpServlet {
          }
          break;
          
-      case "toolsinsert": // 수주 내 내부 부품의 기타 버튼을 누르면 나오는 공구 
+      case "toolsinsert": // 수주 내 내부 부품의 기타 버튼을 누르면 나오는 공구 등록
          ordername = request.getParameter("itemno");
          partsname = request.getParameter("partsname");
          success = 1;
@@ -191,7 +191,7 @@ public class InsertInfo extends HttpServlet {
     	  
     	  break;
     	  
-      case "pedinsert": //수주의 완료예상 날짜 
+      case "pedinsert": //수주의 완료예상 날짜 등록
     	  result = new JSONObject();
     	  
     	  ordername = request.getParameter("itemno");
