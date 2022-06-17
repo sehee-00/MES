@@ -33,7 +33,7 @@ public class InsertInfo extends HttpServlet {
       
       switch(mode) {
       
-      case "partinsert":
+      case "partinsert": //수주의 부품 등록
          ordername = request.getParameter("itemno");
          success = 1;
          result = new JSONObject();
@@ -75,7 +75,7 @@ public class InsertInfo extends HttpServlet {
          }
          break;
          
-      case "toolsinsert":
+      case "toolsinsert": // 수주 내 내부 부품의 기타 버튼을 누르면 나오는 공구 
          ordername = request.getParameter("itemno");
          partsname = request.getParameter("partsname");
          success = 1;
@@ -116,7 +116,7 @@ public class InsertInfo extends HttpServlet {
          }
          break;
          
-      case "partexcelinsert":
+      case "partexcelinsert": //수주의 부품 excel import 등록
          ordername = request.getParameter("itemno");
          success = 1;
          result = new JSONObject();
@@ -191,7 +191,7 @@ public class InsertInfo extends HttpServlet {
     	  
     	  break;
     	  
-      case "pedinsert":
+      case "pedinsert": //수주의 완료예상 날짜 
     	  result = new JSONObject();
     	  
     	  ordername = request.getParameter("itemno");
