@@ -9,7 +9,7 @@ public class DBconn {
 	private String pw = "1234";
 	private Connection con;
 	
-	public DBconn() {
+	public DBconn() { //DB 연결
 		try {
 			Class.forName(driver);
 		}catch(Exception e) {
@@ -17,7 +17,7 @@ public class DBconn {
 		}
 	}
 	
-	public Connection getCon(){
+	public Connection getCon(){ //Connection 연결
 		try {
 			con = DriverManager.getConnection(url, id, pw);
 		}catch(Exception e) {
@@ -26,7 +26,7 @@ public class DBconn {
 		return con;
 	}
 	
-	public void close() {
+	public void close() { //Connection 해제
 		try {
 			con.close();
 		}catch(Exception e) {
