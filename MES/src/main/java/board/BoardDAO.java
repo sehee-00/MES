@@ -15,10 +15,12 @@ public class BoardDAO {
 	private CallableStatement cstmt;
 	private ResultSet rs;
 	
+	//DB연결
 	public BoardDAO(){
 		db = new DBconn();
 	}
 
+	//날짜 검색의 첫 날짜 설정을 위한 등록된 게시물의 첫 날짜 가져오기. 없을 시 2022-01-01 반환
 	public String getfdate() {
 		String sql = "select regdate from board order by regdate";
 		String result = null;
@@ -53,6 +55,7 @@ public class BoardDAO {
 		return result;
 	}
 	
+	//다음 보드 번호(board num) -> 게시물에서 보여지는 게시물 번호 / 게시물 번호를 기재하지 않았을 때 자동 
 	public int getNumNext() {
 		String sql = "select board_num from board order by board_num desc";
 		int res = -1;
@@ -80,7 +83,7 @@ public class BoardDAO {
 		return res;
 	}
 	
-	//다음 보드 번호 알아내기
+	//다음 보드 번호(board id) 알아내기 -> 게시물에서 보여지지 않는 게시물 고유의 id
 	public int getNext() {
 		String sql = "select board_id from board order by board_id desc";
 		int res = -1;
@@ -173,7 +176,7 @@ public class BoardDAO {
 		return list;
 	}
 	
-	//검색
+	// 보드 검색
 	public List<BoardVO> getList2(int pagenum, String condition){
 		List<BoardVO> list = new ArrayList<BoardVO>();
 		int nextnum = -1;
