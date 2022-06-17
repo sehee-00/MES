@@ -36,7 +36,7 @@ public class SearchInfo extends HttpServlet {
       
       switch(mode) {
       
-      case "partinfo":
+      case "partinfo": //부품 정보 검색
          ordername = request.getParameter("itemno");
          List<OrderPartsDTO> partlist = null;
          result = new JSONObject();
@@ -62,7 +62,7 @@ public class SearchInfo extends HttpServlet {
          }
          break;
          
-      case "orderinfo":
+      case "orderinfo": // 수주 정보 검색
          ordername = request.getParameter("itemno");
          ProdProgressOrderDTO dto = null;
          
@@ -84,7 +84,7 @@ public class SearchInfo extends HttpServlet {
          }
          break;
          
-      case "toolsinfo":
+      case "toolsinfo": //공구 정보 검색
          ordername = request.getParameter("itemno");
          partsname = request.getParameter("partsname");
          List<OrderToolsDTO> toolslist = null;  
@@ -111,7 +111,7 @@ public class SearchInfo extends HttpServlet {
          }
          break;
          
-      case "barcode":
+      case "barcode": //바코드 정보 검색
           partsname = request.getParameter("part");
           result = new JSONObject();
           
