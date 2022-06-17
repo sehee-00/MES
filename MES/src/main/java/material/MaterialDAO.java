@@ -20,7 +20,7 @@ public class MaterialDAO {
 		db = new DBconn();
 	}
 	
-	public int getNext() {
+	public int getNext() { // 전체조회에서 paging을 위하고 등록 시 id 부여를 위한 현재 자재 총 수를 불러와 +1한 값 반환
 		String sql = "select count(*) from materials";
 		int res = -1;
 		
@@ -47,7 +47,7 @@ public class MaterialDAO {
 		return res;
 	}
 	
-	public int getNext(String condition) {
+	public int getNext(String condition) { // 검색 시 paging을 위한 검색 조건을 만족하는 자재 총 수를 불러와 +1한 값 반환
 		String sql = "select count(*) from materials" + condition;
 		int res = -1;
 		
@@ -74,7 +74,7 @@ public class MaterialDAO {
 		return res;
 	}
 	
-	public List<MaterialDTO> getList(int pagenum){
+	public List<MaterialDTO> getList(int pagenum){ //페이지에 맞는 자재 정보 10개씩 불러옴
 		List<MaterialDTO> list = new ArrayList<MaterialDTO>();
 		
 		try {
@@ -111,7 +111,7 @@ public class MaterialDAO {
 		return list.isEmpty() ? null : list;
 	}
 	
-	public List<MaterialDTO> getList2(int pagenum, String condition){
+	public List<MaterialDTO> getList2(int pagenum, String condition){ //검색 조건과 페이지에 맞는 자재 정보 10개씩 불러옴
 		List<MaterialDTO> list = new ArrayList<MaterialDTO>();
 		int nextnum = -1;
 		
@@ -170,7 +170,7 @@ public class MaterialDAO {
 		return list.isEmpty() ? null : list;
 	}
 	
-	public List<String> getMtypeList(){
+	public List<String> getMtypeList(){ // 등록 시 소요자재유형 선택 사항을 불러옴
 		List<String> list = new ArrayList<String>();
 		
 		try {
@@ -195,7 +195,7 @@ public class MaterialDAO {
 		return list.isEmpty() ? null : list;
 	}
 	
-	public List<String> getMprocList(){
+	public List<String> getMprocList(){ // 등록 시 자재공정 선택 사항을 불러옴
 		List<String> list = new ArrayList<String>();
 		
 		try {
@@ -220,7 +220,7 @@ public class MaterialDAO {
 		return list.isEmpty() ? null : list;
 	}
 	
-	public int insertMaterial(MaterialDTO dto) {
+	public int insertMaterial(MaterialDTO dto) { //자재 등록 및 갱신(수정)
 		
 		int result = 0;
 		
@@ -276,7 +276,7 @@ public class MaterialDAO {
 		return result;
 	}
 	
-	public int deleteMaterial(String bn) {
+	public int deleteMaterial(String bn) { //자재 삭제
 		int result = 0;
 		
 		try {
