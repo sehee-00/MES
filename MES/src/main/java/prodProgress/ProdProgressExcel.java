@@ -37,7 +37,7 @@ public class ProdProgressExcel {
 		db = new DBconn();
 	}
 	
-	public XSSFWorkbook writeExcel(String realpath, String ordername, String partname) {
+	public XSSFWorkbook writeExcel(String realpath, String ordername, String partname) { //엑셀 작성
 		File file = null;
 		FileOutputStream fos= null;
 		XSSFWorkbook workbook = null;
@@ -132,7 +132,7 @@ public class ProdProgressExcel {
 		return workbook;
 	}
 	
-	public int getQuantity(String ordername, String partname){
+	public int getQuantity(String ordername, String partname){ // 부품 수량 불러옴
 		int quantity = 0;
 		
 		try {
@@ -160,7 +160,7 @@ public class ProdProgressExcel {
 		return quantity;
 	}
 	
-	public String[] getComAndCar(String ordername) {
+	public String[] getComAndCar(String ordername) { // 수주의 고객사와 차종 불러옴
 		String[] res = null;
 		
 		try {
@@ -189,7 +189,7 @@ public class ProdProgressExcel {
 		return res;
 	}
 	
-	public String getCompDate(String ordername, String partname) {
+	public String getCompDate(String ordername, String partname) { // 나의 작업일보에서 완료일자 불러옴
 		String date = null;
 		
 		try {
@@ -225,7 +225,7 @@ public class ProdProgressExcel {
 		return date;
 	}
 	
-	public List<String[]> getProcessInfo(String ordername, String partname){
+	public List<String[]> getProcessInfo(String ordername, String partname){ // 부품의 생산 진행 정보 불러옴
 		List<String[]> list = new ArrayList<String[]>();
 		
 		try {
@@ -254,7 +254,7 @@ public class ProdProgressExcel {
 		return list;
 	}
 	
-	public List<String[]> getFaultyInfo(String ordername, String partname){
+	public List<String[]> getFaultyInfo(String ordername, String partname){ // 부품의 불량 정보 불러옴
 		List<String[]> list = new ArrayList<String[]>();
 		
 		try {
@@ -283,7 +283,7 @@ public class ProdProgressExcel {
 		return list;
 	}
 	
-	public void deletefile(String path) {
+	public void deletefile(String path) { // 생성된 엑셀 파일 사용자 다운 후 삭제
 		File file = new File(path);
 		if(file.exists()) {
 			file.delete();
