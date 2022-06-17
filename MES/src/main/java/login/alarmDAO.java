@@ -21,7 +21,7 @@ public class alarmDAO {
 		db = new DBconn();
 	}
 	
-	public JSONObject getAlarm() {
+	public JSONObject getAlarm() { // 상단 bar에서 badge 등으로 알려주는 불량 갯수 등의 alarm 정보를 가져옴 (로그인 한 사용자부분에 있음)
 		JSONObject res = new JSONObject();
 		
 		try {
