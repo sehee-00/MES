@@ -3,12 +3,14 @@ package board;
 import java.util.Date;
 
 public class BoardVO {
-	private int board_id;
-	private int board_num;
-	private String writer;
-	private String regdate;
-	private String title;
-	private String contents;
+	//게시물 정보를 담을 틀
+	
+	private int board_id; //고유 pk인 id, 사용자에 보여지지 않음
+	private int board_num; //게시물 번호
+	private String writer; //작성자
+	private String regdate; //등록일자
+	private String title; //게시물 제목(이름)
+	private String contents; //게시물 내용
 	
 	public int getBoard_id() {
 		return board_id;
