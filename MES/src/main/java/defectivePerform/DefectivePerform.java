@@ -2,15 +2,15 @@ package defectivePerform;
 
 public class DefectivePerform {
 
-	private int m;
-	private String process;
-	private int mcost;
-	private int num;
-	private int solution;
-	private String ftype;
-	private int om;
-	private int pm;
-	private int mm;
+	private int m;			//
+	private String process;		//공정
+	private int mcost;		//
+	private int num;		//
+	private int solution;		//
+	private String ftype;		//
+	private int om;			//
+	private int pm;			//
+	private int mm;			//
 	
 	public int getOm() {
 		return om;
