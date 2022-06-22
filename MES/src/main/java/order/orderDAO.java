@@ -85,7 +85,7 @@ public class orderDAO {
 		} finally {
 			disconnect();
 		}
-		// 
+		// 데이터 수정
 		if(k == 0) {
 			try {
 				String DEL_DATE="SELECT del_date FROM mes.order WHERE item_no=?";
