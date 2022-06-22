@@ -90,72 +90,72 @@ public class FaultyDAO {
 	
 	
 
-		//불량 저장
-		public int updatefaulty(Faulty vo) {
-			
-			int result = 0;
-			
-			try {
-				String sql = "update faulty set faulty_type = ?, cause_of_defect = ?, date_of_occurrence = ?, materials_cost = ?"
-						+ ", cost = ?, faulty_title = ?, faulty_content = ?, solution = ?, user_id = ?, proc_date = ? where faulty_no = ?";
-				
-				con = DriverManager.getConnection(url, id, pw);
-				pstmt = con.prepareStatement(sql);
-				
-				pstmt.setString(1, vo.getFaulty_type());
-				pstmt.setString(2, vo.getCause_of_defect());
-				pstmt.setString(3, vo.getDate_of_occurrence());
-				pstmt.setInt(4, vo.getMaterials_cost());
-				pstmt.setInt(5, vo.getCost());
-				pstmt.setString(6, vo.getFaulty_title());
-				pstmt.setString(7, vo.getFaulty_content());
-				pstmt.setString(8, vo.getSolution());
-				pstmt.setString(9, vo.getUser_id());
-				pstmt.setString(10, vo.getProc_date());
-				pstmt.setInt(11, vo.getFaulty_no());
-				
-				//pstmt.setString(2, vo.getLink_info());
-				
-				result = pstmt.executeUpdate();
-				
-				pstmt.close();
-				con.close();
-				
-				}catch(Exception e) {
-				e.printStackTrace();
-			}
-			System.out.println(result);
-			return result;
-		}
-		
-		
-		//불량 삭제
-		public int deletefaulty(String bn) {
-			int result = 0;
-			
-			try {
-				String sql = "delete from faulty where faulty_no = " + bn;
-				
-				con = DriverManager.getConnection(url, id, pw);
-				stmt = con.createStatement();
-				
-				result = stmt.executeUpdate(sql);
-				
-				sql = "{CALL decid("+ bn + ", \'mes.faulty\', \'faulty_no\') }";
-				cstmt = con.prepareCall(sql);
-				cstmt.execute();
-				
-				con.close();
-				stmt.close();
-				cstmt.close();
+	//불량 저장
+	public int updatefaulty(Faulty vo) {
+
+		int result = 0;
+
+		try {
+			String sql = "update faulty set faulty_type = ?, cause_of_defect = ?, date_of_occurrence = ?, materials_cost = ?"
+					+ ", cost = ?, faulty_title = ?, faulty_content = ?, solution = ?, user_id = ?, proc_date = ? where faulty_no = ?";
+
+			con = DriverManager.getConnection(url, id, pw);
+			pstmt = con.prepareStatement(sql);
+
+			pstmt.setString(1, vo.getFaulty_type());
+			pstmt.setString(2, vo.getCause_of_defect());
+			pstmt.setString(3, vo.getDate_of_occurrence());
+			pstmt.setInt(4, vo.getMaterials_cost());
+			pstmt.setInt(5, vo.getCost());
+			pstmt.setString(6, vo.getFaulty_title());
+			pstmt.setString(7, vo.getFaulty_content());
+			pstmt.setString(8, vo.getSolution());
+			pstmt.setString(9, vo.getUser_id());
+			pstmt.setString(10, vo.getProc_date());
+			pstmt.setInt(11, vo.getFaulty_no());
+
+			//pstmt.setString(2, vo.getLink_info());
+
+			result = pstmt.executeUpdate();
+
+			pstmt.close();
+			con.close();
+
 			}catch(Exception e) {
-				e.printStackTrace();
-			}
-			
-			return result;
+			e.printStackTrace();
 		}
-	
-		
+		System.out.println(result);
+		return result;
+	}
+
+
+	//불량 삭제
+	public int deletefaulty(String bn) {
+		int result = 0;
+
+		try {
+			String sql = "delete from faulty where faulty_no = " + bn;
+
+			con = DriverManager.getConnection(url, id, pw);
+			stmt = con.createStatement();
+
+			result = stmt.executeUpdate(sql);
+
+			sql = "{CALL decid("+ bn + ", \'mes.faulty\', \'faulty_no\') }";
+			cstmt = con.prepareCall(sql);
+			cstmt.execute();
+
+			con.close();
+			stmt.close();
+			cstmt.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+
 	// 불량원인 콤보박스 데이터 세팅
 	 public ArrayList<String> getfcause() {
 		ArrayList<String> list = new ArrayList<String>();
@@ -304,77 +304,77 @@ public class FaultyDAO {
 				e.printStackTrace();
 			}
 			return list;
-		}
-		
-		//열 번호 세팅
-		public int getNext() {
-			String SQL = "select count(faulty_no) from mes.faulty order by faulty_no desc";
-			int res = -1;
-			
-			try {
-				con = DriverManager.getConnection(url, id, pw);
-				PreparedStatement pstmt = con.prepareStatement(SQL);
-				rs=pstmt.executeQuery();
-				if(rs.next()) {
-					res = rs.getInt(1) + 1;
-				}
-				else {
-					res = 1;
-				}
-				
-				rs.close();
-				pstmt.close();
-				con.close();
-			}catch(Exception e) {
-				e.printStackTrace();
+	}
+
+	//열 번호 세팅
+	public int getNext() {
+		String SQL = "select count(faulty_no) from mes.faulty order by faulty_no desc";
+		int res = -1;
+
+		try {
+			con = DriverManager.getConnection(url, id, pw);
+			PreparedStatement pstmt = con.prepareStatement(SQL);
+			rs=pstmt.executeQuery();
+			if(rs.next()) {
+				res = rs.getInt(1) + 1;
 			}
-			return res;
-		}
-		
-		//검색결과 총 금형번호의 수(페이지네이션에서 응용)
-		public int getSearchAmount(String txt_where) {
-					
-			String SQL = "select count(*) as rownum from mes.faulty" + txt_where;
-			
-			int nextnum = -1;
-			
-			try {
-				con = DriverManager.getConnection(url, id, pw);
-				PreparedStatement pstmt = con.prepareStatement(SQL);
-				rs=pstmt.executeQuery();
-				
-				if(rs.next()) {
-					nextnum = rs.getInt("rownum");
-				}
-				
-				rs.close();
-				con.close();
-				pstmt.close();
-			}catch(Exception e) {
-				e.printStackTrace();
+			else {
+				res = 1;
 			}
-			
-			return nextnum;
-		}	
-		
-		// 링크정보 데이터 세팅
-		// 설비 콤보박스 데이터 세팅
-		 public ArrayList<String> getfacilities() {
-			ArrayList<String> list = new ArrayList<String>();
-			String SQL="select distinct facilities_name from mes.facilities;";
-			try {
-				con = DriverManager.getConnection(url, id, pw);
-				PreparedStatement pstmt = con.prepareStatement(SQL);
-				rs=pstmt.executeQuery();
-				while(rs.next()) {
-					list.add(rs.getString(1));
-				}
-				rs.close();
-				pstmt.close();
-				con.close();
-			}catch(Exception e) {
-				e.printStackTrace();
-			}
-			return list.isEmpty() ? null : list;	//삼항 연산자 빈값이면 null 반환 빈값이 아니면 list 값 반환
+
+			rs.close();
+			pstmt.close();
+			con.close();
+		}catch(Exception e) {
+			e.printStackTrace();
 		}
+		return res;
+	}
+
+	//검색결과 총 금형번호의 수(페이지네이션에서 응용)
+	public int getSearchAmount(String txt_where) {
+
+		String SQL = "select count(*) as rownum from mes.faulty" + txt_where;
+
+		int nextnum = -1;
+
+		try {
+			con = DriverManager.getConnection(url, id, pw);
+			PreparedStatement pstmt = con.prepareStatement(SQL);
+			rs=pstmt.executeQuery();
+
+			if(rs.next()) {
+				nextnum = rs.getInt("rownum");
+			}
+
+			rs.close();
+			con.close();
+			pstmt.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return nextnum;
+	}	
+
+	// 링크정보 데이터 세팅
+	// 설비 콤보박스 데이터 세팅
+	 public ArrayList<String> getfacilities() {
+		ArrayList<String> list = new ArrayList<String>();
+		String SQL="select distinct facilities_name from mes.facilities;";
+		try {
+			con = DriverManager.getConnection(url, id, pw);
+			PreparedStatement pstmt = con.prepareStatement(SQL);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				list.add(rs.getString(1));
+			}
+			rs.close();
+			pstmt.close();
+			con.close();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return list.isEmpty() ? null : list;	//삼항 연산자 빈값이면 null 반환 빈값이 아니면 list 값 반환
+	}
 }
