@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dbconn.DBconn;
+//링크정보를 눌렀을 때 열리는 창에 대한 정보
 public class WorkdayDAO {
 	private DBconn db;
 
@@ -33,7 +34,7 @@ public class WorkdayDAO {
 		db = new DBconn();
 	}
 	
-
+	//작업실적을 불러옴
 	public Workday getWork(String ln) {
 		Workday vo = new Workday();
 			
@@ -63,6 +64,7 @@ public class WorkdayDAO {
 			return vo;
 	}
 	
+	//납기예정일과 비고를 불러옴
 	public String[] getpdate(String it) {
 		String SQL="select del_date, order_note from mes.order where item_no = ?";
 		String []result=new String[2];
@@ -85,6 +87,8 @@ public class WorkdayDAO {
 		
 		return result;
 	}
+	
+	//공정명에 따른 임률을 불러옴
 	public String getPay(String ln) {
 		String SQL="SELECT pay FROM mes.process where process_name = ?";
 		String result=null;
@@ -107,6 +111,7 @@ public class WorkdayDAO {
 		return result;
 	}
 	
+	//작업시간합계를 가져옴
 	public String getTotaltime(String ln) {
 		String SQL="SELECT TIMESTAMPDIFF(hour, work_start, work_end)AS time_diff FROM mes.my_work WHERE work_id = " + ln + "";
 		String result=null;
@@ -129,6 +134,7 @@ public class WorkdayDAO {
 		return result;
 	}
 	
+	//제조원가를 가져옴
 	public String getMcost(String ln) {
 		String SQL="select manufacturing_cost from my_work where work_id = " + ln + "";
 		String result=null;
