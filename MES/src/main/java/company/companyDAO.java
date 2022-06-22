@@ -229,7 +229,7 @@ public class companyDAO {
 		return res;
 	}
 	
-	//검색결과 총  수(페이지네이션에서 응용)
+	//검색결과 총 data 수(페이지네이션에서 응용)
 	public int getSearchAmount(String txt_where) {
 				
 		String SQL = "select count(*) as rownum from mes.company" + txt_where;
