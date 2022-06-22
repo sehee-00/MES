@@ -1,20 +1,21 @@
 package dailyWork;
 
+//전체 작업일보 데이터 객체
 public class DailyWorkDTO {
-	private String worker;
-	private String dwtype;
-	private String order_name;
-	private String regdate;
-	private String part_name;
-	private String process;
-	private String start_date;
-	private String end_date;
-	private String faulty;
-	private String company;
-	private int price;
-	private String warehousing_exp_date;
-	private String facilities;
-	private String status;
+	private String worker; // 작업자
+	private String dwtype; //유형
+	private String order_name; //수주명
+	private String regdate; //등록일자
+	private String part_name; //부품명
+	private String process; //공정
+	private String start_date; //시작일
+	private String end_date; //종료일
+	private String faulty; //불량여부
+	private String company; //외주사
+	private int price; //금액
+	private String warehousing_exp_date; //입고예정일
+	private String facilities; //설비
+	private String status; //상태
 	private int work_id; //나의 작업일보 pk
 	
 	public String getWorker() {
