@@ -26,6 +26,7 @@ public class dServlet extends HttpServlet {
 		response.getWriter().write(getdocproc(year));
 		response.getWriter().write("}");
 	}
+	//월별 불량/처리 건수 연도별 조회 
 	public String getdoccom(String year) {
 		StringBuffer result = new StringBuffer("");
 		result.append("\"comresult\":[");
@@ -38,6 +39,7 @@ public class dServlet extends HttpServlet {
 		return result.toString();
 	}
 	
+	//유형별 불량 건수 연도별 조회
 	public String getdocproc(String year) {
 		StringBuffer result = new StringBuffer("");
 		result.append("\"procresult\":[");
