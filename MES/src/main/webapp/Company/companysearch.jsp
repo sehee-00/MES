@@ -33,7 +33,8 @@
 		</tr>
 	</thead>
 	<tbody>
-	<%
+	<%	
+		//테이블 세팅
 		ArrayList<companyDTO> list = null;
 		String txt_where="";
 		if(input==null){
