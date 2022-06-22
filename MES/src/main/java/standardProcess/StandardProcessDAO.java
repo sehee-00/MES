@@ -133,7 +133,7 @@ public class StandardProcessDAO {
 		return list.isEmpty() ? null : list;
 	}
 	
-	public List<StandardProcessPDTO> getLowerStandardProcessProcesses(String upperlevel){
+	public List<StandardProcessPDTO> getLowerStandardProcessProcesses(String upperlevel){ //하위 레벨 공정 조회
 		List<StandardProcessPDTO> list = new ArrayList<StandardProcessPDTO>();
 		
 		try {
@@ -168,7 +168,7 @@ public class StandardProcessDAO {
 		return list.isEmpty() ? null : list;
 	}
 	
-	public List<StandardProcessFDTO> getLowerStandardProcessFacilities(String upperlevel){
+	public List<StandardProcessFDTO> getLowerStandardProcessFacilities(String upperlevel){ //하위 레벨 설비 조회
 		List<StandardProcessFDTO> list = new ArrayList<StandardProcessFDTO>();
 		
 		try {
@@ -198,7 +198,7 @@ public class StandardProcessDAO {
 		return list.isEmpty() ? null : list;
 	}
 	
-	public JSONObject getWorkTime(String process_name) {
+	public JSONObject getWorkTime(String process_name) { //공정의 표준 작업 시간 조회
 		JSONObject result = new JSONObject();
 		
 		try {
@@ -234,7 +234,7 @@ public class StandardProcessDAO {
 	}
 	
 	//입력, 수정
-	public int insertProcessMulti(StandardProcessPMDTO dto) { //process_multi table insert
+	public int insertProcessMulti(StandardProcessPMDTO dto) { //process_multi table insert (상위-하위 연결 관계 설정(데이터 입력))
 		int res = 0;
 		try {
 			String sql = "insert into process_multi values(?, ?, ?)";
@@ -257,7 +257,7 @@ public class StandardProcessDAO {
 		return res;
 	}
 	
-	public int insertProcess(StandardProcessPDTO dto) { //process table insert
+	public int insertProcess(StandardProcessPDTO dto) { //process table insert(공정 등록)
 		int res = 0;
 		try {
 			String sql = "insert into mes.process(process_name, mes.process.type, pay, load_factor, mes.process.using) values(?, ?, ?, ?, ?)";
@@ -282,7 +282,7 @@ public class StandardProcessDAO {
 		return res;
 	}
 	
-	public int insertProcessManager(String process_name, String proc_manager) { //update process_manager at process
+	public int insertProcessManager(String process_name, String proc_manager) { //update process_manager at process(공정의 담당자 수정(등록))
 		int res = 0;
 		
 		try {
@@ -305,7 +305,7 @@ public class StandardProcessDAO {
 		return res;
 	}
 	
-	public int insertWorkTime(String p_name, String[] wt) { //insert process_time table
+	public int insertWorkTime(String p_name, String[] wt) { //insert process_time table(표준 작업 시간 등록 및 수정)
 		int res = 0;
 		
 		if(wt.length % 2 != 0) {
@@ -345,7 +345,7 @@ public class StandardProcessDAO {
 	}
 	
 	//삭제
-	public int deleteProcessMulti(String proc_name, String sub_proc) { //process_multi table delete
+	public int deleteProcessMulti(String proc_name, String sub_proc) { //process_multi table delete(상위-하위 연결 끊기(데이터 삭제))
 		int res = 0;
 		try {
 			String sql = "delete from process_multi where proc_name=? and sub_proc=?";
@@ -365,7 +365,7 @@ public class StandardProcessDAO {
 		return res;
 	}
 	
-	public int deleteProcess(String process_name) {
+	public int deleteProcess(String process_name) { //공정 삭제
 		int res = 0;
 		String sql = "";
 		try {
@@ -410,7 +410,7 @@ public class StandardProcessDAO {
 		return res;
 	}
 	
-	public void updatelowerlevelafterdelete() {
+	public void updatelowerlevelafterdelete() { //하위 공정 혹은 설비 삭제 후 상위 공정의 하위 공정 혹은 설비가 있는지 여부에 대한 데이터 설정
 		try {
 			String sql = "UPDATE mes.process SET lowerlevel = 0 WHERE process_name NOT IN (SELECT proc_name FROM mes.process_multi GROUP BY proc_name)";
 			con = db.getCon();
