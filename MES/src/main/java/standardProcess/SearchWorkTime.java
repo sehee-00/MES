@@ -14,7 +14,8 @@ public class SearchWorkTime extends HttpServlet {
     public SearchWorkTime() {
         super();
     }
-
+	
+	//공정의 표준 작업 시간 검색 Servlet
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
 		PrintWriter writer = response.getWriter();
