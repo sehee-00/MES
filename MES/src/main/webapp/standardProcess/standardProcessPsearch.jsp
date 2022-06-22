@@ -42,6 +42,7 @@
     <%} %>
     
     <script>
+    <!-- 목록 속 공정 선택 이벤트 -->
     $(document).on("click",".processcontent",function(){
 		$(".processcontent, .facilitycontent").css("background","white");
 		$(this).css("background","lightgray");
@@ -71,7 +72,8 @@
 			$("#selpcinchargeselect").append(htmlstr);
 		}
 	});
-    
+	    
+    <!-- 하위 설비 선택 이벤트 -->
     $(document).on("click",".facilitycontent",function(){
     	$(".processcontent, .facilitycontent").css("background","white");
 		$(this).css("background","lightgray");
