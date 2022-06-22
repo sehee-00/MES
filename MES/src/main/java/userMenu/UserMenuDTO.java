@@ -1,17 +1,18 @@
 package userMenu;
 
+//사용자 메뉴 데이터 객체
 public class UserMenuDTO {
-	private String user_id;
-	private String user_name;
-	private String sales;
-	private String prod;
-	private String work;
-	private String material_prod;
-	private String order_warehousing;
-	private String dashboard;
-	private String info_manage;
-	private String admin;
-	private String facilitiesmenu;
+	private String user_id; //사용자 id
+	private String user_name; //사용자 이름
+	private String sales; //영업 관리 메뉴
+	private String prod; //생산 관리 메뉴
+	private String work; //작업 관리 메뉴
+	private String material_prod; //자재 제품 관리 메뉴
+	private String order_warehousing; //발주입고 관리 메뉴
+	private String dashboard; //dashboard 메뉴
+	private String info_manage; //기준 정보 관리 메뉴
+	private String admin; //사용자 관리 메뉴
+	private String facilitiesmenu; //설비 관리 메뉴
 	
 	
 	public String getFacilitiesmenu() {
