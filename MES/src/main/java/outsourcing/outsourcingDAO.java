@@ -76,7 +76,7 @@ public class outsourcingDAO {
 		return res;
 	}
 	
-	//검색결과 총 금형번호의 수(페이지네이션에서 응용)
+	//검색결과 총 data 수(페이지네이션에서 응용)
 	public int getSearchAmount(String txt_where) {
 				
 		String SQL = "select count(*) as rownum from mes.outsourcing" + txt_where;
@@ -198,7 +198,7 @@ public class outsourcingDAO {
 		return list;
 	}
 	
-	// 검색패널 - 수주일 시작일자 세팅
+	// 검색패널 - 시작일자 세팅
 	public String getstartdate() {
 		String SQL="SELECT warehousing_exp_date FROM mes.outsourcing order by warehousing_exp_date";
 		String result=null;
@@ -223,7 +223,7 @@ public class outsourcingDAO {
 		}
 		return result;
 	}
-	
+	// 검색패널 - 종료일자 세팅
 	public String getenddate() {
 		String SQL="SELECT warehousing_exp_date FROM mes.outsourcing order by warehousing_exp_date desc";
 		String result=null;
@@ -255,7 +255,7 @@ public class outsourcingDAO {
 		}
 		return result;
 	}
-
+	// 
 	public int update(String num, String date) {
 		String SQL="UPDATE mes.outsourcing SET warehousing_date = ?, outsourcing.status = 1 WHERE outsourcing_no="+num;
 		int k=0;
