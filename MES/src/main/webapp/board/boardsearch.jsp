@@ -8,6 +8,7 @@
 <%
 	request.setCharacterEncoding("UTF-8");
 
+	<!-- paging을 위한 변수 초기화 -->
 	int lastboardnum = -1;
 
 	String pagenum = request.getParameter("page");
@@ -16,6 +17,7 @@
 		p = Integer.parseInt(pagenum);
 	}
 	
+	<!-- 검색 시의 검색 내용(검색 조건) 받아옴 -->
 	String duration = request.getParameter("date");
 	String startdate = null, enddate = null;
 	
@@ -35,16 +37,17 @@
 	}
 %>
 
+<!-- db에서 조건에 따라 검색 결과 받아옴 -->
 	<jsp:useBean id="dao" class="board.BoardDAO"/>
 
 <%	
 	List<BoardVO> list = null;
-	if(duration == null && sda == null){
+	if(duration == null && sda == null){ //검색 조건 없을 때
 		list = dao.getList(p);
 		lastboardnum = dao.getNext() - 1;
 		
 	}
-	else{
+	else{ //검색 조건 있을 때
 		String condition = "";
 		
 		if(startdate != null && enddate != null) {
@@ -64,6 +67,7 @@
 		
 	}
 %>
+<!-- 받아온 데이터로 화면 구성 -->
 	<table class="table table-bordered table-hover">
 		<thead class="tablehead">
 			<th style="width: 10%;">No.</th>
@@ -92,6 +96,7 @@
 		</tr>
 		<%}; %>
 		
+		<!-- 화면 클릭 시 이벤트 -->
 		<script>
 		$(".tablecontent").click(function(){
 			$(".tablecontent").css("background","white");
@@ -108,6 +113,7 @@
 		
 	</table>
 	
+	<!-- paging -->
 	<ul class="pagination">
 		<li><a class="preanpage">Previous</a></li>
 		<%
