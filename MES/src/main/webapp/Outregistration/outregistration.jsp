@@ -216,7 +216,7 @@ integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="ano
 		
 		
 	}
-	// 데이터 삭제
+	<!-- 수주에 따른 부품명 로딩 함수 -->
 	function delInsert(obj){
 		var number = obj.parentNode.parentNode.children[10].children[0].value;
 
