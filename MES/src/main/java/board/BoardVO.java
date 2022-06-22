@@ -3,7 +3,7 @@ package board;
 import java.util.Date;
 
 public class BoardVO {
-	//게시물 정보를 담을 틀
+	//게시물 데이터 객체
 	
 	private int board_id; //고유 pk인 id, 사용자에 보여지지 않음
 	private int board_num; //게시물 번호
