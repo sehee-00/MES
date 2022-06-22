@@ -365,7 +365,7 @@ public class StandardProcessDAO {
 		return res;
 	}
 	
-	public int deleteProcess(String process_name) { //공정 삭제
+	public int deleteProcess(String process_name) { //공정 삭제 - 삭제 시 하위 공정이나 설비가 있다면 모두 삭제하고 연결 끊은 후 삭제
 		int res = 0;
 		String sql = "";
 		try {
