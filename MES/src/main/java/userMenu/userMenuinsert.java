@@ -18,7 +18,8 @@ public class userMenuinsert extends HttpServlet {
     public userMenuinsert() {
         super();
     }
-
+	
+	//사용자의 메뉴 권한 설정 Servlet
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter writer = response.getWriter();
 
