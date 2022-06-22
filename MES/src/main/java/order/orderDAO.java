@@ -54,7 +54,7 @@ public class orderDAO {
 	
 	public int write(orderDTO dto) {
 		int k = 0;
-		
+		// 데이터 등록
 		try {
 			String SQL="INSERT INTO mes.order(item_no, order_com_id, order_date, order_status, part_status, car_name, prod_name, order_price, nego_price, del_date,"
 					+ "order_note, item_img, order_et_id, order_num) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -85,7 +85,7 @@ public class orderDAO {
 		} finally {
 			disconnect();
 		}
-		
+		// 
 		if(k == 0) {
 			try {
 				String DEL_DATE="SELECT del_date FROM mes.order WHERE item_no=?";
