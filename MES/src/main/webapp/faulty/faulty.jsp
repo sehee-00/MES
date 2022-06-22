@@ -336,6 +336,7 @@ request.setCharacterEncoding("UTF-8");
 </html>
 <script>
 
+	<!-- 링크정보 클릭시 불량과 연관된 링크정보  -->
 	$('#linkinfoinput').on("click",function(e){
 		let linkinfo = $("#linknum").val();
 		let link = $("#linkinfoinput").val();
@@ -421,6 +422,7 @@ request.setCharacterEncoding("UTF-8");
 	
 	var pnum = "1";
 	
+	<!-- 초기화 버튼 -->
 	$("#faultyreset").click(function() {
 		$(".tablecontent").css({
 			"background" : "white"
@@ -507,6 +509,7 @@ request.setCharacterEncoding("UTF-8");
 		}
 	});
 	
+	<!-- 초기 테이블 세팅 -->
 	function tsetting(){
 		$.ajax({
 	        type:"GET",
