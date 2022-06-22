@@ -2,8 +2,8 @@ package defectivePerform;
 
 public class DefectivePerform {
 
-	private int m;
-	private String process;
+	private int m;		
+	private String process;	//
 	private int mcost;
 	private int num;
 	private int solution;
