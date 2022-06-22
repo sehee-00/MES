@@ -42,7 +42,7 @@
 			<!-- 기본 베이스 테이블 세팅 -->
 			<script>
 			var pnum = "1";// 페이지
-			var dates = "";// 수주일
+			var dates = "";// 입고예정일
 			var input = "";// 입력 데이터
 			$(document).ready(function(){
 				$.ajax({
@@ -51,7 +51,7 @@
 			        data:{page:pnum, flag:"0"},	// 페이지 데이터 넘김
 			        dataType:"html",
 			        success:function(data){
-			            $("#outsourcingt").html(data);	// 요청 성공 시 ordert에 데이터를 세팅 
+			            $("#outsourcingt").html(data);	// 요청 성공 시 outsourcingt 데이터를 세팅 
 					}	
 				});
 			});
@@ -63,7 +63,7 @@
 			<input style="display:none;" class="warehousing" type="button" id="Warehousingbtn" data-toggle="modal" data-target="#warehousingmodal"/>
 			<!-- 검색 -->
 			<script>	
-			// 수주일 세팅
+			// 입고예정일 세팅
 			$('input[name="dates"]').daterangepicker({ // .daterangepicker = 시작일시와 종료일시를 받는 컴포넌트
 				timePicker: false,	// 시간 노출 여부 false
 				locale:{	
@@ -73,7 +73,7 @@
 				"endDate": "<%=outsourcingDAO.getenddate()%>"
 			});
 			
-			// 검색과 수주일 처리
+			// 검색과 입고예정일 처리
 			$('input[name="dates"]').on("change",function(){	// 날짜 변경에 대한 이벤트 처리 
 				dates=$('input[name="dates"]').val();	// 입력한 날짜 값 저장
 				input=$("#searchbox").val();	// 검색 창에 입력한 값 저장
@@ -106,7 +106,7 @@
 					});
 				}
 			});
-			
+			// 입고 처리
 			$(document).on("click", "#insertwhbtn", function(){
 				var wDay = $("#warehousingday").val();
 				$("input:checkbox[name=chkbox]:checked").each(function(){
