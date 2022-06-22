@@ -1,13 +1,14 @@
 package material;
 
 public class MaterialDTO {
-	private int materials_id;
-	private String materials_name;
-	private int unit_price;
-	private String materials_type;
-	private String materials_proc;
-	private int stock;
-	private int safety_stock;
+	//자재 데이터 객체
+	private int materials_id; //자재 id
+	private String materials_name; // 자재명
+	private int unit_price; //단가
+	private String materials_type; //소요 자재 유형
+	private String materials_proc; //자재 공정
+	private int stock; //수량
+	private int safety_stock; //안전 재고 수량
 	
 	
 	public int getMaterials_id() {
