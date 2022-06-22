@@ -200,7 +200,7 @@ List<OrderPartDetailDTO> orderpartdetaillist = dao.getOrderPartDetail(itemno);
 </div>
 <script>
 
-
+<!-- 날짜 형식 -->
 function date_mask(objValue) {
 	 var v = objValue.replace("--", "-");
 

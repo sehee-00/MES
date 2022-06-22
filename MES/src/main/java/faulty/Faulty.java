@@ -3,21 +3,21 @@ package faulty;
 
 public class Faulty {
 
-	private int faulty_no;
-	private String link_info;
-	private String faulty_type;
-	private String cause_of_defect;
-	private String date_of_occurrence;
-	private int materials_cost;
-	private int cost;
-	private String faulty_title;
-	private String faulty_content;
-	private String solution;
-	private String user_id;
-	private String proc_date;
-	private String part_name;
-	private String process;
-	private String order_name;
+	private int faulty_no;		//불량번호
+	private String link_info;	//링크정보
+	private String faulty_type;	//불량유형
+	private String cause_of_defect;	//불량원인
+	private String date_of_occurrence;	//발생일자
+	private int materials_cost;	//자재비용
+	private int cost;		//비용
+	private String faulty_title;	//불량제목
+	private String faulty_content;	//불량내용
+	private String solution;	//해결방안
+	private String user_id;		//사용자아이디
+	private String proc_date;	//공정날짜
+	private String part_name;	//부품명
+	private String process;		//공정명
+	private String order_name;	//수주
 
 	
 

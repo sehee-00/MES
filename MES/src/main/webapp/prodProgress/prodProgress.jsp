@@ -29,6 +29,7 @@
         <link rel="stylesheet" href="prodProgress.css?ver09">
     </head>
     <body>
+	<!-- 상단 수주 선택과 상태, 정보 확인 버튼 --> 
         <div class="panel panel-default border searchbox">
             <div class="panel-body">
                 <span>금형번호:&nbsp;&nbsp;&nbsp;
@@ -87,6 +88,7 @@
             </div>
         </div>
 
+	    <!-- 선택 수주의 계획 공정표 및 생산 진행 목록 부분 -->
 		<div class="row">
             <div class="panel panel-default border listbox col-md-6" id="prodProgresslist">
 
@@ -136,7 +138,7 @@
             </div>
         </div>
         
-       <!-- 수주정보 -->
+       <!-- 수주정보 modal -->
        <div class="modal fade" id="orderImodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -241,7 +243,7 @@
             </div>
         </div>
         
-        <!-- 공구 -->
+        <!-- 공구 modal -->
         <div class="modal fade" id="toolsRmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -279,7 +281,7 @@
             </div>
         </div>
         
-        <!-- 발주요청 -->
+        <!-- 발주요청 modal -->
         <div class="modal fade" id="orderRmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -342,6 +344,7 @@
           var indexx = 0;
           var indexy = 0;
 
+	  // 부품관리 버튼 이벤트
           $("#partsMbtn").on("click",function(){
               let itemno = $("#itemnosel").val();
               partsM_alldelInsert();
@@ -380,6 +383,7 @@
               }
           });
           
+	  //부품 등록창의 저장 버튼 이벤트
           $(document).on("click","#insertpartsMbtn", function(){
         	let itemno = $("#itemnosel").val();
   			var partform = $("#partsMform").serialize();
@@ -404,6 +408,7 @@
 			})
           });
       
+	  //수주정보 버튼 이벤트
           $("#orderIbtn").on("click",function(){
               let itemno = $("#itemnosel").val();
               
@@ -452,6 +457,7 @@
               }
           });
           
+	  //수주별 목록 설정
           document.addEventListener("DOMContentLoaded", function(){
             tsetting(null);
           });
@@ -475,6 +481,7 @@
               });
           }
           
+	  //부품등록(관리) 창의 추가버튼 이벤트
           $("#insertrowbtn").on("click",function(){
               var rowItem="<tr id='partsMaddbody'>";
                   rowItem+="<td class='form-group'>";
@@ -501,6 +508,7 @@
                   indexx += 1;
           });
           
+	  //부품등록(관리) 창의 열 삭제 이벤트
           function delInsert(obj){
               var number = obj.parentNode.parentNode.children[4].children[0].value;
 
@@ -509,10 +517,12 @@
            
            }
 
+	  //부품등록(관리) 창의 전체삭제 이벤트
           function partsM_alldelInsert(){
               $("tr[id=partsMaddbody]").remove();
            }
-            
+          
+	  //공구 등록 창의 추가버튼 이벤트
           $("#toolsR_insertrowbtn").on("click",function(){
               var rowItem="<tr id='toolsRaddbody'>";
                   rowItem+="<td class='form-group'>";
@@ -545,13 +555,12 @@
                   indexy += 1;
           });
 
-            
+         //공구 등록창의 전체 삭제버튼 이벤트
           function toolsR_alldelInsert(){
               $("tr[id=toolsRaddbody]").remove();
            }
               
-              <!-- Excel -->
-              
+              //excel import(부품 등록(관리) 창)
               function excelbtnevent(){
             	  $("#excelbtn").click();
               };
@@ -611,6 +620,7 @@
 	        		  while (Date.now() < wakeUpTime) {}
 	        	}
 				
+	    		//기타 버튼 클릭 이벤트
 				function toolsClick(t){
 	                  indexy = 0;
 	                     let itemno = $("#itemnosel").val();
@@ -648,7 +658,8 @@
 	                        alert("오류");
 	                     }
 	                  }
-	             
+	       
+	             //공구 등록 창의 저장 버튼 이벤트
 	             function toolsInsert(t){
 	                     let itemno = $("#itemnosel").val();
 	                     let partsname = $("#toolsPart").val();
@@ -677,21 +688,24 @@
 	                        })
 	                     
 	             };
-	             
+	       
+	             //공구 등록의 금액 자동 계산 - 단가 변경 시
 	             function calcPrice_uprice(t){
 	                var amount = t.parentNode.parentNode.children[2].children[0].value;
 	                var uprice = t.value;
 	                
 	                t.parentNode.parentNode.children[3].children[0].value = amount * uprice;
 	             }
-	             
+	       
+	             //공구 등록의 금액 자동 계산 - 수량 변경 시
 	             function calcPrice_amount(t){
 	                var amount = t.value;
 	                var uprice = t.parentNode.parentNode.children[1].children[0].value;
 	                
 	                t.parentNode.parentNode.children[3].children[0].value = amount * uprice;
 	             }
-	             
+	       
+	             // 발주요청 버튼 클릭 이벤트
 	             function orderRequestClick(t){
 	                 $("#orderR_modalTogglebtn").click();
 	                 
@@ -702,6 +716,7 @@
 	                 $("#parttype").val(tp);
 	              }
 	             
+	             // 발주 요청 창(수주 정보 창)에서 저장 클릭 이벤트
 	             function requestInsert (){
 	            	 var orderRform = $("#orderRform").serialize();
 	            	 
@@ -777,6 +792,7 @@
 	        		}
 	        	});
 	        	
+	       		// 인쇄버튼 이벤트
 	        	function printWindowOpen(t){
 	        		let part = t.parentNode.id;
 	        		$.ajax({

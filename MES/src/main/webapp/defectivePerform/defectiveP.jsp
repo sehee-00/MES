@@ -39,6 +39,7 @@
 <script type="text/javascript">
 var request = new XMLHttpRequest();
 var comresult ="";
+<!-- 막대그래프 셋팅 -->
 google.charts.load('current', {
 	'packages' : [ 'bar' ]
 });
@@ -48,6 +49,7 @@ $(document).ready(function(){
 	tsetting();
 });
 
+<!-- 월별/불량 처리 건수 그래프 -->
 function drawChart() {
 	
 	var data = new google.visualization.DataTable();
@@ -67,6 +69,7 @@ function drawChart() {
 	   chart.draw(data, google.charts.Bar.convertOptions(options));
 }
 
+<!-- 유형별 불량 건수 그래프 -->
 function drawChart2() {
 	
 	var data = new google.visualization.DataTable();
@@ -83,14 +86,15 @@ function drawChart2() {
 	      }
 	   };
 
-	  
-	  	var chart2 = new google.charts.Bar(document.getElementById('columnchart_material2'));
 
-	   	chart2.draw(data, google.charts.Bar.convertOptions(options));
+	var chart2 = new google.charts.Bar(document.getElementById('columnchart_material2'));
 
-	   
+	chart2.draw(data, google.charts.Bar.convertOptions(options));
+
+
 }
 
+<!-- 그래프 조회연도에 따른 데이터 보내기 -->
 function fisrtchart(){
 	var year = document.getElementById("inputsearch").value;
 	request.open("Post", "./dServlet?year="+year, true);
@@ -98,6 +102,7 @@ function fisrtchart(){
 	request.send(null);
 }
 
+<!-- 그래프 데이터 받아오기 -->	
 function fisrtresult(){
 	if(request.readyState == 4 && request.status == 200){
 		var object = eval('(' + request.responseText + ')');
@@ -107,6 +112,7 @@ function fisrtresult(){
 	}
 }
 
+<!-- 그래프 그리기 -->
 function draw(){
 	google.setOnLoadCallback(drawChart);
 	google.setOnLoadCallback(drawChart2);
@@ -114,6 +120,8 @@ function draw(){
 	//google.charts.setOnLoadCallback(drawChart2);
 
 }
+	
+<!-- 조회연도 검색 -->
 function yclick(){
 	var year = document.getElementById("inputsearch").value;
 	request.open("Post", "./dServlet?year="+year, true);
@@ -122,6 +130,7 @@ function yclick(){
 	tsetting();
 }
 
+<!-- 테이블 데이터 보내고  -->
 function tsetting(){
 	d=$("#inputsearch").val();
 	$.ajax({

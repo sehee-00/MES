@@ -36,81 +36,85 @@
 <title>소모품 현황</title>
 
 <jsp:useBean id="dao" class="consumables.CDAO" />
-	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+		
 	<!-- 테이블 셋팅 -->
-	
 	$(document).ready(function(){
 		tsetting();
 	});
 
 	var request = new XMLHttpRequest();
-    var cresult ="";
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
+	var cresult ="";
+	google.charts.load('current', {'packages':['bar']});
+	google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
-        
-       var data = new google.visualization.DataTable();
- 	   
- 	   data.addColumn('string', '');
- 	   data.addColumn('number', '금액');
- 	   console.log(cresult);
- 	   data.addRows(cresult);
- 	   
-        var options = {
-          chart: {
-            title: '',
-          }
-        };
+	function drawChart() {
 
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+		var data = new google.visualization.DataTable();
 
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-      }
+		   data.addColumn('string', '');
+		   data.addColumn('number', '금액');
+		   console.log(cresult);
+		   data.addRows(cresult);
+
+		var options = {
+		  chart: {
+		    title: '',
+		  }
+		};
+
+		var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+		chart.draw(data, google.charts.Bar.convertOptions(options));
+     	}
       
-     function fisrtchart(){
-   		var cdate = document.getElementById("Cdate").value;
-   		var cedate = document.getElementById("CEdate").value;
-   		request.open("Post", "./Csurvlet?cdate=" + cdate + "&cedate=" + cedate, true);
-   		request.onreadystatechange = fisrtresult;
-   		request.send(null);
-   	}
-
-   	function fisrtresult(){
-   		if(request.readyState == 4 && request.status == 200){
-   			var object = eval('(' + request.responseText + ')');
-   			cresult = object.cresult;
-   			draw();  
-   		}
-   	}
-
-   	function draw(){
-   		google.setOnLoadCallback(drawChart);
-   	}
-   	function yclick(){
-   		var cdate = document.getElementById("Cdate").value;
-   		var cedate = document.getElementById("CEdate").value;
-   		request.open("Post", "./Csurvlet?cdate=" + cdate + "&cedate=" + cedate, true);
-   		request.onreadystatechange = fisrtresult;
-   		request.send(null);
-   		tsetting();
-   	}
-   	
-   	function tsetting(){
-   		d=$("#Cdate").val();
-   		e=$("#CEdate").val();
-   		$.ajax({
-   	        type:"GET",
-   	        url:"./ctable.jsp",
-   	        data:{start:d, end:e},
-   	        dataType:"html",
-   	        success:function(data){
-   	            $("#ctable").html(data);
-   	        }
-   	    });
-   	}
-   	</script>
+	//초기 기간에 맞는 데이터 조회
+	function fisrtchart(){
+		var cdate = document.getElementById("Cdate").value;
+		var cedate = document.getElementById("CEdate").value;
+		request.open("Post", "./Csurvlet?cdate=" + cdate + "&cedate=" + cedate, true);
+		request.onreadystatechange = fisrtresult;
+		request.send(null);
+	}
+	
+	//그래프에 그릴 데이터 받아오기
+	function fisrtresult(){
+		if(request.readyState == 4 && request.status == 200){
+			var object = eval('(' + request.responseText + ')');
+			cresult = object.cresult;
+			draw();  
+		}
+	}
+	//그래프 그리기
+	function draw(){
+		google.setOnLoadCallback(drawChart);
+	}
+	//기간을 변경하여 검색하였을 때 
+	function yclick(){
+		var cdate = document.getElementById("Cdate").value;
+		var cedate = document.getElementById("CEdate").value;
+		request.open("Post", "./Csurvlet?cdate=" + cdate + "&cedate=" + cedate, true);
+		request.onreadystatechange = fisrtresult;
+		request.send(null);
+		tsetting();
+	}
+	
+	//초기 테이블 세팅
+	function tsetting(){
+		d=$("#Cdate").val();
+		e=$("#CEdate").val();
+		$.ajax({
+		type:"GET",
+		url:"./ctable.jsp",
+		data:{start:d, end:e},
+		dataType:"html",
+		success:function(data){
+		    $("#ctable").html(data);
+		}
+	    });
+	}
+	</script>
 </head>
 <body>
 	<div class="title">Dashboard/소모품 현황</div>

@@ -6,18 +6,19 @@ import java.util.List;
 
 import org.json.simple.JSONObject;
 
+//수주별 부품 세부 정보 데이터 객체
 public class OrderPartDetailDTO {
 	
-	private String order;
-	private String part;
-	private int total_work_time = 0;
-	private int price = 0;
-	private int quantity = 0;
-	private String standard;
-	private String order_status;
-	private List<JSONObject> process = new ArrayList<JSONObject>();
-	private String status_color = "background-color: rgb(70, 211, 191)";
-	private String type;
+	private String order; //수주명
+	private String part; //부품명
+	private int total_work_time = 0; //WT
+	private int price = 0; //제조원가
+	private int quantity = 0; //수량
+	private String standard; //규격
+	private String order_status; //발주여부
+	private List<JSONObject> process = new ArrayList<JSONObject>(); //공정
+	private String status_color = "background-color: rgb(70, 211, 191)"; //진행 상태 배경 색
+	private String type; //유형
 	
 	
 	public String getOrder() {

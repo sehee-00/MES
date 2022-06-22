@@ -1,16 +1,17 @@
 package prodProgress;
 
+//수주 정보 데이터 객체
 public class ProdProgressOrderDTO {
-	private String order_com_id;
-	private int order_price;
-	private String part_status;
-	private String car_name;
-	private String item_no;
-	private String order_date;
-	private String proc_end_date;
-	private String del_date;
-	private String due_date;
-	private String order_note;
+	private String order_com_id; //고객사명
+	private int order_price; //수주금액
+	private String part_status; //부품구분
+	private String car_name; //제품명
+	private String item_no; //금형번호
+	private String order_date; //수주일
+	private String proc_end_date; //공정완료일
+	private String del_date; //납기예정일
+	private String due_date; //납기완료일
+	private String order_note; //비고
 	
 	public String getOrder_com_id() {
 		return order_com_id;

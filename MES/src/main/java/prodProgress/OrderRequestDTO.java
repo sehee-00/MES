@@ -4,16 +4,17 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+//발주 요청 데이터 객체
 public class OrderRequestDTO {
-	private int porder_no;
-	private String order_name;
-	private String part_name;
-	private String type;
-	private int number_of_request;
-	private String porder_company;
-	private String exp_date;
-	private String p_date;
-	private int unit_price;
+	private int porder_no; //발주 no
+	private String order_name; //수주명
+	private String part_name; //부품명
+	private String type; //유형
+	private int number_of_request; //발주 수량
+	private String porder_company; //발주사
+	private String exp_date; //입고예정일
+	private String p_date; //발주일
+	private int unit_price; //단가
 	
 	public OrderRequestDTO(int nextnum) {
 		this.porder_no = nextnum;

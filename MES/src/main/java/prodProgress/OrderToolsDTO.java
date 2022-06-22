@@ -1,12 +1,13 @@
 package prodProgress;
 
+//공구 데이터 객체
 public class OrderToolsDTO {
-   private String order_name;
-   private String part_name;
-   private String tool_name;
-   private int unit_price;
-   private int stock;
-   private int price;
+   private String order_name; //수주명
+   private String part_name; //부품명
+   private String tool_name; //공구명(기타)
+   private int unit_price; //단가
+   private int stock; //수량
+   private int price; //금액
    
    public String getOrder_name() {
       return order_name;

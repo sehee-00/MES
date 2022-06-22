@@ -2,18 +2,18 @@ package faulty;
 
 public class Workday {
 
-	private int work_id;
-	private String order_name;
-	private String part_name;
-	private String process;
-	private String facilities;
-	private String work_start;
-	private String work_end;
-	private String client;
-	private String worker;
-	private String pdate;
-	private int pay;
-	private String remarks;
+	private int work_id;		//작업번호
+	private String order_name;	//수주명
+	private String part_name;	//부품명
+	private String process;		//공정
+	private String facilities;	//설비
+	private String work_start;	//작업시작날짜
+	private String work_end;	//작업종료날짜
+	private String client;		//고객사
+	private String worker;		//작업자
+	private String pdate;		//납기예정일
+	private int pay;		//임률
+	private String remarks;		//비고
 	
 	
 	public int getWork_id() {
