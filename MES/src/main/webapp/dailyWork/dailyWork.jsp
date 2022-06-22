@@ -28,6 +28,7 @@
     </head>
     <body id="boardp">
     
+	<!-- 큰 제목과 검색 -->
         <div class="title">작업 관리 / 전체작업일보</div>
         <div class="panel panel-default border searchbox">
             <div class="panel-body">
@@ -48,7 +49,7 @@
         </div>
         
         
-
+	<!-- 전제 작업 일보 목록 -->
 		<div class="row">
             <div class="panel panel-default border listbox col-md-6" id="dailyWorkList">
                 <div class="panel-heading">
@@ -195,6 +196,7 @@
 </html>
 
 <script>
+// 전체 작업 일보 목록 설정
 function dailyWorktsetting(){
 	$.ajax({
 		type:"GET",
@@ -283,21 +285,4 @@ $(document).on("keyup", "#price", function(e) {
      str = String(str);
      return str.replace(/[^\d]+/g, '');
  }
- 
- //불량체크
- $("#worklogtable #faultycheck").change(function(){
-	 let checked = $(this).is(":checked");
-	 let ordername = $("#worklogtable #ordername").val();
-	/*
-	 $.ajax({
-			type:"GET",
-			url:"./MyWorkSearch",
-			data:{"ordername":ordername, "checked":checked, "mode":"mywork"},
-			dataType:"json",
-			success:function(data){
-	            console.log(data.result);
-	        }
-		});
-	*/
- })
 </script>
