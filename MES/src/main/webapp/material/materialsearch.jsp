@@ -7,7 +7,7 @@
 
 <%
 request.setCharacterEncoding("UTF-8");
-	
+	 //paging을 위한 변수 초기화
 	int lastboardnum = -1;
 	
 	String pagenum = request.getParameter("page");
@@ -16,22 +16,24 @@ request.setCharacterEncoding("UTF-8");
 		p = Integer.parseInt(pagenum);
 	}
 	
+	//검색어 받아옴
 	String sda = request.getParameter("sdata");
 	if(sda == ""){
 		sda = null;
 	}
 %>
 
+<!-- db에서 데이터 받아옴 -->
 <jsp:useBean id="dao" class="material.MaterialDAO"/>
 
 <%
 	List<MaterialDTO> list = null;
-	if(sda == null){
+	if(sda == null){ //검색어 없을 때
 		list = dao.getList(p);
 		lastboardnum = dao.getNext() - 1;
 	}
 	
-	else{
+	else{ //검색어 있을 때
 		String condition = " where materials_name like \'%" + sda + "%\'";
 		
 		lastboardnum = dao.getNext(condition);
@@ -40,7 +42,7 @@ request.setCharacterEncoding("UTF-8");
 	
 	
 %>
-
+<!-- 받아온 데이터를 화면 요소 구성 -->
 	<table class="table table-bordered table-hover">
 		<thead class="tablehead">
 			<th style="width: 25%;">자재명</th>
@@ -65,6 +67,7 @@ request.setCharacterEncoding("UTF-8");
 		<%}; %>
 		
 		<script>
+		<!-- 안전 재고 수량과 수량을 비교하여 재고 부족 표현 -->
 		<%
 			int lastid = 0;
 			if(list != null){
@@ -82,6 +85,7 @@ request.setCharacterEncoding("UTF-8");
 				}
 			});
 		
+			<!-- 테이블 열 클릭(선택) 이벤트 -->
 			$(".tablecontent").click(function(){
 				$(".tablecontent").css("background","white");
 				$(this).css("background","lightgray");
@@ -97,6 +101,7 @@ request.setCharacterEncoding("UTF-8");
 		</script>
 	</table>
 	
+	<!-- paging -->
 	<ul class="pagination">
 		<li><a class="preanpage">Previous</a></li>
 		<%
