@@ -1,3 +1,4 @@
+<!-- 공정 목록 검색 및 화면 요소 설정 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
