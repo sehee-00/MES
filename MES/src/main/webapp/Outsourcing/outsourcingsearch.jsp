@@ -116,7 +116,7 @@
 	</tbody>
 </table>
 <script>
-// 완료 및 비상 처리
+// 비상 처리
 <% if(list.isEmpty() == false){ %>
 	$(document).ready(function(){
 		for(var i=1; i<=<%=list.get(0).getOutsourcing_no() %>; i++){
