@@ -1,12 +1,13 @@
 package prodProgress;
 
+//수주별 부품 정보 데이터 객체
 public class OrderPartsDTO {
-	private int pbo_id;
-	private String order;
-	private String part;
-	private int quantity;
-	private String order_status;
-	private String layer;
+	private int pbo_id; //수주별 부품 id
+	private String order; //수주명
+	private String part; //부품명
+	private int quantity; //수량
+	private String order_status; //발주여부
+	private String layer; //layer
 	
 	public int getPbo_id() {
 		return pbo_id;
