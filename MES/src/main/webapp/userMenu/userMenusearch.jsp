@@ -4,6 +4,7 @@
 <%@ page import = "java.util.HashMap" %>
 <%@ page import = "java.util.Map" %>
 <%@ page import = "java.util.Map.Entry" %>
+<!-- 사용자별 메뉴 조회 -->
 <jsp:useBean id="dao" class="userMenu.UserMenuDAO" />
  <table class="table table-bordered table-hover table-striped" id="usermenutable">
      <thead class="tablehead">
