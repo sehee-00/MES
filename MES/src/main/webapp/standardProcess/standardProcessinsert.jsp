@@ -1,3 +1,4 @@
+<!-- 공정 등록 후 결과 반환 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
