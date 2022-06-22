@@ -257,7 +257,7 @@ function chgorder(t){
 	request.send(null);
 	*/
 }
-
+<!-- 부품명 변경 -->
 function changeparts(){
 	if(request.readyState == 4 && request.status == 200){
 		var object = eval('(' + request.responseText + ')');
@@ -271,7 +271,7 @@ function changeparts(){
 		$("#prod_name").append(option);
 	}
 }
-// 금액 콤마
+<!-- 금액 콤마 -->
 function comma(str) {
     str = String(str);
     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
