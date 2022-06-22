@@ -12,14 +12,14 @@ public class companyDAO {
 	private static final String USER = "Usera";
 	private static final String PASSWD = "1234";
 	
-	// µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á °ü·Ã º¯¼ö ¼±¾ğ
+	// ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° ê´€ë ¨ ë³€ìˆ˜ ì„ ì–¸
 	private Connection con = null;
 	private PreparedStatement pstmt = null;
 	private ResultSet rs;
 	
-	// JDBC µå¶óÀÌ¹ö¸¦ ·ÎµåÇÏ´Â »ı¼ºÀÚ
+	// JDBC ë“œë¼ì´ë²„ë¥¼ ë¡œë“œí•˜ëŠ” ìƒì„±ì
 	public companyDAO() {
-		// JDBC µå¶óÀÌ¹ö ·Îµå
+		// JDBC ë“œë¼ì´ë²„ ë¡œë“œ
 		try {
 			Class.forName(JDBC_DRIVER);
 		} catch(Exception e) {
@@ -29,14 +29,14 @@ public class companyDAO {
 	
 	public void connect() {
 		try {
-			// µ¥ÀÌÅÍº£ÀÌ½º¿¡ ¿¬°á, Connection °´Ã¼ ÀúÀå 
+			// ë°ì´í„°ë² ì´ìŠ¤ì— ì—°ê²°, Connection ê°ì²´ ì €ì¥ 
 			con = DriverManager.getConnection(JDBC_URL, USER, PASSWD);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	// µ¥ÀÌÅÍº£ÀÌ½º ¿¬°á ÇØÁ¦ ¸Ş¼Òµå 
+	// ë°ì´í„°ë² ì´ìŠ¤ ì—°ê²° í•´ì œ ë©”ì†Œë“œ 
 	public void disconnect() {
 		if(con != null) {
 			try {
@@ -47,7 +47,7 @@ public class companyDAO {
 		}
 	}
 	
-	//µ¥ÀÌÅÍ ¸®½ºÆ® Á¶È¸ ¸Ş¼Òµå
+	//ë°ì´í„° ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ ë©”ì†Œë“œ
 	public ArrayList<companyDTO> getCompanyList1(int pagenum) throws ParseException {	
 		
 		String SQL = "SELECT * FROM mes.company WHERE com_id<? ORDER BY com_id DESC LIMIT 10";
@@ -87,7 +87,7 @@ public class companyDAO {
 				rs_c.setMain_task(rs.getString(18));
 				rs_c.setNote(rs.getString(19));
 								
-				//¸®½ºÆ®¿¡ Ãß°¡
+				//ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
 				list.add(rs_c);
 			}
 			rs.close();	
@@ -101,7 +101,7 @@ public class companyDAO {
 		return list;
 	}
 	
-	//µ¥ÀÌÅÍ ¸®½ºÆ® °Ë»ö ¸Ş¼Òµå
+	//ë°ì´í„° ë¦¬ìŠ¤íŠ¸ ê²€ìƒ‰ ë©”ì†Œë“œ
 	public ArrayList<companyDTO> getCompanyList2(int pagenum, String txt_where) throws ParseException{
 		ArrayList<companyDTO> list = new ArrayList<companyDTO>();
 		String SQL1="SELECT com_id FROM mes.company"+ txt_where + " ORDER BY com_id desc";
@@ -160,7 +160,7 @@ public class companyDAO {
 				rs_c.setMain_task(rs.getString(18));
 				rs_c.setNote(rs.getString(19));
 								
-				//¸®½ºÆ®¿¡ Ãß°¡
+				//ë¦¬ìŠ¤íŠ¸ì— ì¶”ê°€
 				list.add(rs_c);
 			}
 			rs.close();
@@ -173,9 +173,9 @@ public class companyDAO {
 		return list;
 	}
 	
-	//µ¥ÀÌÅÍ »èÁ¦ ¸Ş¼Òµå 
+	//ë°ì´í„° ì‚­ì œ ë©”ì†Œë“œ 
 	public int delete(String com_id) {
-		String SQL="Delete FROM mes.company WHERE com_id=\'"+com_id+"\'";	// item_no¿¡ µû¸¥ »èÁ¦
+		String SQL="Delete FROM mes.company WHERE com_id=\'"+com_id+"\'";	// item_noì— ë”°ë¥¸ ì‚­ì œ
 		
 		int k = -1;
 		try {
@@ -186,7 +186,7 @@ public class companyDAO {
 			k=pstmt.executeUpdate();
 	
 			
-			SQL = "{CALL decid("+com_id+", \'mes.company\', \'com_id\')}";	// »èÁ¦¿¡ µû¸¥ num ÀÚµ¿ °¨¼Ò ÇÁ·Î½Ãwj
+			SQL = "{CALL decid("+com_id+", \'mes.company\', \'com_id\')}";	// ì‚­ì œì— ë”°ë¥¸ num ìë™ ê°ì†Œ í”„ë¡œì‹œwj
 			
 			CallableStatement cstmt=con.prepareCall(SQL);
 			cstmt.execute();
@@ -203,7 +203,7 @@ public class companyDAO {
 		return k;
 	}		
 	
-	//È¸»ç ¹øÈ£ ¼¼ÆÃ
+	//íšŒì‚¬ ë²ˆí˜¸ ì„¸íŒ…
 	public int getNext() {
 		String SQL = "SELECT com_id FROM mes.company ORDER BY com_id DESC";
 		int res = -1;
@@ -229,7 +229,7 @@ public class companyDAO {
 		return res;
 	}
 	
-	//°Ë»ö°á°ú ÃÑ ±İÇü¹øÈ£ÀÇ ¼ö(ÆäÀÌÁö³×ÀÌ¼Ç¿¡¼­ ÀÀ¿ë)
+	//ê²€ìƒ‰ê²°ê³¼ ì´  ìˆ˜(í˜ì´ì§€ë„¤ì´ì…˜ì—ì„œ ì‘ìš©)
 	public int getSearchAmount(String txt_where) {
 				
 		String SQL = "select count(*) as rownum from mes.company" + txt_where;
@@ -255,7 +255,7 @@ public class companyDAO {
 		
 		return nextnum;
 	}
-	//µ¥ÀÌÅÍ ÀÔ·Â(µî·Ï)¹× ¼öÁ¤ ¸Ş¼Òµå 
+	//ë°ì´í„° ì…ë ¥(ë“±ë¡)ë° ìˆ˜ì • ë©”ì†Œë“œ 
 		public int write(companyDTO dto) {
 			int k = 0;
 			
