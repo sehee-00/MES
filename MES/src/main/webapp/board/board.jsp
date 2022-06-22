@@ -34,7 +34,7 @@
         
     </head>
     <body id="boardp">
-    
+        <!-- 큰 제목과 검색 -->
         <div class="title">작업 관리/게시판</div>
         <div class="panel panel-default border searchbox">
             <div class="panel-body">
@@ -45,7 +45,7 @@
         </div>
         
         
-
+	<!-- 게시판 목록 / 내용 table은 boardsearch에서 가져옴 -->
 		<div class="row">
         <div class="panel panel-default border boardlistbox col-md-6">
             <div class="panel-heading">
@@ -59,6 +59,7 @@
             </div>
         </div>
         
+	<!-- 게시판 쓰기  -->
         <div class="panel panel-default border boardinputbox col-md-6">
             <div class="panel-heading">
                 <h5 class="panel-title">게시판 등록/수정</h5>
@@ -230,7 +231,7 @@ $('input[name="searchdata"]').on("keydown",function(e){
 	};
 });
 
-<!-- 그외 셋팅 -->
+<!-- 그외 셋팅 / 게시판 번호와 날짜에 대한 포맷, 초기화 버튼 시 표 클릭 css 풀기 -->
 $("#boardreset").click(function(){
 	$(".tablecontent").css({"background":"white"});
 });
