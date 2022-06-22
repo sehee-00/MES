@@ -34,6 +34,7 @@
     </head>
     <body id="boardp">
     
+	<!-- 큰 제목과 검색 창 + 엑셀 import -->
         <div class="title">자재 제품 관리 / 자재 관리</div>
         <div class="panel panel-default border searchbox">
             <div class="panel-body">
@@ -42,6 +43,7 @@
             </div>
         </div>
 
+	<!-- 자재 목록 -->
 		<div class="row">
         <div class="panel panel-default border mlistbox col-md-6">
             <div class="panel-heading">
@@ -60,6 +62,7 @@
             </div>
         </div>
         
+	<!-- 자재 등록 창 -->
         <div class="panel panel-default border minputbox col-md-6">
             <div class="panel-heading">
                 <h5 class="panel-title">자재 등록/수정</h5>
@@ -158,7 +161,7 @@
         var pnum="1";
         var sda = "";
         
-        <!-- select02 -->
+        <!-- select02 설정 (콤보박스에서 검색 가능하게 함) -->
             $(document).ready(function() {
                 $('.selectlist').select2();
                 $(".selectlist").val(null).select2();
@@ -168,7 +171,7 @@
                 $(".selectlist").val(null).select2();
             });
             
-        <!-- 셋팅 -->
+        <!-- 기본 자재 목록 셋팅 -->
         	$(document).ready(function(){
         		tsetting();
         	});
@@ -185,6 +188,7 @@
         		});
         	}
         	
+		<!-- 등록 창 쓰기 형식 지정 -->
         	$(document).on("keyup", "#materialamo", function(e) {
         		$(this).val( $(this).val().replace(/[^0-9-]/gi,"") );
         	});
@@ -323,16 +327,20 @@
                 reader.readAsBinaryString(input.files[0]);
             }
         	
+		<!-- 등록 창 쓰기 형식 지정 -->
         	$(document).on("keyup", "input[name='price']", function(e) {
         		   $(this).val( $(this).val().replace(/[^0-9-]/gi,"") );
         		   
         		   $(this).val(comma($(this).val()));
         		});
         	
+		<!-- 엑셀을 읽을 때 다른 작업과의 충돌을 없애기 위한 sleep -->
         	function sleep(ms) {
         		  const wakeUpTime = Date.now() + ms;
         		  while (Date.now() < wakeUpTime) {}
         	}
+		
+		<!-- 단가 형식 지정시 사용하는 , 찍기와 , 없애기 -->
         	function comma(str) {
         	    str = String(str);
         	    return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
