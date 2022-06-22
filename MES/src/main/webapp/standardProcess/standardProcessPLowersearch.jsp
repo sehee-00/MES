@@ -11,6 +11,7 @@ List<StandardProcessPDTO> spLowerProcessList = dao.getLowerStandardProcessProces
 if(spLowerProcessList != null){
 	for(StandardProcessPDTO pdto : spLowerProcessList){
 %>
+<!-- 하위 공정 검색(화면 요소 설정) -->
 <tr class="tablecontent processcontent" name="<%=upperprocess %>" id="<%=pdto.getProcess_name() %>"> 
 <%		if(pdto.isLowerlevel()){ %>
     <td id="spicon" name="spopenicon" style="padding-left:<%=padding %>"><span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span></td>
