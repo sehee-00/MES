@@ -1,9 +1,9 @@
 package consumables;
 
 public class Consumables {
-	private int price;
-	private String tool_name;
-	public int getPrice() {
+	private int price;		//가격
+	private String tool_name;	//소모품명
+	public int getPrice() {	
 		return price;
 	}
 	public void setPrice(int price) {
