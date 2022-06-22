@@ -1,5 +1,6 @@
 package standardProcess;
 
+//공정과 공정 혹은 공정과 설비의 연결 관계에 대한 데이터 객체
 public class StandardProcessPMDTO {
 	private String proc_name; //상위 공정명
 	private String sortation; //구분(P, F)
