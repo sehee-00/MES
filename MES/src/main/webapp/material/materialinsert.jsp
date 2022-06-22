@@ -1,3 +1,4 @@
+<!-- 자재 등록 및 수정 후 결과 반환 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
