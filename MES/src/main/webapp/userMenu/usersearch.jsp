@@ -4,6 +4,7 @@
 <jsp:useBean id="dao" class="userMenu.UserMenuDAO" />
 
 <%
+	// paging을 위한 변수 초기화 및 검색 내용(조건)을 
 	int lastnum = -1;
 	String condition = "WHERE";
 	
@@ -15,6 +16,7 @@
 		p = Integer.parseInt(pagenum);
 	}
 	
+	// 사용자 조회
 	List<String[]> users = null;
 	
 	if(uname != null){
@@ -28,11 +30,11 @@
 		}
 	}
 	
-	if(uname == null && uid == null){
+	if(uname == null && uid == null){ //검색 없을 때
 		users = dao.getUsers(p);
 		lastnum = dao.getUserNext() - 1;
 	}
-	else{
+	else{ //검색 있을 때
 		if(uname != null){
 			condition = condition + " user_name LIKE \'%" + uname + "%\'";
 			if(uid != null){
@@ -47,6 +49,7 @@
 	}
 %>
 
+<!-- 사용자 목록 화면 요소 설정 -->
 <table class="table table-bordered table-hover">
 	<thead class="tablehead">
 		<th style="width:50%;">사번(아이디)</th>
@@ -94,6 +97,7 @@ $(".usercontent").on("click",function(){
 });
 </script>
 
+<!-- paging -->
 <ul class="pagination">
 	<li><a class="preanpage">Previous</a></li>
 	<%
