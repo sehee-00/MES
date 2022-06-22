@@ -3,7 +3,9 @@
 <%@page import="dailyWork.DailyWorkDTO" %>
 <%@page import="java.util.List" %>
 <jsp:useBean id="dao" class="dailyWork.DailyWorkDAO"/>
+<!-- 전체 작업 일보 조회 -->
 <%
+	// paging을 위한 변수 초기화 및 검색 내용(조건) 받아옴
 	int lastnum = -1;
 	String condition = "WHERE";
 	
@@ -31,13 +33,14 @@
 		wk = null;
 	}
 	
+	// 전제 작업 일보 목록 조회
 	List<DailyWorkDTO> dwlist = null;
-	if(duration == null && wk == null){
+	if(duration == null && wk == null){ //검색 없을 때
 		dwlist = dao.getDailyWorkList(p);
 		lastnum = dao.getDailyWorkNext();
 		
 	}
-	else{
+	else{ // 검색 있을 때
 		
 		if(startdate != null && enddate != null) {
 			condition = condition + " regdate >= \'" + startdate + "\' and regdate <= \'" + enddate + "\'";
@@ -56,11 +59,12 @@
 		
 	}
 %>
+<!-- 조회된 데이터 화면 요소 설정 -->
 <table class="table table-bordered table-hover">
 	<thead class="tablehead">
 	    <th style="width: 16%">작업자</th>
 	    <th style="width: 16%">유형</th>
-	    <th style="width: 17%">수주명</th> <!-- 금형번호? -->
+	    <th style="width: 17%">수주명</th>
 	    <th style="width: 17%">부품명</th>
 	    <th style="width: 17%">공정</th>
 	    <th style="width: 17%">등록일</th>
@@ -172,7 +176,7 @@ $(".dwtablecontent").on("click",function(){
 	}   
 });
 
-function toISO(dtime){
+function toISO(dtime){ // 날짜 형식 설정
 	let ymd = dtime.substring(0,10);
 	let h = dtime.substring(11,13);
 	let mm = dtime.substring(14,16);
@@ -182,7 +186,7 @@ function toISO(dtime){
 	return result;
 }
 
-function status(st){
+function status(st){ // 작업일보 조회의 상태
 	let stt = "<button type='button' class='btn btn-primary' style='text-align:center;' id='sttdiv' disabled></button>";
 	
 	$("#statusdiv").html(stt);
@@ -190,6 +194,8 @@ function status(st){
 	
 }
 </script>
+
+<!-- paging -->
 <ul class="pagination">
 	<li><a class="preanpage">Previous</a></li>
 	<%
