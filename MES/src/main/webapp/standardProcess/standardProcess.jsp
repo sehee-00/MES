@@ -33,6 +33,7 @@
 
         <div class="title">기준정보 관리/표준공정 관리</div>
         
+	    <!-- 표준 공정 목록 -->
 		<div class="row">
             <div class="panel panel-default border listbox col-md-6">
                 <div class="panel-heading">
@@ -325,6 +326,7 @@
     </body>
 
     <script>
+	//기본 화면 설정
         $(document).ready(function(){
             $("#insertpcpanel").hide();
             $("#insertpceqpanel").hide();
@@ -334,7 +336,7 @@
             $(".selectlist").val(null).select2();
         });
         
-        //기본 테이블 조회
+        //기본 표준 공정 목록 조회
         $(document).ready(function(){
         	tsetting();
         });
@@ -453,7 +455,7 @@
         	$("input[name='wtinput']").val(null);
         });
         
-        //공정설비 삽삭갱
+        //공정설비 삽입, 삭제, 갱신(수정)
         $("#pceqinsertbtn").on("click",function(){ //등록, 수정
         	let procn = $("select[name='pceqpname']").val();
         	let subp = $("select[name='pceqename']").val();
@@ -508,7 +510,7 @@
 			});
         });
         
-        //공정 삽삭갱
+        //공정 삽입, 삭제, 갱신(수정)
         $("#pcfirstlevelinsertbtn").on("click",function(){ //최상위 등록
         	let procn = $("#pcpnameinput").val();
         	let p = $("#pcfreratesinput").val();
@@ -614,7 +616,7 @@
 			});
         });
         
-        $("#pcdeletebtn").on("click",function(){
+        $("#pcdeletebtn").on("click",function(){ //공정 선택을 하지 않고 삭제하려면 실패
         	alert("실패하였습니다");
         })
         
