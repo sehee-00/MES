@@ -46,7 +46,7 @@ public class outregistrationDAO {
 			}
 		}
 	}
-	
+	// 수주의 금형번호 세팅
 	public ArrayList<String> getordercombo(){
 		ArrayList<String> list = new ArrayList<String>();
 		String SQL="SELECT distinct item_no FROM mes.order";
@@ -66,7 +66,7 @@ public class outregistrationDAO {
 		}
 		return list.isEmpty() ? null : list;	//삼항 연산자 빈값이면 null 반환 빈값이 아니면 list 값 반환
 	}
-	
+	// 부품의 부품명 세팅
 	public ArrayList<String> getprod() {
 		ArrayList<String> list = new ArrayList<String>();
 		String SQL = "SELECT distinct part_name FROM mes.part";
@@ -86,7 +86,7 @@ public class outregistrationDAO {
 		}
 		return list.isEmpty() ? null : list;
 	}
-	
+	// 공정의 공정명 세팅
 	public ArrayList<String> getprocess() {
 		ArrayList<String> list = new ArrayList<String>();
 		String SQL = "SELECT distinct process_name FROM mes.process";
@@ -106,7 +106,7 @@ public class outregistrationDAO {
 		}
 		return list.isEmpty() ? null : list;
 	}
-	
+	// 업체(외주사)의 업체명 세팅
 	public ArrayList<String> getcompany() {
 		ArrayList<String> list = new ArrayList<String>();
 		String SQL = "SELECT distinct com_name FROM mes.company WHERE client_outsourcing='외주사'";
@@ -126,7 +126,7 @@ public class outregistrationDAO {
 		}
 		return list.isEmpty() ? null : list;
 	}
-	
+	// 열 번호 세팅
 	public int getNext() {
 		String SQL="SELECT outsourcing_no FROM mes.outsourcing ORDER BY outsourcing_no DESC";
 		int res=-1;
@@ -148,7 +148,7 @@ public class outregistrationDAO {
 		}
 		return res;
 	}
-	
+	// 데이터 리스트 세팅
 	public ArrayList<outregistrationDTO> getOutList() throws ParseException{
 		String SQL="SELECT * FROM mes.outsourcing WHERE outsourcing.status=0";
 		ArrayList<outregistrationDTO> list=new ArrayList<outregistrationDTO>();
@@ -185,7 +185,7 @@ public class outregistrationDAO {
 		}
 		return list;
 	}
-	
+	// 데이터 입력(등록) 및 수정 
 	public int write(outregistrationDTO dto) {
 		int result = 0;
 		try {
