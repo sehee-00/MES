@@ -69,6 +69,7 @@ integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="ano
 							</tr>
 						</thead>
 						<tbody>
+						<!--데이터 -->
 						<% ArrayList<outregistrationDTO> list=outregistrationDAO.getOutList(); %>
 							<tr id="addData">
 								<td colspan="10" align="right">
@@ -88,6 +89,7 @@ integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="ano
 </body>
 </html>
 <script>
+	<!--작업일보 추가-->
 	$(document).ready(function(){
 		let f = <%=list.size() %>;
 		for(var i = 0; i<f; i++){
@@ -128,6 +130,7 @@ integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="ano
 		chk_num = <%= outregistrationDAO.getNext() %>;
 	});
 	
+	<!--작업일보 추가 -->
 	function addInsert(){
 		
 		var rowItem="<tr class=filter_row id='row"+ index +"'>";
@@ -213,6 +216,7 @@ integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="ano
 		
 		
 	}
+	// 데이터 삭제
 	function delInsert(obj){
 		var number = obj.parentNode.parentNode.children[10].children[0].value;
 
@@ -267,6 +271,7 @@ function changeparts(){
 		$("#prod_name").append(option);
 	}
 }
+// 금액 콤마
 function comma(str) {
     str = String(str);
     return str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
