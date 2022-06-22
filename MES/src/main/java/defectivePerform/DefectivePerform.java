@@ -3,7 +3,7 @@ package defectivePerform;
 public class DefectivePerform {
 
 	private int m;
-	private String process;
+	private String process;	//공정명
 	private int mcost;
 	private int num;
 	private int solution;
