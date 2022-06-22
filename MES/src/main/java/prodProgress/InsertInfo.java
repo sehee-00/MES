@@ -153,7 +153,7 @@ public class InsertInfo extends HttpServlet {
          }
          break;
          
-      case "OrderRequest":
+      case "OrderRequest": //발주 요청
     	  OrderRequestDTO dto = new OrderRequestDTO(dao.getPorder_numNext());
     	  result = new JSONObject();
     	  
