@@ -11,6 +11,7 @@ List<StandardProcessFDTO> spLowerProcessList = dao.getLowerStandardProcessFacili
 if(spLowerProcessList != null){
 	for(StandardProcessFDTO pdto : spLowerProcessList){
 %>
+<!-- 하위 설비 검색 -->
 <tr class="tablecontent facilitycontent" style="color: #d9534f;" name="<%=upperprocess %>" id="<%=pdto.getFacility_name() %>"> 
 	<td id="spicon"></td>
     <td id="spnames" style="padding-left:<%=padding %>"><%=pdto.getFacility_name() %></td>
