@@ -2,15 +2,15 @@ package defectivePerform;
 
 public class DefectivePerform {
 
-	private int m;
-	private String process;
-	private int mcost;
-	private int num;
-	private int solution;
-	private String ftype;
-	private int om;
-	private int pm;
-	private int mm;
+	private int m;		//날짜 '월'
+	private String process;	//공정
+	private int mcost;	//자재비용(manufacturing_cost)의 합계  
+	private int num;	//월별 불량 건수
+	private int solution;	//해결 방안
+	private String ftype;	//불량 유형
+	private int om;		//수주 갯수
+	private int pm;		//자재입고 갯수
+	private int mm;		//공정 갯수
 	
 	public int getOm() {
 		return om;
