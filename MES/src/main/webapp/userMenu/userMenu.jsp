@@ -38,7 +38,7 @@
         </div>
         
         
-
+	<!-- 사용자 목록 -->
 		<div class="row">
             <div class="panel panel-default border listbox col-md-6" id="umUsersList">
                 <div class="panel-heading">
@@ -50,6 +50,7 @@
                 </div>
             </div>
             
+	    <!-- 선택한 사용자의 메뉴 권한 목록 -->
             <div class="panel panel-default border inputbox displaynone col-md-6 " id="umUsermenuList">
                 <div class="panel-heading">
                     <table id="umUsermenuListHeader">
@@ -122,6 +123,7 @@
 </html>
 
 <script>
+// 사용자 목록 설정
 function usertsetting(){
 	$.ajax({
 		type:"GET",
@@ -138,7 +140,7 @@ $(document).ready(function(){
 	usertsetting();
 });
 
-//검색
+//사용자 검색 (각 사번, 이름)
 $("input[name='searchid']").on("keydown",function(e){
 	if(e.keyCode == 13){
 		uid = $("input[name='searchid']").val();
