@@ -1,5 +1,6 @@
 package standardProcess;
 
+//공정 데이터 객체
 public class StandardProcessPDTO {
 	private String process_name; //공정명
 	private String facilites_name; //설비명
