@@ -73,6 +73,7 @@ private DBconn db;
 		return list.isEmpty() ? null : list;
 	}
 	
+	// 금형번호에 따른 나의 작업일보 data 세팅
 	public List<processProgressDTO> getProcList(String itemno) throws ParseException{
 		List<processProgressDTO> list = new ArrayList<processProgressDTO>();
 		try {
@@ -105,6 +106,7 @@ private DBconn db;
 		return list.isEmpty() ? null : list;
 	}
 	
+	// 예정종료일 세팅
 	public String getProcExpdate(String itemno, String procname) throws ParseException{
 		String res = null;
 		try {
@@ -133,6 +135,7 @@ private DBconn db;
 		return res == null ? "" : res;
 	}
 	
+	// 시작일 세팅
 	public String getProcStartdate(String itemno, String procname) throws ParseException{
 		String res = null;
 		try {
@@ -162,6 +165,7 @@ private DBconn db;
 		return res == null ? "" : res;
 	}
 	
+	// 종료일 세팅
 	public String getProcEnddate(String itemno, String procname) throws ParseException{
 		String res = null;
 		try {
@@ -191,6 +195,7 @@ private DBconn db;
 		return res == null ? "" : res;
 	}
 	
+	// 시작일과 예정종료일간의 간격 구하기
 	public int getProcBetDate(String itemno, String procname) throws ParseException{
 		processProgressDTO dto = new processProgressDTO();
 		int betDate = 0;
