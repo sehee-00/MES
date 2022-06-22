@@ -237,7 +237,7 @@ public class outregistrationDAO {
 		}finally {
 			disconnect();
 		}
-		
+		// 데이터 수정
 		if(result == 0) {
 			try {
 				String SQL="UPDATE mes.outsourcing SET price=?, warehousing_exp_date=?, outstart_date=?, outend_date=? WHERE outsourcing_no=?";
@@ -273,7 +273,7 @@ public class outregistrationDAO {
 		}
 		return result;
 	}
-	
+	// 데이터 삭제
 	public int delete(int num) {
 		String SQL="DELETE FROM mes.outsourcing WHERE outsourcing_no="+num;
 		int k=-1;
@@ -292,7 +292,7 @@ public class outregistrationDAO {
 		}
 		return k;
 	}
-	
+	// 불량 초기화
 	public void clearFaulty() {
 		try {
 			String SQL="UPDATE mes.outsourcing SET faulty='N'";
@@ -307,7 +307,7 @@ public class outregistrationDAO {
 			disconnect();
 		}
 	}
-	
+	// 불량 세팅
 	public int settingFaulty(int num) {
 		int result = 0;
 		try {
@@ -324,7 +324,7 @@ public class outregistrationDAO {
 		}
 		return result;
 	}
-	// 수주 선택에 따른 부품명 세팅
+		// 수주 선택에 따른 부품명 세팅
 		public String getparts(String ordername) {	
 			String SQL = "SELECT distinct part FROM mes.parts_by_order WHERE order=\'"+ordername+"\'";
 
