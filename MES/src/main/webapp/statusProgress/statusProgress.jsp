@@ -1,3 +1,4 @@
+<!-- 진척현황 메인 jsp -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.List" %>
@@ -43,7 +44,7 @@
     </div>
  
     <script>
-      // just helper to get current dates
+      <!-- 현재 데이터 가져오기 -->
       function getDate(hours) {
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
@@ -52,7 +53,7 @@
         const timeStamp = new Date(currentYear, currentMonth, currentDay, 0, 0, 0).getTime();
         return new Date(timeStamp + hours * 60 * 60 * 1000).getTime();
       }
- 
+<!-- 데이터 세팅 -->
       let tasks = [
     	  <%
     	  List<statusProgressDTO> list=dao.getList();
@@ -106,6 +107,7 @@
 					<%
 					for(int j=0; j<proclist.size(); j++){
 						index++;
+						// 공정
 						if(dao.getProcStartdate(list.get(i).getItem_no(),proclist.get(j).getProcess())!=""){
 					%>
 						{
